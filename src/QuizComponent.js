@@ -26,15 +26,17 @@ const generateNewQuiz = async () => {
 
 };
 
-   const formatQuestions = (data) => {
+  const formatQuestions = (data) => {
     if (data && data.choices && data.choices[0] && data.choices[0].message) {
       const sentences = data.choices[0].message.content.split('\n');
       return sentences.map((sentence, index) => {
-        // Render only the first five sentences unconditionally
         if (index < 5) {
-          return <p key={index}>{sentence}</p>;
+          // Replace words in parentheses with word + input box
+          const formattedSentence = sentence.replace(/\((\w+)\)/g, '($1) <input placeholder="$1" />');
+          return (
+            <p key={index} dangerouslySetInnerHTML={{ __html: formattedSentence }} />
+          );
         }
-        // Render sentences after the fifth one based on showAnswers state
         return showAnswers ? <p key={index}>{sentence}</p> : null;
       });
     }
