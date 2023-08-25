@@ -3,16 +3,15 @@ const axios = require('axios');
 
 exports.handler = async function(event, context) {
     try {
-        const response = await axios.post('https://api.openai.com/v1/engines/davinci/completions', {
-
+        const payload = {
+            model: "gpt-3.5-turbo-0613",
             messages: [
-                {"role": "system", "content": "You are a Spanish teacher"},
-                {"role": "user", "content": "Generate quiz questions for Spanish subjunctive leaving the verb in its unconjugated form. List the answers at the end."}
-            ],
-            max_tokens: 120,
-            stop: null,
-            temperature: 0.7,
-        }, {
+                { "role": "system", "content": "You are a Spanish teacher." },
+                { "role": "user", "content": "Generate quiz questions for Spanish subjunctive leaving the verb in its unconjugated form. List the answers at the end." }
+            ]
+        };
+
+        const response = await axios.post('https://api.openai.com/v1/chat/completions', payload, {
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${process.env.OPENAI_API_KEY}`
@@ -31,3 +30,4 @@ exports.handler = async function(event, context) {
         };
     }
 };
+
