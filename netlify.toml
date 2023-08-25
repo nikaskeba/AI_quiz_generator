@@ -1,0 +1,4 @@
+[functions]
+  directory = "netlify/functions"
+  # Setting the timeout to 26 seconds as an example
+  timeout = 26
