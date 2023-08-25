@@ -5,7 +5,6 @@ const QuizComponent = () => {
   const [quizData, setQuizData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [showAnswers, setShowAnswers] = useState(false);  // New state variable
-  const [feedback, setFeedback] = useState({}); // New state to hold feedback for each answer
 
 const generateNewQuiz = async () => {
     setLoading(true);
