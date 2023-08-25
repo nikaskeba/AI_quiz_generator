@@ -22,20 +22,28 @@ const generateNewQuiz = async () => {
       console.error("Error fetching quiz data:", error);
       setLoading(false);
     }
-    
+
 };
 
-  const formatQuestions = (data) => {
+   const formatQuestions = (data) => {
     if (data && data.choices && data.choices[0] && data.choices[0].message) {
-      return data.choices[0].message.content.split('\n').map((sentence, index) => (
-        <p key={index}>{sentence}</p>
-      ));
+      const sentences = data.choices[0].message.content.split('\n');
+      return sentences.map((sentence, index) => {
+        // Render only the first five sentences unconditionally
+        if (index < 5) {
+          return <p key={index}>{sentence}</p>;
+        }
+        // Render sentences after the fifth one based on showAnswers state
+        return showAnswers ? <p key={index}>{sentence}</p> : null;
+      });
     }
     return null;
   };
   return (
     <div>
       <button onClick={generateNewQuiz}>Generate New Quiz</button>
+            <button onClick={() => setShowAnswers(!showAnswers)}>Show Answers</button> {/* New button */}
+
             {formatQuestions(quizData)}
 
       {loading && <p>Loading...</p>}
