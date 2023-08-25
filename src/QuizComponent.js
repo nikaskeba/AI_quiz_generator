@@ -16,7 +16,7 @@ const QuizComponent = () => {
             });
 const data = await response.json();
 setApiRawResponse(data);
-            const data = await response.json();
+            
             const parsedData = parseGpt3Output(data.choices[0].message.content);
             setQuizData(parsedData.questions);
             setUserAnswers(Array(parsedData.questions.length).fill(""));
