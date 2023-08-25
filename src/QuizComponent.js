@@ -1,4 +1,3 @@
-//QuizComponent.js
 import React, { useState } from 'react';
 
 const QuizComponent = () => {
@@ -17,8 +16,7 @@ const QuizComponent = () => {
             });
 
             const data = await response.json();
-            const { choices } = data;
-            const parsedData = parseGpt3Output(choices[0].message.content);
+            const parsedData = parseGpt3Output(data.choices[0].message.content);
             setQuizData(parsedData.questions);
             setUserAnswers(Array(parsedData.questions.length).fill(""));
             setLoading(false);
@@ -43,8 +41,7 @@ const QuizComponent = () => {
     };
 
     const checkAnswer = (index) => {
-        const { answers } = parseGpt3Output(quizData);
-        if (userAnswers[index] === answers[index]) {
+        if (userAnswers[index] === quizData.answers[index]) {
             alert('Correct!');
         } else {
             alert('Wrong answer. Try again.');
@@ -54,12 +51,12 @@ const QuizComponent = () => {
     return (
         <div>
             <button onClick={generateNewQuiz}>Generate New Quiz</button>
-
+            
             {loading && <p>Loading...</p>}
 
-            {quizData && quizData.map((question, index) => (
+            {quizData && quizData.questions.map((question, index) => (
                 <div key={index}>
-                    <p dangerouslySetInnerHTML={{ __html: question.replace("_______", `<input type="text" onChange={(e) => handleInputChange(${index}, e)} />`) }}></p>
+                    <p dangerouslySetInnerHTML={{ __html: question.replace("_______", '<input type="text" onChange={e => handleInputChange(index, e)} />') }}></p>
                     <button onClick={() => checkAnswer(index)}>Submit</button>
                 </div>
             ))}
@@ -68,3 +65,4 @@ const QuizComponent = () => {
 };
 
 export default QuizComponent;
+
