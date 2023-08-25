@@ -8,7 +8,7 @@ exports.handler = async function(event, context) {
             messages: [
                 { "role": "system", "content": "You are a Spanish teacher." },
                 { "role": "user", "content": "Generate quiz questions for Spanish subjunctive leaving the verb in its unconjugated form. List the answers at the end." }
-            ]
+            ],    max_tokens: 200
         };
 
         const response = await axios.post('https://api.openai.com/v1/chat/completions', payload, {
