@@ -1,6 +1,9 @@
-// getQuestions.js
+// getQuizQuestions.js
+let fetch;
 
-const fetch = require('node-fetch');
+import('node-fetch').then(module => {
+  fetch = module.default;
+});
 
 exports.handler = async function(event, context) {
     const body = JSON.parse(event.body);
