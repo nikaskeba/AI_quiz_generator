@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+let userAnswer; 
 
 const QuizGenerator = () => {
   const [questions, setQuestions] = useState([]);
@@ -27,7 +28,6 @@ const QuizGenerator = () => {
     // Compare userAnswer with correctAnswer and display a message
     // indicating whether it's correct or wrong
   };
-
   return (
     <div>
       {questions.map((question, index) => (
