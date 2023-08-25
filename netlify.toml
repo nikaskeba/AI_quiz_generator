@@ -1,5 +1,5 @@
-[build]
-  functions = "netlify/functions"
-
 [functions]
-  timeout = 26 # This sets the timeout to 26 seconds for all functions
+  directory = "netlify/functions"
+
+[functions.getQuizQuestions]
+  timeout = 26
