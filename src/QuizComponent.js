@@ -21,7 +21,7 @@ useEffect(() => {
         }),
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': 'Bearer OPENAI_API_KEY' // replace with your API key or use environment variables for security
+          'Authorization': `Bearer ${process.env.OPENAI_API_KEY}` // replace with your API key or use environment variables for security
         },
       });
       const data = await response.json();
