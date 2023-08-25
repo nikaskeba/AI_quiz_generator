@@ -14,7 +14,8 @@ const QuizComponent = () => {
                     'Content-Type': 'application/json',
                 },
             });
-
+const data = await response.json();
+setApiRawResponse(data);
             const data = await response.json();
             const parsedData = parseGpt3Output(data.choices[0].message.content);
             setQuizData(parsedData.questions);
@@ -33,8 +34,7 @@ const QuizComponent = () => {
 
         return { questions, answers };
     };
-const data = await response.json();
-setApiRawResponse(data);
+
     const handleInputChange = (index, event) => {
         const newAnswers = [...userAnswers];
         newAnswers[index] = event.target.value;
