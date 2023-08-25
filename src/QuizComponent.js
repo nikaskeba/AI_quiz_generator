@@ -4,6 +4,7 @@ const QuizComponent = () => {
     const [quizData, setQuizData] = useState(null);
     const [loading, setLoading] = useState(false);
     const [userAnswers, setUserAnswers] = useState([]);
+const [apiRawResponse, setApiRawResponse] = useState(null);
 
     const generateNewQuiz = async () => {
         setLoading(true);
