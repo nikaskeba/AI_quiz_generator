@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 let userAnswer; 
+const correctAnswer = "someValue";
 
 const QuizGenerator = () => {
   const [questions, setQuestions] = useState([]);
