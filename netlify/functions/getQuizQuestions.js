@@ -1,10 +1,9 @@
 // getQuestions.js
-import fetch from 'node-fetch';
-
+const axios = require('axios');
 
 exports.handler = async function(event, context) {
     const body = JSON.parse(event.body);
-    const response = await fetch('https://api.openai.com/v1/engines/davinci/completions', {
+    const response = await axios.post('https://api.openai.com/v1/engines/davinci/completions', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -16,7 +15,7 @@ exports.handler = async function(event, context) {
         })
     });
     
-    const data = await response.json();
+    const data = response.data;
 
     return {
         statusCode: 200,
