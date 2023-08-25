@@ -46,6 +46,6 @@ return (
       ))}
     </div>
   );
-
+};
 
 export default QuizGenerator;
