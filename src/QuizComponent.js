@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 const QuizComponent = () => {
   const [quizData, setQuizData] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [showAnswers, setShowAnswers] = useState(false);  // New state variable
 
 const generateNewQuiz = async () => {
     setLoading(true);
