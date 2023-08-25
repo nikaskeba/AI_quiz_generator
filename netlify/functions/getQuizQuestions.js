@@ -3,8 +3,8 @@ const axios = require('axios');
 
 exports.handler = async function(event, context) {
     try {
-        const response = await axios.post('https://api.openai.com/v1/chat/completions', {
-            model: "gpt-4-0314",
+        const response = await axios.post('https://api.openai.com/v1/engines/davinci/completions', {
+
             messages: [
                 {"role": "system", "content": "You are a Spanish teacher"},
                 {"role": "user", "content": "Generate quiz questions for Spanish subjunctive leaving the verb in its unconjugated form. List the answers at the end."}
