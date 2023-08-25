@@ -22,13 +22,22 @@ const generateNewQuiz = async () => {
       console.error("Error fetching quiz data:", error);
       setLoading(false);
     }
+    
 };
 
-
+  const formatQuestions = (data) => {
+    if (data && data.choices && data.choices[0] && data.choices[0].message) {
+      return data.choices[0].message.content.split('\n').map((sentence, index) => (
+        <p key={index}>{sentence}</p>
+      ));
+    }
+    return null;
+  };
   return (
     <div>
       <button onClick={generateNewQuiz}>Generate New Quiz</button>
-      
+            {formatQuestions(quizData)}
+
       {loading && <p>Loading...</p>}
 
       {/* Display API Response for Debugging */}
