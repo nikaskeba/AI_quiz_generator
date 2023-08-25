@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 let userAnswer; 
-const correctAnswer = "someValue";
+
 
 const QuizGenerator = () => {
   const [questions, setQuestions] = useState([]);
@@ -23,23 +23,29 @@ const QuizGenerator = () => {
 
     fetchQuizQuestions();
   }, []);
-
-  const handleSubmission = (questionIndex, userAnswer) => {
+const handleSubmission = (questionIndex, userAnswer) => {
     const correctAnswer = questions[questionIndex].answer;
-    // Compare userAnswer with correctAnswer and display a message
-    // indicating whether it's correct or wrong
-  };
-  return (
+    if (userAnswer === correctAnswer) {
+        alert("Correct!");
+    } else {
+        alert("Wrong!");
+    }
+};
+
+return (
     <div>
       {questions.map((question, index) => (
         <div key={index}>
           <p>{question.sentence}</p>
-          <input type="text" />
+          <input 
+            type="text" 
+            onChange={e => userAnswer = e.target.value} 
+          />
           <button onClick={() => handleSubmission(index, userAnswer)}>Submit</button>
         </div>
       ))}
     </div>
   );
-};
+
 
 export default QuizGenerator;
