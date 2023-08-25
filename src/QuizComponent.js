@@ -33,7 +33,8 @@ const QuizComponent = () => {
 
         return { questions, answers };
     };
-
+const data = await response.json();
+setApiRawResponse(data);
     const handleInputChange = (index, event) => {
         const newAnswers = [...userAnswers];
         newAnswers[index] = event.target.value;
