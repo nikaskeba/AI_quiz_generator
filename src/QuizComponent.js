@@ -54,12 +54,14 @@ const QuizComponent = () => {
             
             {loading && <p>Loading...</p>}
 
-            {quizData && quizData.questions.map((question, index) => (
-                <div key={index}>
-                    <p dangerouslySetInnerHTML={{ __html: question.replace("_______", '<input type="text" onChange={e => handleInputChange(index, e)} />') }}></p>
-                    <button onClick={() => checkAnswer(index)}>Submit</button>
-                </div>
-            ))}
+           {quizData && quizData.questions.map((question, index) => (
+    <div key={index}>
+        <span>{question.split("_______")[0]}</span>
+        <input type="text" onChange={e => handleInputChange(index, e)} />
+        <span>{question.split("_______")[1]}</span>
+        <button onClick={() => checkAnswer(index)}>Submit</button>
+    </div>
+))}
         </div>
     );
 };
