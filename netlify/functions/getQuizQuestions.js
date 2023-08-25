@@ -7,7 +7,7 @@ exports.handler = async function(event, context) {
             model: "gpt-3.5-turbo-0613",
             messages: [
                 { "role": "system", "content": "You are a Spanish teacher." },
-                { "role": "user", "content": "Generate 5 quiz questions for Spanish subjunctive leaving the verb in its unconjugated form. List the answers at the end." }
+                { "role": "user", "content": "Generate 5 unique phrases for Spanish subjunctive leaving the verb in its unconjugated form. List the answers at the end." }
             ],    max_tokens: 200
         };
 
