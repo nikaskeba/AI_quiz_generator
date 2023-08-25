@@ -48,22 +48,32 @@ const QuizComponent = () => {
         }
     };
 
-    return (
-        <div>
-            <button onClick={generateNewQuiz}>Generate New Quiz</button>
-            
-            {loading && <p>Loading...</p>}
+  return (
+    <div>
+        <button onClick={generateNewQuiz}>Generate New Quiz</button>
+        
+        {loading && <p>Loading...</p>}
 
-           {quizData && quizData.questions.map((question, index) => (
-    <div key={index}>
-        <span>{question.split("_______")[0]}</span>
-        <input type="text" onChange={e => handleInputChange(index, e)} />
-        <span>{question.split("_______")[1]}</span>
-        <button onClick={() => checkAnswer(index)}>Submit</button>
+        {/* Display Raw API Response */}
+        {apiRawResponse && (
+            <div>
+                <h3>Raw API Response:</h3>
+                <pre>{JSON.stringify(apiRawResponse, null, 2)}</pre>
+            </div>
+        )}
+
+        {/* Display Questions */}
+        {quizData && quizData.questions.map((question, index) => (
+            <div key={index}>
+                <span>{question.split("_______")[0]}</span>
+                <input type="text" onChange={e => handleInputChange(index, e)} />
+                <span>{question.split("_______")[1]}</span>
+                <button onClick={() => checkAnswer(index)}>Submit</button>
+            </div>
+        ))}
     </div>
-))}
-        </div>
-    );
+);
+
 };
 
 export default QuizComponent;
