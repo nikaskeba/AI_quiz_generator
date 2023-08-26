@@ -26,45 +26,46 @@ const generateNewQuiz = async () => {
 
 };
 
- const formatQuestions = (data) => {
+const formatQuestions = (data) => {
     if (data && data.choices && data.choices[0] && data.choices[0].message) {
-      const fullContent = data.choices[0].message.content;
-      const [questionsPart, answersPart] = fullContent.split('Verb solutions in order of question:');
-      
-      // Extract answers into an array
-      const answersArray = answersPart.trim().split('\n').map(answer => answer.split('.')[1].trim());
-
-      const sentences = questionsPart.split('\n');
-      return (
-        <>
-          {sentences.map((sentence, index) => {
-            if (index < 5) {
-              const formattedSentence = sentence.replace(/\((\w+)\)/g, '($1) <input placeholder="$1" />');
-              return (
-                <p key={index} dangerouslySetInnerHTML={{ __html: formattedSentence }} />
-              );
+        const sentences = data.choices[0].message.content.split('\n');
+        
+        const content = [];
+        
+        // Assuming the first 5 are questions and the next 5 are answers.
+        for (let i = 0; i < 5; i++) {
+            const question = sentences[i];
+            const answer = sentences[i + 5];
+            
+            // Format the question
+            const formattedQuestion = question.replace(/\((\w+)\)/g, '($1) <input placeholder="$1" />');
+            content.push(
+                <p key={i} dangerouslySetInnerHTML={{ __html: formattedQuestion }} />
+            );
+            
+            // If answers should be shown, display them
+            if (showAnswers) {
+                content.push(<p key={i + 5}>{answer}</p>);
             }
-            return null;
-          })}
-          {showAnswers && (
-            <div>
-              <p>Test: {answersArray.join(', ')}</p>
-            </div>
-          )}
-        </>
-      );
+        }
+        
+        return content;
     }
     return null;
-  };
-
+};
   return (
     <div>
       <button onClick={generateNewQuiz}>Generate New Quiz</button>
-      <button onClick={() => setShowAnswers(!showAnswers)}>Show Answers</button>
-      
+            <button onClick={() => setShowAnswers(!showAnswers)}>Show Answers</button> {/* New button */}
+
+            {formatQuestions(quizData)}
+
       {loading && <p>Loading...</p>}
 
-      {formatQuestions(quizData)}
+      {/* Display API Response for Debugging */}
+      {/* quizData && (
+        <pre>{JSON.stringify(quizData, null, 2)}</pre>
+      )*/}
     </div>
   );
 };
