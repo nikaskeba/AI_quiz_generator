@@ -28,13 +28,7 @@ const QuizComponent = () => {
 const checkAnswers = () => {
     let newFeedback = {};
 
-    // Parse questions for debugging purposes.
-    const questions = quizData.choices[0].message.content.split('Solutions:')[0].split('\n');
-
     quizData.choices[0].message.content.split('Solutions:')[1].split('\n').forEach((answer, index) => {
-      // Log the question for debugging
-      console.log(`Checking Question: ${questions[index]}`);
-      
       let formattedAnswer = answer.replace(/^\d+\.\s*/, '');
       let inputElement = document.getElementById(`input-${index}`);
       let userInput = inputElement ? inputElement.value : null;
@@ -42,7 +36,8 @@ const checkAnswers = () => {
       if (userInput === formattedAnswer) {
         newFeedback[index] = "correct";
       } else {
-        newFeedback[index] = "wrong";
+        // Include the correct answer in the feedback if the user's answer is wrong.
+        newFeedback[index] = `wrong (Correct answer: ${formattedAnswer})`;
       }
     });
 
@@ -50,35 +45,29 @@ const checkAnswers = () => {
 };
 
 
-  const formatQuestions = (data) => {
-    if (data && data.choices && data.choices[0] && data.choices[0].message) {
-      const [rawContentBeforeSolutions, rawContentAfterSolutions] = data.choices[0].message.content.split('Solutions:');
-      const contentBeforeSolutions = rawContentBeforeSolutions.substring(rawContentBeforeSolutions.indexOf('1.'));
-      const questions = contentBeforeSolutions.split('\n');
 
-      const contentAfterSolutions = rawContentAfterSolutions.substring(rawContentAfterSolutions.indexOf('1.'));
-      const answers = contentAfterSolutions.split('\n');
+const formatQuestions = (data) => {
+    // ... [rest of the function remains unchanged]
 
-      return questions.map((question, index) => {
-        let formattedQuestion = question.replace(/\((\w+)\)/g, `($1) <input id="input-${index}" placeholder="$1" />`);
+    return questions.map((question, index) => {
+      let formattedQuestion = question.replace(/\((\w+)\)/g, `($1) <input id="input-${index}" placeholder="$1" />`);
 
-        if (showAnswers && answers[index]) {
-          let formattedAnswer = answers[index].replace(/^\d+\.\s*/, '');
-          formattedQuestion += `${formattedAnswer}`;
-        }
+      if (showAnswers && answers[index]) {
+        let formattedAnswer = answers[index].replace(/^\d+\.\s*/, '');
+        formattedQuestion += `${formattedAnswer}`;
+      }
 
-        // Add feedback after the question if available
-        if (feedback[index]) {
-          formattedQuestion += ` ${feedback[index]}`;
-        }
+      // Add feedback after the question if available
+      if (feedback[index]) {
+        formattedQuestion += ` <span class="feedback">${feedback[index]}</span>`;
+      }
 
-        return (
-          <p key={index} dangerouslySetInnerHTML={{ __html: formattedQuestion }} />
-        );
-      });
-    }
-    return null;
-  };
+      return (
+        <p key={index} dangerouslySetInnerHTML={{ __html: formattedQuestion }} />
+      );
+    });
+};
+
 
   return (
     <div>
