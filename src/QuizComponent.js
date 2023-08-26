@@ -51,6 +51,9 @@ const generateNewQuiz = async () => {
   };
   return (
     <div>
+       {answers.length > 0 && (
+        <pre>{JSON.stringify(answers, null, 2)}</pre>
+      )}
       <button onClick={generateNewQuiz}>Generate New Quiz</button>
             <button onClick={() => setShowAnswers(!showAnswers)}>Show Answers</button> {/* New button */}
 
@@ -62,9 +65,7 @@ const generateNewQuiz = async () => {
       {/* quizData && (
         <pre>{JSON.stringify(quizData, null, 2)}</pre>
       )*/}
-          {answers.length > 0 && (
-        <pre>{JSON.stringify(answers, null, 2)}</pre>
-      )}
+
     </div>
   );
 };
