@@ -71,7 +71,7 @@ const formatQuestions = (data) => {
     const contentAfterSolutions = rawContentAfterSolutions.substring(rawContentAfterSolutions.indexOf('1.'));
     const answers = contentAfterSolutions.split('\n');
     
-     return questions.map((question, index) => {
+    return questions.map((question, index) => {
       let formattedQuestion = question.replace(/\((\w+)\)/g, (match, p1) => {
         return `(${p1}) <input id="input-${index}" placeholder="${p1}" onChange={(e) => handleInputChange(index, e.target.value)} />`;
       });
