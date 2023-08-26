@@ -29,7 +29,7 @@ const QuizComponent = () => {
     let newFeedback = {};
 
     // Assuming questions and answers have the same length.
-    quizData.choices[0].message.content.split('Solutions:')[1].split('\n').forEach((answer, index) => {
+answers.forEach((answer, index) => {
       let formattedAnswer = answer.replace(/^\d+\.\s*/, '');
       let inputElement = document.getElementById(`input-${index}`);
 let userInput = inputElement ? inputElement.value : null;
@@ -48,10 +48,10 @@ let userInput = inputElement ? inputElement.value : null;
     if (data && data.choices && data.choices[0] && data.choices[0].message) {
       const [rawContentBeforeSolutions, rawContentAfterSolutions] = data.choices[0].message.content.split('Solutions:');
       const contentBeforeSolutions = rawContentBeforeSolutions.substring(rawContentBeforeSolutions.indexOf('1.'));
-      const questions = contentBeforeSolutions.split('\n');
+const questions = contentBeforeSolutions.split('\n').filter(line => line.trim() !== '');
 
       const contentAfterSolutions = rawContentAfterSolutions.substring(rawContentAfterSolutions.indexOf('1.'));
-      const answers = contentAfterSolutions.split('\n');
+const answers = contentAfterSolutions.split('\n').filter(line => line.trim() !== '');
 
       return questions.map((question, index) => {
         let formattedQuestion = question.replace(/\((\w+)\)/g, `($1) <input id="input-${index}" placeholder="$1" />`);
