@@ -1,12 +1,13 @@
+//QuizComponent.js
 import React, { useState } from 'react';
 
 const QuizComponent = () => {
   const [quizData, setQuizData] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [showAnswers, setShowAnswers] = useState(false); 
+  const [showAnswers, setShowAnswers] = useState(false);  // New state variable
   const [feedback, setFeedback] = useState({}); // New state to store feedback for each question
 
-  const generateNewQuiz = async () => {
+const generateNewQuiz = async () => {
     setLoading(true);
     try {
       const response = await fetch('/.netlify/functions/getQuizQuestions', {
@@ -23,8 +24,8 @@ const QuizComponent = () => {
       console.error("Error fetching quiz data:", error);
       setLoading(false);
     }
-  };
 
+};
 const checkAnswers = () => {
     let newFeedback = {};
 
@@ -43,19 +44,20 @@ const checkAnswers = () => {
 
     setFeedback(newFeedback);
 };
+const formatQuestions = (data) => {
+  if (data && data.choices && data.choices[0] && data.choices[0].message) {
+    // Split the content at "Solutions:"
+    const [rawContentBeforeSolutions, rawContentAfterSolutions] = data.choices[0].message.content.split('Solutions:');
 
+    // Extract questions and remove text before the first "1."
+    const contentBeforeSolutions = rawContentBeforeSolutions.substring(rawContentBeforeSolutions.indexOf('1.'));
+    const questions = contentBeforeSolutions.split('\n');
 
-
-  const formatQuestions = (data) => {
-    if (data && data.choices && data.choices[0] && data.choices[0].message) {
-      const [rawContentBeforeSolutions, rawContentAfterSolutions] = data.choices[0].message.content.split('Solutions:');
-      const contentBeforeSolutions = rawContentBeforeSolutions.substring(rawContentBeforeSolutions.indexOf('1.'));
-      const questions = contentBeforeSolutions.split('\n');
-
-      const contentAfterSolutions = rawContentAfterSolutions.substring(rawContentAfterSolutions.indexOf('1.'));
-      const answers = contentAfterSolutions.split('\n');
-
-      return questions.map((question, index) => {
+    // Start answers from the first occurrence of "1."
+    const contentAfterSolutions = rawContentAfterSolutions.substring(rawContentAfterSolutions.indexOf('1.'));
+    const answers = contentAfterSolutions.split('\n');
+    
+    return questions.map((question, index) => {
       let formattedQuestion = question.replace(/\((\w+)\)/g, `($1) <input id="input-${index}" placeholder="$1" />`);
 
       if (showAnswers && answers[index]) {
@@ -74,18 +76,22 @@ const checkAnswers = () => {
     });
 };
 
+
   return (
     <div>
       <button onClick={generateNewQuiz}>Generate New Quiz</button>
-      <button onClick={checkAnswers}>Check</button> {/* New "Check" button */}
-      <button onClick={() => setShowAnswers(!showAnswers)}>Show Answers</button>
+            <button onClick={() => setShowAnswers(!showAnswers)}>Show Answers</button> {/* New button */}
 
-      {formatQuestions(quizData)}
+            {formatQuestions(quizData)}
 
       {loading && <p>Loading...</p>}
+
+      {/* Display API Response for Debugging */}
+      {/* quizData && (
+        <pre>{JSON.stringify(quizData, null, 2)}</pre>
+      )*/}
     </div>
   );
 };
 
 export default QuizComponent;
-
