@@ -46,10 +46,16 @@ const checkAnswers = () => {
 
 
 
-const formatQuestions = (data) => {
-    // ... [rest of the function remains unchanged]
+  const formatQuestions = (data) => {
+    if (data && data.choices && data.choices[0] && data.choices[0].message) {
+      const [rawContentBeforeSolutions, rawContentAfterSolutions] = data.choices[0].message.content.split('Solutions:');
+      const contentBeforeSolutions = rawContentBeforeSolutions.substring(rawContentBeforeSolutions.indexOf('1.'));
+      const questions = contentBeforeSolutions.split('\n');
 
-    return questions.map((question, index) => {
+      const contentAfterSolutions = rawContentAfterSolutions.substring(rawContentAfterSolutions.indexOf('1.'));
+      const answers = contentAfterSolutions.split('\n');
+
+      return questions.map((question, index) => {
       let formattedQuestion = question.replace(/\((\w+)\)/g, `($1) <input id="input-${index}" placeholder="$1" />`);
 
       if (showAnswers && answers[index]) {
@@ -67,7 +73,6 @@ const formatQuestions = (data) => {
       );
     });
 };
-
 
   return (
     <div>
