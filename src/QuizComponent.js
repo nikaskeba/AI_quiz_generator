@@ -5,6 +5,7 @@ const QuizComponent = () => {
   const [quizData, setQuizData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [showAnswers, setShowAnswers] = useState(false);  // New state variable
+  const [answers, setAnswers] = useState([]); // State to hold extracted answers
 
 const generateNewQuiz = async () => {
     setLoading(true);
@@ -29,6 +30,12 @@ const generateNewQuiz = async () => {
   const formatQuestions = (data) => {
     if (data && data.choices && data.choices[0] && data.choices[0].message) {
       const sentences = data.choices[0].message.content.split('\n');
+        // Extract answers after the word "solutions"
+      const answersMatch = data.choices[0].message.content.match(/solutions:[\s\S]*?(\d+\.\s\w+)/g);
+      if (answersMatch) {
+        const extractedAnswers = answersMatch.map(answer => answer.split('. ')[1]);
+        setAnswers(extractedAnswers);
+      }
       return sentences.map((sentence, index) => {
         if (index < 7) {
           // Replace words in parentheses with word + input box
@@ -55,6 +62,9 @@ const generateNewQuiz = async () => {
       {/* quizData && (
         <pre>{JSON.stringify(quizData, null, 2)}</pre>
       )*/}
+          {answers.length > 0 && (
+        <pre>{JSON.stringify(answers, null, 2)}</pre>
+      )}
     </div>
   );
 };
