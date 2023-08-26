@@ -51,6 +51,7 @@ const generateNewQuiz = async () => {
   };
   return (
     <div>
+    return answersMatch
        {answers.length > 0 && (
         <pre>{JSON.stringify(answers, null, 2)}</pre>
       )}
