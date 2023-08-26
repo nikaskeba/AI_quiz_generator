@@ -30,7 +30,7 @@ const generateNewQuiz = async () => {
     if (data && data.choices && data.choices[0] && data.choices[0].message) {
       const sentences = data.choices[0].message.content.split('\n');
       return sentences.map((sentence, index) => {
-        if (index < 5) {
+        if (index < 7) {
           // Replace words in parentheses with word + input box
           const formattedSentence = sentence.replace(/\((\w+)\)/g, '($1) <input placeholder="$1" />');
           return (
