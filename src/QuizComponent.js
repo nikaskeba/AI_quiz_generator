@@ -1,9 +1,12 @@
+//QuizComponent.js
+import React, { useState } from 'react';
+
 const QuizComponent = () => {
   const [quizData, setQuizData] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [showAnswers, setShowAnswers] = useState(false);
+  const [showAnswers, setShowAnswers] = useState(false);  // New state variable
 
-  const generateNewQuiz = async () => {
+const generateNewQuiz = async () => {
     setLoading(true);
     try {
       const response = await fetch('/.netlify/functions/getQuizQuestions', {
@@ -20,12 +23,13 @@ const QuizComponent = () => {
       console.error("Error fetching quiz data:", error);
       setLoading(false);
     }
-  };
+
+};
 
   const checkAnswer = (inputIndex, answer) => {
     const inputElem = document.getElementById(`answer-input-${inputIndex}`);
     if (inputElem) {
-      if (inputElem.value === answer.trim()) {  // Using trim() to remove potential extra spaces
+      if (inputElem.value === answer) {
         inputElem.style.backgroundColor = 'green';
       } else {
         inputElem.style.backgroundColor = 'red';
@@ -36,19 +40,20 @@ const QuizComponent = () => {
   const formatQuestions = (data) => {
     if (data && data.choices && data.choices[0] && data.choices[0].message) {
       const [rawContentBeforeSolutions, rawContentAfterSolutions] = data.choices[0].message.content.split('Solutions:');
-      const questions = rawContentBeforeSolutions.split('\n');
-      const answers = rawContentAfterSolutions.split('\n').filter(answer => answer);
+      const contentBeforeSolutions = rawContentBeforeSolutions.substring(rawContentBeforeSolutions.indexOf('1.'));
+      const questions = contentBeforeSolutions.split('\n');
 
-      return questions.slice(0, answers.length).map((question, index) => {
-        const formattedQuestion = question.replace(/\((\w+)\)/g, (_, match) => {
+      const contentAfterSolutions = rawContentAfterSolutions.substring(rawContentAfterSolutions.indexOf('1.'));
+      const answers = contentAfterSolutions.split('\n');
+    
+      return questions.map((question, index) => {
+        let formattedQuestion = question.replace(/\((\w+)\)/g, (_, match) => {
           return `(${match}) <input id="answer-input-${index}" placeholder="${match}" />`;
         });
         
-        const displayAnswer = showAnswers ? ` Answer: ${answers[index]}` : '';
-        
         return (
           <div key={index}>
-            <p dangerouslySetInnerHTML={{ __html: formattedQuestion + displayAnswer }} />
+            <p dangerouslySetInnerHTML={{ __html: formattedQuestion }} />
             <button onClick={() => checkAnswer(index, answers[index])}>
               Check Answer
             </button>
@@ -59,15 +64,23 @@ const QuizComponent = () => {
     return null;
   };
 
+
+
   return (
     <div>
       <button onClick={generateNewQuiz}>Generate New Quiz</button>
-      <button onClick={() => setShowAnswers(!showAnswers)}>Show Answers</button>
-      {formatQuestions(quizData)}
+            <button onClick={() => setShowAnswers(!showAnswers)}>Show Answers</button> {/* New button */}
+
+            {formatQuestions(quizData)}
+
       {loading && <p>Loading...</p>}
+
+      {/* Display API Response for Debugging */}
+      {/* quizData && (
+        <pre>{JSON.stringify(quizData, null, 2)}</pre>
+      )*/}
     </div>
   );
 };
 
 export default QuizComponent;
-
