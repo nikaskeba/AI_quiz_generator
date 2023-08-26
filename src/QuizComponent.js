@@ -28,13 +28,20 @@ const generateNewQuiz = async () => {
 
 const formatQuestions = (data) => {
   if (data && data.choices && data.choices[0] && data.choices[0].message) {
-    // Split the content at "Solutions:" and only consider the part before it
-    const contentBeforeSolutions = data.choices[0].message.content.split('Solutions:')[0];
-    const sentences = contentBeforeSolutions.split('\n');
+    // Split the content at "Solutions:"
+    const [contentBeforeSolutions, contentAfterSolutions] = data.choices[0].message.content.split('Solutions:');
+
+    // If showAnswers is false, display questions; else, display answers.
+    const contentToDisplay = showAnswers ? contentAfterSolutions : contentBeforeSolutions;
+    
+    const sentences = contentToDisplay.split('\n');
     
     return sentences.map((sentence, index) => {
-      // Replace words in parentheses with word + input box
-      const formattedSentence = sentence.replace(/\((\w+)\)/g, '($1) <input placeholder="$1" />');
+      // If showAnswers is false, format the questions.
+      const formattedSentence = showAnswers 
+        ? sentence 
+        : sentence.replace(/\((\w+)\)/g, '($1) <input placeholder="$1" />');
+
       return (
         <p key={index} dangerouslySetInnerHTML={{ __html: formattedSentence }} />
       );
