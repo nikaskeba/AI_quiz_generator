@@ -5,7 +5,6 @@ const QuizComponent = () => {
   const [quizData, setQuizData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [showAnswers, setShowAnswers] = useState(false);  // New state variable
-  const [answers, setAnswers] = useState([]); // State to hold extracted answers
 
 const generateNewQuiz = async () => {
     setLoading(true);
@@ -27,46 +26,45 @@ const generateNewQuiz = async () => {
 
 };
 
-  const formatQuestions = (data) => {
+ const formatQuestions = (data) => {
     if (data && data.choices && data.choices[0] && data.choices[0].message) {
-      const sentences = data.choices[0].message.content.split('\n');
-        // Extract answers after the word "solutions"
-      const answersMatch = data.choices[0].message.content.match(/solutions:[\s\S]*?(\d+\.\s\w+)/g);
-      if (answersMatch) {
-        const extractedAnswers = answersMatch.map(answer => answer.split('. ')[1]);
-        setAnswers(extractedAnswers);
-      }
-      return sentences.map((sentence, index) => {
-        if (index < 7) {
-          // Replace words in parentheses with word + input box
-          const formattedSentence = sentence.replace(/\((\w+)\)/g, '($1) <input placeholder="$1" />');
-          return (
-            <p key={index} dangerouslySetInnerHTML={{ __html: formattedSentence }} />
-          );
-        }
-        return showAnswers ? <p key={index}>{sentence}</p> : null;
-      });
+      const fullContent = data.choices[0].message.content;
+      const [questionsPart, answersPart] = fullContent.split('Verb solutions in order of question:');
+      
+      // Extract answers into an array
+      const answersArray = answersPart.trim().split('\n').map(answer => answer.split('.')[1].trim());
+
+      const sentences = questionsPart.split('\n');
+      return (
+        <>
+          {sentences.map((sentence, index) => {
+            if (index < 5) {
+              const formattedSentence = sentence.replace(/\((\w+)\)/g, '($1) <input placeholder="$1" />');
+              return (
+                <p key={index} dangerouslySetInnerHTML={{ __html: formattedSentence }} />
+              );
+            }
+            return null;
+          })}
+          {showAnswers && (
+            <div>
+              <p>Test: {answersArray.join(', ')}</p>
+            </div>
+          )}
+        </>
+      );
     }
     return null;
   };
+
   return (
     <div>
-    return answersMatch
-       {answers.length > 0 && (
-        <pre>{JSON.stringify(answers, null, 2)}</pre>
-      )}
       <button onClick={generateNewQuiz}>Generate New Quiz</button>
-            <button onClick={() => setShowAnswers(!showAnswers)}>Show Answers</button> {/* New button */}
-
-            {formatQuestions(quizData)}
-
+      <button onClick={() => setShowAnswers(!showAnswers)}>Show Answers</button>
+      
       {loading && <p>Loading...</p>}
 
-      {/* Display API Response for Debugging */}
-      {/* quizData && (
-        <pre>{JSON.stringify(quizData, null, 2)}</pre>
-      )*/}
-
+      {formatQuestions(quizData)}
     </div>
   );
 };
