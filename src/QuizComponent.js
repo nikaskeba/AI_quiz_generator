@@ -26,44 +26,34 @@ const generateNewQuiz = async () => {
 
 };
 
-  const checkAnswer = (inputIndex, answer) => {
-    const inputElem = document.getElementById(`answer-input-${inputIndex}`);
-    if (inputElem) {
-      if (inputElem.value === answer) {
-        inputElem.style.backgroundColor = 'green';
-      } else {
-        inputElem.style.backgroundColor = 'red';
-      }
-    }
-  };
+const formatQuestions = (data) => {
+  if (data && data.choices && data.choices[0] && data.choices[0].message) {
+    // Split the content at "Solutions:"
+    const [rawContentBeforeSolutions, rawContentAfterSolutions] = data.choices[0].message.content.split('Solutions:');
 
-  const formatQuestions = (data) => {
-    if (data && data.choices && data.choices[0] && data.choices[0].message) {
-      const [rawContentBeforeSolutions, rawContentAfterSolutions] = data.choices[0].message.content.split('Solutions:');
-      const contentBeforeSolutions = rawContentBeforeSolutions.substring(rawContentBeforeSolutions.indexOf('1.'));
-      const questions = contentBeforeSolutions.split('\n');
+    // Extract questions and remove text before the first "1."
+    const contentBeforeSolutions = rawContentBeforeSolutions.substring(rawContentBeforeSolutions.indexOf('1.'));
+    const questions = contentBeforeSolutions.split('\n');
 
-      const contentAfterSolutions = rawContentAfterSolutions.substring(rawContentAfterSolutions.indexOf('1.'));
-      const answers = contentAfterSolutions.split('\n');
+    // Start answers from the first occurrence of "1."
+    const contentAfterSolutions = rawContentAfterSolutions.substring(rawContentAfterSolutions.indexOf('1.'));
+    const answers = contentAfterSolutions.split('\n');
     
-      return questions.map((question, index) => {
-        let formattedQuestion = question.replace(/\((\w+)\)/g, (_, match) => {
-          return `(${match}) <input id="answer-input-${index}" placeholder="${match}" />`;
-        });
-        
-        return (
-          <div key={index}>
-            <p dangerouslySetInnerHTML={{ __html: formattedQuestion }} />
-            <button onClick={() => checkAnswer(index, answers[index])}>
-              Check Answer
-            </button>
-          </div>
-        );
-      });
-    }
-    return null;
-  };
+    return questions.map((question, index) => {
+      let formattedQuestion = question.replace(/\((\w+)\)/g, '($1) <input placeholder="$1" />');
+      
+      // If showAnswers is true, append the answer to the right side of the question.
+      if (showAnswers && answers[index]) {
+        formattedQuestion += `${answers[index]}`;
+      }
 
+      return (
+        <p key={index} dangerouslySetInnerHTML={{ __html: formattedQuestion }} />
+      );
+    });
+  }
+  return null;
+};
 
 
   return (
