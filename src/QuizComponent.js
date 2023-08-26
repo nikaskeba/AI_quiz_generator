@@ -30,25 +30,26 @@ const formatQuestions = (data) => {
   if (data && data.choices && data.choices[0] && data.choices[0].message) {
     // Split the content at "Solutions:"
     const [contentBeforeSolutions, contentAfterSolutions] = data.choices[0].message.content.split('Solutions:');
-
-    // If showAnswers is false, display questions; else, display answers.
-    const contentToDisplay = showAnswers ? contentAfterSolutions : contentBeforeSolutions;
     
-    const sentences = contentToDisplay.split('\n');
+    const questions = contentBeforeSolutions.split('\n');
+    const answers = contentAfterSolutions.split('\n');
     
-    return sentences.map((sentence, index) => {
-      // If showAnswers is false, format the questions.
-      const formattedSentence = showAnswers 
-        ? sentence 
-        : sentence.replace(/\((\w+)\)/g, '($1) <input placeholder="$1" />');
+    return questions.map((question, index) => {
+      let formattedQuestion = question.replace(/\((\w+)\)/g, '($1) <input placeholder="$1" />');
+      
+      // If showAnswers is true, append the answer to the right side of the question.
+      if (showAnswers && answers[index]) {
+        formattedQuestion += ` Answer: ${answers[index]}`;
+      }
 
       return (
-        <p key={index} dangerouslySetInnerHTML={{ __html: formattedSentence }} />
+        <p key={index} dangerouslySetInnerHTML={{ __html: formattedQuestion }} />
       );
     });
   }
   return null;
 };
+
   return (
     <div>
       <button onClick={generateNewQuiz}>Generate New Quiz</button>
