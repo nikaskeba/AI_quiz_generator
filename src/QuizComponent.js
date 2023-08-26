@@ -70,28 +70,24 @@ const formatQuestions = (data) => {
         formattedQuestion += ` <span class="feedback">${feedback[index]}</span>`;
       }
 
-      return (
-        <p key={index} dangerouslySetInnerHTML={{ __html: formattedQuestion }} />
-      );
-    });
+    return (
+      <p key={index} dangerouslySetInnerHTML={{ __html: formattedQuestion }} />
+    );
+  });
 };
 
 
-  return (
-    <div>
-      <button onClick={generateNewQuiz}>Generate New Quiz</button>
-            <button onClick={() => setShowAnswers(!showAnswers)}>Show Answers</button> {/* New button */}
+return (
+  <div>
+    <button onClick={generateNewQuiz}>Generate New Quiz</button>
+    <button onClick={checkAnswers}>Check</button>
+    <button onClick={() => setShowAnswers(!showAnswers)}>Show Answers</button>
 
-            {formatQuestions(quizData)}
+    {formatQuestions(quizData)}
 
-      {loading && <p>Loading...</p>}
-
-      {/* Display API Response for Debugging */}
-      {/* quizData && (
-        <pre>{JSON.stringify(quizData, null, 2)}</pre>
-      )*/}
-    </div>
-  );
+    {loading && <p>Loading...</p>}
+  </div>
+);
 };
 
 export default QuizComponent;
