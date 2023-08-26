@@ -42,9 +42,11 @@ const formatQuestions = (data) => {
     return questions.map((question, index) => {
       let formattedQuestion = question.replace(/\((\w+)\)/g, '($1) <input placeholder="$1" />');
       
-      // If showAnswers is true, append the answer to the right side of the question.
+     // If showAnswers is true, append the answer to the right side of the question.
       if (showAnswers && answers[index]) {
-        formattedQuestion += `${answers[index]}`;
+        // Remove leading number and dot, e.g., "1. answer" becomes "answer"
+        let formattedAnswer = answers[index].replace(/^\d+\.\s*/, '');
+        formattedQuestion += `${formattedAnswer}`;
       }
 
       return (
