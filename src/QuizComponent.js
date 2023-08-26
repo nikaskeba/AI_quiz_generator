@@ -27,31 +27,20 @@ const generateNewQuiz = async () => {
 };
 
 const formatQuestions = (data) => {
-    if (data && data.choices && data.choices[0] && data.choices[0].message) {
-        const sentences = data.choices[0].message.content.split('\n');
-        
-        const content = [];
-        
-        // Assuming the first 5 are questions and the next 5 are answers.
-        for (let i = 0; i < 5; i++) {
-            const question = sentences[i];
-            const answer = sentences[i + 5];
-            
-            // Format the question
-            const formattedQuestion = question.replace(/\((\w+)\)/g, '($1) <input placeholder="$1" />');
-            content.push(
-                <p key={i} dangerouslySetInnerHTML={{ __html: formattedQuestion }} />
-            );
-            
-            // If answers should be shown, display them
-            if (showAnswers) {
-                content.push(<p key={i + 5}>{answer}</p>);
-            }
-        }
-        
-        return content;
-    }
-    return null;
+  if (data && data.choices && data.choices[0] && data.choices[0].message) {
+    // Split the content at "Solutions:" and only consider the part before it
+    const contentBeforeSolutions = data.choices[0].message.content.split('Solutions:')[0];
+    const sentences = contentBeforeSolutions.split('\n');
+    
+    return sentences.map((sentence, index) => {
+      // Replace words in parentheses with word + input box
+      const formattedSentence = sentence.replace(/\((\w+)\)/g, '($1) <input placeholder="$1" />');
+      return (
+        <p key={index} dangerouslySetInnerHTML={{ __html: formattedSentence }} />
+      );
+    });
+  }
+  return null;
 };
   return (
     <div>
