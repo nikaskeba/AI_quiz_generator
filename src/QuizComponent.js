@@ -25,7 +25,7 @@ const QuizComponent = () => {
     }
   };
 
-  const checkAnswers = () => {
+const checkAnswers = () => {
     let newFeedback = {};
 
     // Parse questions for debugging purposes.
