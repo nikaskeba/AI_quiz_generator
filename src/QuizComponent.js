@@ -31,7 +31,8 @@ const QuizComponent = () => {
     // Assuming questions and answers have the same length.
     quizData.choices[0].message.content.split('Solutions:')[1].split('\n').forEach((answer, index) => {
       let formattedAnswer = answer.replace(/^\d+\.\s*/, '');
-      let userInput = document.getElementById(`input-${index}`).value;
+      let inputElement = document.getElementById(`input-${index}`);
+let userInput = inputElement ? inputElement.value : null;
 
       if (userInput === formattedAnswer) {
         newFeedback[index] = "correct";
