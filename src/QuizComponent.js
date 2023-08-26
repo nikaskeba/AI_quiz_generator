@@ -5,6 +5,8 @@ const QuizComponent = () => {
   const [quizData, setQuizData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [showAnswers, setShowAnswers] = useState(false);  // New state variable
+  const [inputValues, setInputValues] = useState({});  // Store user inputs
+
 
 const generateNewQuiz = async () => {
     setLoading(true);
@@ -25,6 +27,36 @@ const generateNewQuiz = async () => {
     }
 
 };
+
+
+
+  const handleInputChange = (index, value) => {
+    setInputValues(prevValues => ({
+      ...prevValues,
+      [index]: value
+    }));
+  };
+
+  const checkAnswers = () => {
+    const answers = formatAnswers(quizData);
+    for (let i = 0; i < answers.length; i++) {
+      const inputBox = document.getElementById(`input-${i}`);
+      if (inputBox) {
+        inputBox.style.backgroundColor = inputValues[i] === answers[i] ? 'green' : 'red';
+      }
+    }
+  };
+
+  const formatAnswers = (data) => {
+    if (data && data.choices && data.choices[0] && data.choices[0].message) {
+      const [, rawContentAfterSolutions] = data.choices[0].message.content.split('Solutions:');
+      const contentAfterSolutions = rawContentAfterSolutions.substring(rawContentAfterSolutions.indexOf('1.'));
+      return contentAfterSolutions.split('\n').map(answer => answer.replace(/^\d+\.\s*/, ''));
+    }
+    return [];
+  };
+
+
 
 const formatQuestions = (data) => {
   if (data && data.choices && data.choices[0] && data.choices[0].message) {
@@ -59,14 +91,12 @@ const formatQuestions = (data) => {
 
 
   return (
-    <div>
+  <div>
       <button onClick={generateNewQuiz}>Generate New Quiz</button>
-            <button onClick={() => setShowAnswers(!showAnswers)}>Show Answers</button> {/* New button */}
-
-            {formatQuestions(quizData)}
-
+      <button onClick={() => setShowAnswers(!showAnswers)}>Show Answers</button>
+      <button onClick={checkAnswers}>Check</button> {/* New Check button */}
+      {formatQuestions(quizData)}
       {loading && <p>Loading...</p>}
-
       {/* Display API Response for Debugging */}
       {/* quizData && (
         <pre>{JSON.stringify(quizData, null, 2)}</pre>
