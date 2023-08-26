@@ -30,12 +30,13 @@ const generateNewQuiz = async () => {
 
 
 
-  const handleInputChange = (index, value) => {
+const handleInputChange = (index, event) => {
+    const value = event.target.value;
     setInputValues(prevValues => ({
-      ...prevValues,
-      [index]: value
+        ...prevValues,
+        [index]: value
     }));
-  };
+};
 
   const checkAnswers = () => {
     const answers = formatAnswers(quizData);
@@ -73,7 +74,7 @@ const formatQuestions = (data) => {
     
     return questions.map((question, index) => {
       let formattedQuestion = question.replace(/\((\w+)\)/g, (match, p1) => {
-        return `(${p1}) <input id="input-${index}" placeholder="${p1}" onChange={(e) => handleInputChange(index, e.target.value)} />`;
+return `(${p1}) <input id="input-${index}" placeholder="${p1}" onChange={handleInputChange.bind(null, index)} />`;
       });
      // If showAnswers is true, append the answer to the right side of the question.
       if (showAnswers && answers[index]) {
