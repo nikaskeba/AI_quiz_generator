@@ -52,9 +52,9 @@ const generateNewQuiz = async () => {
       {loading && <p>Loading...</p>}
 
       {/* Display API Response for Debugging */}
-      {quizData && (
+      {/* quizData && (
         <pre>{JSON.stringify(quizData, null, 2)}</pre>
-      )}
+      )*/}
     </div>
   );
 };
