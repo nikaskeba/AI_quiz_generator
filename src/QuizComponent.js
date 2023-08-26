@@ -28,11 +28,16 @@ const QuizComponent = () => {
   const checkAnswers = () => {
     let newFeedback = {};
 
-    // Assuming questions and answers have the same length.
-answers.forEach((answer, index) => {
+    // Parse questions for debugging purposes.
+    const questions = quizData.choices[0].message.content.split('Solutions:')[0].split('\n');
+
+    quizData.choices[0].message.content.split('Solutions:')[1].split('\n').forEach((answer, index) => {
+      // Log the question for debugging
+      console.log(`Checking Question: ${questions[index]}`);
+      
       let formattedAnswer = answer.replace(/^\d+\.\s*/, '');
       let inputElement = document.getElementById(`input-${index}`);
-let userInput = inputElement ? inputElement.value : null;
+      let userInput = inputElement ? inputElement.value : null;
 
       if (userInput === formattedAnswer) {
         newFeedback[index] = "correct";
@@ -42,16 +47,17 @@ let userInput = inputElement ? inputElement.value : null;
     });
 
     setFeedback(newFeedback);
-  };
+};
+
 
   const formatQuestions = (data) => {
     if (data && data.choices && data.choices[0] && data.choices[0].message) {
       const [rawContentBeforeSolutions, rawContentAfterSolutions] = data.choices[0].message.content.split('Solutions:');
       const contentBeforeSolutions = rawContentBeforeSolutions.substring(rawContentBeforeSolutions.indexOf('1.'));
-const questions = contentBeforeSolutions.split('\n').filter(line => line.trim() !== '');
+      const questions = contentBeforeSolutions.split('\n');
 
       const contentAfterSolutions = rawContentAfterSolutions.substring(rawContentAfterSolutions.indexOf('1.'));
-const answers = contentAfterSolutions.split('\n').filter(line => line.trim() !== '');
+      const answers = contentAfterSolutions.split('\n');
 
       return questions.map((question, index) => {
         let formattedQuestion = question.replace(/\((\w+)\)/g, `($1) <input id="input-${index}" placeholder="$1" />`);
