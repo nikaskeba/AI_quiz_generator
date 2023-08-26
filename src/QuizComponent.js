@@ -29,7 +29,10 @@ const generateNewQuiz = async () => {
 const formatQuestions = (data) => {
   if (data && data.choices && data.choices[0] && data.choices[0].message) {
     // Split the content at "Solutions:"
-    const [contentBeforeSolutions, contentAfterSolutions] = data.choices[0].message.content.split('Solutions:');
+    const [rawContentBeforeSolutions, contentAfterSolutions] = data.choices[0].message.content.split('Solutions:');
+
+    // Remove text before the first "1."
+    const contentBeforeSolutions = rawContentBeforeSolutions.substring(rawContentBeforeSolutions.indexOf('1.'));
     
     const questions = contentBeforeSolutions.split('\n');
     const answers = contentAfterSolutions.split('\n');
@@ -49,6 +52,7 @@ const formatQuestions = (data) => {
   }
   return null;
 };
+
 
   return (
     <div>
