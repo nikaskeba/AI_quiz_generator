@@ -80,28 +80,33 @@ const formatQuestions = (data) => {
     const contentAfterSolutions = rawContentAfterSolutions.substring(rawContentAfterSolutions.indexOf('1.'));
     const answers = contentAfterSolutions.split('\n');
     
-    return questions.map((question, index) => {
-      let match = question.match(/\((\w+)\)/);
+return questions.map((question, index) => {
+    // Replace placeholders with input elements right within the question
+    let formattedQuestion = question.replace(/\((\w+)\)/g, 
+        `($1) <input 
+                 id="input-${index}" 
+                 placeholder="$1" 
+                 value=${userAnswers[index] || ''} 
+                 onChange={(e) => handleInputChange(e, index)} 
+              />`
+    );
 
-      if (!match) return null;
+    if (showAnswers && answers[index]) {
+        let formattedAnswer = answers[index].replace(/^\d+\.\s*/, '');
+        formattedQuestion += ` ${formattedAnswer}`; // Ensuring there's space before the answer text
+    }
 
-      let placeholder = match[1];
-      let formattedQuestion = question.replace(/\((\w+)\)/g, "");
+    // Add feedback after the question if available
+    if (feedback[index]) {
+        formattedQuestion += ` <span class="feedback">${feedback[index]}</span>`;
+    }
 
-      return (
-        <p key={index}>
-          {formattedQuestion}
-          <input 
-            id={`input-${index}`} 
-            placeholder={placeholder}
-            value={userAnswers[index] || ''} 
-            onChange={(e) => handleInputChange(e, index)} 
-          />
-          {showAnswers && answers[index] && <span>{answers[index].replace(/^\d+\.\s*/, '')}</span>}
-          {feedback[index] && <span className="feedback">{feedback[index]}</span>}
-        </p>
-      );
-    });
+    // Return the constructed paragraph
+    return (
+        <p key={index} dangerouslySetInnerHTML={{ __html: formattedQuestion }} />
+    );
+});
+
   }
 };
 
