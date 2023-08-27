@@ -113,18 +113,6 @@ const formatQuestions = () => {
 
 
 
-// Helper function to find the nth occurrence of a substring
-function nthIndexOf(string, substring, n) {
-  let times = 0;
-  let index = 0;
-
-  while (times < n && index !== -1) {
-    index = string.indexOf(substring, index + 1);
-    times++;
-  }
-
-  return index;
-}
 
 
   const selectQuizType = (type) => {
