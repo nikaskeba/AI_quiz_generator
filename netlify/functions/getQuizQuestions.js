@@ -18,14 +18,9 @@ exports.handler = async function(event, context) {
             }
         });
 
-        const responseData = response.data.choices[0].message.content;
-        const indexOfFirst1 = responseData.indexOf("1");
-
-        const cleanedResponse = indexOfFirst1 !== -1 ? responseData.slice(indexOfFirst1) : responseData;
-
         return {
             statusCode: 200,
-            body: JSON.stringify({ cleanedResponse })
+            body: JSON.stringify(response.data)
         };
     } catch (error) {
         console.error("Error making API call:", error);
@@ -35,5 +30,4 @@ exports.handler = async function(event, context) {
         };
     }
 };
-
 
