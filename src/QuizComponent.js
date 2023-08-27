@@ -144,7 +144,7 @@ questions.forEach((question, index) => {
       </div>
 
       <button onClick={generateNewQuiz}>Generate New Quiz</button>
-      <button onClick={checkAnswers}>Check</button><br><br>
+      <button onClick={checkAnswers}>Check</button>
       <button onClick={() => setShowAnswers(!showAnswers)}>Show Answers</button>
 
       {formatQuestions(quizData)}
