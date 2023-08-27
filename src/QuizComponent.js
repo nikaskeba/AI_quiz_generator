@@ -72,9 +72,9 @@ const formatQuestions = (data) => {
 
       return (
         <p key={index} dangerouslySetInnerHTML={{ __html: formattedQuestion }} />
-      );
-    });
-
+      });
+    }
+  };
 
 
 
@@ -89,6 +89,5 @@ const formatQuestions = (data) => {
     {loading && <p>Loading...</p>}
   </div>
   );
-};
 };
 export default QuizComponent;
