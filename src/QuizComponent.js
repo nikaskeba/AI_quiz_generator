@@ -50,7 +50,7 @@ const generateNewQuiz = async () => {
 
 
 
-cconst checkAnswers = () => {
+const checkAnswers = () => {
   let newFeedback = {};
 
   const content = quizData.choices[0].message.content;
