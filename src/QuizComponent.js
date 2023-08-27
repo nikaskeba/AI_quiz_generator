@@ -54,10 +54,10 @@ const checkAnswers = () => {
   let newFeedback = {};
 
   const content = quizData.choices[0].message.content;
-  const splitIndex = nthIndexOf(content, "1. ", 2);  // Find the index of the second occurrence of "1. "
-  
-  const answersContent = content.substring(splitIndex).trim();
-  const answers = answersContent.split('\n').filter(a => a.trim() !== "");
+  const splitData = content.split(/(.*?)(?=^1\. )/s);
+if (splitData.length < 2) return;
+const answersContent = splitData[1].trim();
+
 
   answers.forEach((answer, index) => {
     let formattedAnswer = answer.replace(/^\d+\.\s*/, '');
@@ -83,11 +83,10 @@ const formatQuestions = (data) => {
   if (data && data.choices && data.choices[0] && data.choices[0].message) {
     const content = data.choices[0].message.content;
     
-    const splitIndex = nthIndexOf(content, "1. ", 2);  // Find the index of the second occurrence of "1. "
-    if (splitIndex === -1) return;  // Early return if the format is not as expected
-    
-    const questionsContent = content.substring(0, splitIndex).trim();
-    const answersContent = content.substring(splitIndex).trim();
+  const splitData = content.split(/(.*?)(?=^1\. )/s);
+if (splitData.length < 2) return;
+const questionsContent = splitData[0].trim();
+const answersContent = splitData[1].trim();
 
     const questions = questionsContent.split('\n').filter(q => q.trim() !== ""); // Assuming 5 questions
     const answers = answersContent.split('\n').filter(a => a.trim() !== "");  // Assuming 5 answers
