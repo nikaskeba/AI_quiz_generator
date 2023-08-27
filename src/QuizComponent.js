@@ -53,11 +53,14 @@ const generateNewQuiz = async () => {
 const checkAnswers = () => {
   let newFeedback = {};
 
-  // Split the content at "Solutions:"
-  const solutionContent = quizData.choices[0].message.content.split('Solutions:')[1];
-  // Start from the first occurrence of "1."
-  const answersContent = solutionContent.substring(solutionContent.indexOf('1.'));
-  const answers = answersContent.split('\n');
+  const content = quizData.choices[0].message.content;
+  const splitIndex = nthIndexOf(content, "1. ", 2);  // Find the index of the second occurrence of "1. "
+  
+  const questionsContent = content.substring(0, splitIndex).trim();
+  const answersContent = content.substring(splitIndex).trim();
+  
+  const questions = questionsContent.split('\n').filter(q => q.trim() !== "");
+  const answers = answersContent.split('\n').filter(a => a.trim() !== "");
 
   answers.forEach((answer, index) => {
     let formattedAnswer = answer.replace(/^\d+\.\s*/, '');
@@ -66,15 +69,14 @@ const checkAnswers = () => {
 
     if (userInput === formattedAnswer) {
       newFeedback[index] = "correct";
-
     } else {
       newFeedback[index] = "wrong";
- 
     }
   });
 
   setFeedback(newFeedback);
 };
+
 
 
 const formatQuestions = (data) => {
