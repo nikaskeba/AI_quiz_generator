@@ -129,8 +129,18 @@ questions.forEach((question, index) => {
     <div>
       {/* Selector buttons for quiz type */}
       <div className="quiz-selector">
-        <button onClick={() => selectQuizType('Subjunctive')}>Subjunctive</button>
-        <button onClick={() => selectQuizType('Basic Conjugation')}>Basic Conjugation</button>
+        <button 
+            className={quizType === 'Subjunctive' ? 'selected-quiz' : ''} 
+            onClick={() => selectQuizType('Subjunctive')}
+        >
+            Subjunctive
+        </button>
+        <button 
+            className={quizType === 'Basic Conjugation' ? 'selected-quiz' : ''} 
+            onClick={() => selectQuizType('Basic Conjugation')}
+        >
+            Basic Conjugation
+        </button>
       </div>
 
       <button onClick={generateNewQuiz}>Generate New Quiz</button>
@@ -141,6 +151,6 @@ questions.forEach((question, index) => {
 
       {loading && <p>Loading...</p>}
     </div>
-  );
+);
 };
 export default QuizComponent;

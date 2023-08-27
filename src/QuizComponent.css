@@ -9,3 +9,6 @@
 .feedback.wrong {
     color: red;
 }
+.selected-quiz {
+    border-color: green;
+}
