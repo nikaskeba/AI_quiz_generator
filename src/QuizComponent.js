@@ -46,19 +46,21 @@ const checkAnswers = () => {
 
     if (userInput === formattedAnswer) {
       newFeedback[index] = "correct";
-      if (inputElement) {
-        inputElement.style.borderColor = 'green';
-      }
     } else {
       newFeedback[index] = "wrong";
-      if (inputElement) {
-        inputElement.style.borderColor = 'red';
-      }
     }
   });
 
-  setFeedback(newFeedback);
+  setFeedback(newFeedback, () => {
+    Object.keys(newFeedback).forEach(index => {
+      let inputElement = document.getElementById(`input-${index}`);
+      if (inputElement) {
+        inputElement.style.borderColor = newFeedback[index] === 'correct' ? 'green' : 'red';
+      }
+    });
+  });
 };
+
 
 
 const formatQuestions = (data) => {
