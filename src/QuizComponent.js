@@ -1,6 +1,6 @@
 //QuizComponent.js
 import React, { useState } from 'react';
-
+import './QuizComponent.css';
 const QuizComponent = () => {
   const [quizData, setQuizData] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -29,14 +29,7 @@ const generateNewQuiz = async () => {
     setLoading(false);
   }
 };
-const inputRefs = useRef([]);
 
-  useEffect(() => {
-    // Whenever the quiz data changes, reset the input refs
-    if (quizData) {
-      inputRefs.current = inputRefs.current.slice(0, quizData.choices[0].message.content.split('Solutions:')[0].split('\n').length);
-    }
-  }, [quizData]);
 const checkAnswers = () => {
   let newFeedback = {};
 
@@ -46,18 +39,19 @@ const checkAnswers = () => {
   const answersContent = solutionContent.substring(solutionContent.indexOf('1.'));
   const answers = answersContent.split('\n');
 
- answers.forEach((answer, index) => {
-      let formattedAnswer = answer.replace(/^\d+\.\s*/, '');
-      let userInput = inputRefs.current[index].value;
+  answers.forEach((answer, index) => {
+    let formattedAnswer = answer.replace(/^\d+\.\s*/, '');
+    let inputElement = document.getElementById(`input-${index}`);
+    let userInput = inputElement ? inputElement.value : null;
 
-      if (userInput === formattedAnswer) {
-        newFeedback[index] = "correct";
-        inputRefs.current[index].style.borderColor = 'green';
-      } else {
-        newFeedback[index] = "wrong";
-        inputRefs.current[index].style.borderColor = 'red';
-      }
-    });
+    if (userInput === formattedAnswer) {
+      newFeedback[index] = "correct";
+
+    } else {
+      newFeedback[index] = "wrong";
+ 
+    }
+  });
 
   setFeedback(newFeedback);
 };
@@ -76,15 +70,12 @@ const formatQuestions = (data) => {
     const contentAfterSolutions = rawContentAfterSolutions.substring(rawContentAfterSolutions.indexOf('1.'));
     const answers = contentAfterSolutions.split('\n');
     
-        return questions.map((question, index) => {
-      let formattedQuestion = question.replace(/\((\w+)\)/g, 
-          `($1) <input ref={(el) => inputRefs.current[index] = el} id="input-${index}" placeholder="$1" />`);
+    return questions.map((question, index) => {
+      let formattedQuestion = question.replace(/\((\w+)\)/g, `($1) <input id="input-${index}" placeholder="$1" />`);
 
-      // If showAnswers is true, display the answers alongside the question
       if (showAnswers && answers[index]) {
         let formattedAnswer = answers[index].replace(/^\d+\.\s*/, '');
-        formattedQuestion = formattedQuestion.replace(` id="input-${index}"`, 
-            ` id="input-${index}" value="${formattedAnswer}" readonly`);
+        formattedQuestion += `${formattedAnswer}`;
       }
 
       // Add feedback after the question if available
@@ -92,11 +83,13 @@ const formatQuestions = (data) => {
         formattedQuestion += ` <span class="feedback">${feedback[index]}</span>`;
       }
 
+      // Only one return statement here
       return (
         <p key={index} dangerouslySetInnerHTML={{ __html: formattedQuestion }} />
       );
     });
-  };
+  }
+};
 
 
 
