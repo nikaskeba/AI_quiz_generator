@@ -67,6 +67,11 @@ const checkAnswers = () => {
 
 
 
+const handleInputChange = (e, index) => {
+    const updatedAnswers = { ...userAnswers, [index]: e.target.value };
+    setUserAnswers(updatedAnswers);
+};
+
 const formatQuestions = (data) => {
   if (data && data.choices && data.choices[0] && data.choices[0].message) {
     // Split the content at "Solutions:"
@@ -80,16 +85,16 @@ const formatQuestions = (data) => {
     const contentAfterSolutions = rawContentAfterSolutions.substring(rawContentAfterSolutions.indexOf('1.'));
     const answers = contentAfterSolutions.split('\n');
     
-return questions.map((question, index) => {
-    // Replace placeholders with input elements right within the question
-    let formattedQuestion = question.replace(/\((\w+)\)/g, 
-        `($1) <input 
-                 id="input-${index}" 
-                 placeholder="$1" 
-                 value=${userAnswers[index] || ''} 
-                 onChange={(e) => handleInputChange(e, index)} 
-              />`
-    );
+        return questions.map((question, index) => {
+            // Replace placeholders with input elements right within the question
+            let formattedQuestion = question.replace(/\((\w+)\)/g, 
+                `($1) <input 
+                         id="input-${index}" 
+                         placeholder="$1" 
+                         value=${userAnswers[index] || ''} 
+                         onChange={(e) => handleInputChange(e, index)} 
+                      />`
+            );
 
     if (showAnswers && answers[index]) {
         let formattedAnswer = answers[index].replace(/^\d+\.\s*/, '');
