@@ -56,15 +56,16 @@ const checkAnswers = () => {
   const content = quizData.choices[0].message.content;
   const splitIndex = nthIndexOf(content, "1. ", 2);  // Find the index of the second occurrence of "1. "
   
-  const answersContent = content.substring(splitIndex).trim();
-  const answers = answersContent.split('\n').filter(a => a.trim() !== "");
+  if (splitIndex === -1) return;  // If the format is not as expected, exit early
+  
+  const answersContent = content.substring(splitIndex);
+  const answers = answersContent.split('\n').filter(a => a.trim() !== "").map(a => a.replace(/^\d+\.\s*/, ''));
 
   answers.forEach((answer, index) => {
-    let formattedAnswer = answer.replace(/^\d+\.\s*/, '');
     let inputElement = document.getElementById(`input-${index}`);
     let userInput = inputElement ? inputElement.value : null;
 
-    if (userInput === formattedAnswer) {
+    if (userInput === answer) {
       newFeedback[index] = "correct";
     } else {
       newFeedback[index] = "wrong";
@@ -73,6 +74,7 @@ const checkAnswers = () => {
 
   setFeedback(newFeedback);
 };
+
 
 
 
