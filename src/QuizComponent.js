@@ -31,19 +31,33 @@ const generateNewQuiz = async () => {
 };
 
 const checkAnswers = () => {
-    quizData.choices[0].message.content.split('Solutions:')[1].split('\n').forEach((answer, index) => {
-      let formattedAnswer = answer.replace(/^\d+\.\s*/, '');
-      let inputElement = document.getElementById(`input-${index}`);
-      let userInput = inputElement ? inputElement.value : null;
+  let newFeedback = {};
 
-      if (userInput === formattedAnswer) {
-        // Set border color to green for correct answers
-        inputElement.style.borderColor = "green";
-      } else {
-        // Set border color to red for incorrect answers
-        inputElement.style.borderColor = "red";
+  // Split the content at "Solutions:"
+  const solutionContent = quizData.choices[0].message.content.split('Solutions:')[1];
+  // Start from the first occurrence of "1."
+  const answersContent = solutionContent.substring(solutionContent.indexOf('1.'));
+  const answers = answersContent.split('\n');
+
+  answers.forEach((answer, index) => {
+    let formattedAnswer = answer.replace(/^\d+\.\s*/, '');
+    let inputElement = document.getElementById(`input-${index}`);
+    let userInput = inputElement ? inputElement.value : null;
+
+    if (userInput === formattedAnswer) {
+      newFeedback[index] = "correct";
+      if (inputElement) {
+        inputElement.style.borderColor = 'green';
       }
-    });
+    } else {
+      newFeedback[index] = "wrong";
+      if (inputElement) {
+        inputElement.style.borderColor = 'red';
+      }
+    }
+  });
+
+  setFeedback(newFeedback);
 };
 
 
