@@ -77,6 +77,7 @@ const formatQuestions = (data) => {
 };
 
 
+
   return (
     <div>
       <button onClick={generateNewQuiz}>Generate New Quiz</button>
@@ -84,12 +85,8 @@ const formatQuestions = (data) => {
 
             {formatQuestions(quizData)}
 
-      {loading && <p>Loading...</p>}
+      {loading && <p>Loading</p>}
 
-      {/* Display API Response for Debugging */}
-      {/* quizData && (
-        <pre>{JSON.stringify(quizData, null, 2)}</pre>
-      )*/}
     </div>
   );
 };
