@@ -79,15 +79,15 @@ const formatQuestions = (data) => {
 
 
   return (
-    <div>
-      <button onClick={generateNewQuiz}>Generate New Quiz</button>
-            <button onClick={() => setShowAnswers(!showAnswers)}>Show Answers</button> {/* New button */}
+  <div>
+    <button onClick={generateNewQuiz}>Generate New Quiz</button>
+    <button onClick={checkAnswers}>Check</button>
+    <button onClick={() => setShowAnswers(!showAnswers)}>Show Answers</button>
 
-            {formatQuestions(quizData)}
+    {formatQuestions(quizData)}
 
-      {loading && <p>Loading</p>}
-
-    </div>
+    {loading && <p>Loading...</p>}
+  </div>
   );
 };
 };
