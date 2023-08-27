@@ -44,50 +44,47 @@ const checkAnswers = () => {
 
     setFeedback(newFeedback);
 };
-const formatQuestions = (data) => {
-  if (data && data.choices && data.choices[0] && data.choices[0].message) {
-    // Split the content at "Solutions:"
-    const [rawContentBeforeSolutions, rawContentAfterSolutions] = data.choices[0].message.content.split('Solutions:');
+  const formatQuestions = (data) => {
+    if (data && data.choices && data.choices[0] && data.choices[0].message) {
+      const fullContent = data.choices[0].message.content;
+      const [questionsPart, answersPart] = fullContent.split('Verb solutions in order of question:');
+      
+      // Extract answers into an array
+const answersArray = answersPart ? answersPart.trim().split('\n').map(answer => answer.split('.')[1].trim()) : [];
 
-    // Extract questions and remove text before the first "1."
-    const contentBeforeSolutions = rawContentBeforeSolutions.substring(rawContentBeforeSolutions.indexOf('1.'));
-    const questions = contentBeforeSolutions.split('\n');
+      const sentences = questionsPart.split('\n');
+      return (
+        <>
+          {sentences.map((sentence, index) => {
+            if (index < 5) {
+              const formattedSentence = sentence.replace(/\((\w+)\)/g, '($1) <input placeholder="$1" />');
+              return (
+                <p key={index} dangerouslySetInnerHTML={{ __html: formattedSentence }} />
+              );
+            }
+            return null;
+          })}
+          {showAnswers && (
+            <div>
+              <p>Test: {answersArray.join(', ')}</p>
+            </div>
+          )}
+        </>
+      );
+    }
+    return null;
+  };
 
-    // Start answers from the first occurrence of "1."
-    const contentAfterSolutions = rawContentAfterSolutions.substring(rawContentAfterSolutions.indexOf('1.'));
-    const answers = contentAfterSolutions.split('\n');
-    
-    return questions.map((question, index) => {
-      let formattedQuestion = question.replace(/\((\w+)\)/g, `($1) <input id="input-${index}" placeholder="$1" />`);
+  return (
+    <div>
+      <button onClick={generateNewQuiz}>Generate New Quiz</button>
+      <button onClick={() => setShowAnswers(!showAnswers)}>Show Answers</button>
+      
+      {loading && <p>Loading...</p>}
 
-      if (showAnswers && answers[index]) {
-        let formattedAnswer = answers[index].replace(/^\d+\.\s*/, '');
-        formattedQuestion += `${formattedAnswer}`;
-      }
-
-      // Add feedback after the question if available
-      if (feedback[index]) {
-        formattedQuestion += ` <span class="feedback">${feedback[index]}</span>`;
-      }
-
-    return (
-      <p key={index} dangerouslySetInnerHTML={{ __html: formattedQuestion }} />
-    );
-  });
+      {formatQuestions(quizData)}
+    </div>
+  );
 };
-
-
-return (
-  <div>
-    <button onClick={generateNewQuiz}>Generate New Quiz</button>
-    <button onClick={checkAnswers}>Check</button>
-    <button onClick={() => setShowAnswers(!showAnswers)}>Show Answers</button>
-
-    {formatQuestions(quizData)}
-
-    {loading && <p>Loading...</p>}
-  </div>
-);
-
 
 export default QuizComponent;
