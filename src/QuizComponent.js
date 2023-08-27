@@ -50,16 +50,13 @@ const generateNewQuiz = async () => {
 
 
 
-const checkAnswers = () => {
+cconst checkAnswers = () => {
   let newFeedback = {};
 
   const content = quizData.choices[0].message.content;
   const splitIndex = nthIndexOf(content, "1. ", 2);  // Find the index of the second occurrence of "1. "
   
-  const questionsContent = content.substring(0, splitIndex).trim();
   const answersContent = content.substring(splitIndex).trim();
-  
-  const questions = questionsContent.split('\n').filter(q => q.trim() !== "");
   const answers = answersContent.split('\n').filter(a => a.trim() !== "");
 
   answers.forEach((answer, index) => {
@@ -76,6 +73,7 @@ const checkAnswers = () => {
 
   setFeedback(newFeedback);
 };
+
 
 
 
