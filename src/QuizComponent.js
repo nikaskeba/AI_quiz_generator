@@ -83,14 +83,14 @@ const formatQuestions = (data) => {
   if (data && data.choices && data.choices[0] && data.choices[0].message) {
     const content = data.choices[0].message.content;
     
-    const splitIndex = nthIndexOf(content, "1. ", 2);  // Find the index of the second occurrence of "1. "
-    if (splitIndex === -1) return;  // Early return if the format is not as expected
+    const splitContent = content.split('1. ');
+    if (splitContent.length < 3) return;  // Early return if the format is not as expected
     
-    const questionsContent = content.substring(0, splitIndex).trim();
-    const answersContent = content.substring(splitIndex).trim();
-
-    const questions = questionsContent.split('\n').filter(q => q.trim() !== ""); // Assuming 5 questions
-    const answers = answersContent.split('\n').filter(a => a.trim() !== "");  // Assuming 5 answers
+    const questionsContent = splitContent[1];
+    const answersContent = splitContent[2];
+    
+    const questions = questionsContent.split('\n').slice(0, 5);  // Assuming 5 questions
+    const answers = answersContent.split('\n').slice(0, 5);  // Assuming 5 answers
 
     questions.forEach((question, index) => {
   // Split the question around the placeholder
@@ -121,21 +121,9 @@ const formatQuestions = (data) => {
 
   }
 
-    return renderedQuestions;
+  return renderedQuestions;
 };
 
-// Helper function to find the nth occurrence of a substring
-function nthIndexOf(string, substring, n) {
-  let times = 0;
-  let index = 0;
-
-  while (times < n && index !== -1) {
-    index = string.indexOf(substring, index + 1);
-    times++;
-  }
-
-  return index;
-}
 
 
   const selectQuizType = (type) => {
