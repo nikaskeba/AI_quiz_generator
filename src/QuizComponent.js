@@ -42,7 +42,8 @@ const checkAnswers = () => {
 
   answers.forEach((answer, index) => {
     let formattedAnswer = answer.replace(/^\d+\.\s*/, '');
-    let userInput = userAnswers[index] || null;
+    let inputElement = document.getElementById(`input-${index}`);
+    let userInput = inputElement ? inputElement.value : null;
 
     if (userInput === formattedAnswer) {
       newFeedback[index] = "correct";
@@ -63,43 +64,47 @@ const checkAnswers = () => {
 
 
 
-
-const handleInputChange = (e, index) => {
-    const updatedAnswers = { ...userAnswers, [index]: e.target.value };
-    setUserAnswers(updatedAnswers);
-};
-
 const formatQuestions = (data) => {
   if (data && data.choices && data.choices[0] && data.choices[0].message) {
+    // Split the content at "Solutions:"
     const [rawContentBeforeSolutions, rawContentAfterSolutions] = data.choices[0].message.content.split('Solutions:');
 
+    // Extract questions and remove text before the first "1."
     const contentBeforeSolutions = rawContentBeforeSolutions.substring(rawContentBeforeSolutions.indexOf('1.'));
     const questions = contentBeforeSolutions.split('\n');
+
+    // Start answers from the first occurrence of "1."
     const contentAfterSolutions = rawContentAfterSolutions.substring(rawContentAfterSolutions.indexOf('1.'));
     const answers = contentAfterSolutions.split('\n');
-
+    
     return questions.map((question, index) => {
-      let questionPart = question.replace(/\((\w+)\)/, "");  // This gets the question text without the placeholder
-      let placeholderMatch = question.match(/\((\w+)\)/);
-      let placeholderText = placeholderMatch ? placeholderMatch[1] : "";
+let formattedQuestion = question.replace(/\((\w+)\)/g, 
+    `($1) <input 
+             id="input-${index}" 
+             placeholder="$1" 
+             value=${userAnswers[index] || ''} 
+             onChange={(e) => handleInputChange(e, index)} 
+          />`
+);
 
+
+      if (showAnswers && answers[index]) {
+        let formattedAnswer = answers[index].replace(/^\d+\.\s*/, '');
+        formattedQuestion += `${formattedAnswer}`;
+      }
+
+      // Add feedback after the question if available
+      if (feedback[index]) {
+        formattedQuestion += ` <span class="feedback">${feedback[index]}</span>`;
+      }
+
+      // Only one return statement here
       return (
-        <p key={index}>
-          {questionPart} 
-          <input 
-            id={`input-${index}`} 
-            placeholder={placeholderText}
-            value={userAnswers[index] || ''}
-            onChange={(e) => handleInputChange(e, index)}
-          />
-          {showAnswers && answers[index] && ` ${answers[index].replace(/^\d+\.\s*/, '')}`}
-          {feedback[index] && <span className="feedback">{feedback[index]}</span>}
-        </p>
+        <p key={index} dangerouslySetInnerHTML={{ __html: formattedQuestion }} />
       );
     });
   }
 };
-
 
 
 
