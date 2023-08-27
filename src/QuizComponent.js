@@ -70,11 +70,13 @@ const formatQuestions = (data) => {
         formattedQuestion += ` <span class="feedback">${feedback[index]}</span>`;
       }
 
+      // Only one return statement here
       return (
         <p key={index} dangerouslySetInnerHTML={{ __html: formattedQuestion }} />
-      });
-    }
-  };
+      );
+    });
+  }
+};
 
 
 
