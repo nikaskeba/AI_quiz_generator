@@ -29,7 +29,9 @@ const generateNewQuiz = async () => {
     } else if (quizType === 'Basic Conjugation') {
       userContent = "Generate a Spanish quiz that numerically lists 5 unique Spanish present tense sentences. In each sentence, leave the verb without conjugation and display the verb within (). Keep the 5 generated sentences together. Write the word solution and then list the 5 conjugated verbs solution, writing only the conjugated verb and no other text in numerical order after the questions. List only the questions and solutions with no other text.";
     }
-
+ } else if (quizType === 'Imperative') {
+      userContent = "Generate a Spanish quiz that numerically lists 5 unique Spanish imperative sentences. In each sentence, leave the verb without conjugation and display the verb within (). Keep the 5 generated sentences together. Write the word solution and then list the 5 conjugated verbs solution, writing only the conjugated verb and no other text in numerical order after the questions. List only the questions and solutions with no other text.";
+    }
     try {
       const response = await fetch('/.netlify/functions/getQuizQuestions', {
         method: 'POST',
@@ -159,6 +161,12 @@ const formatQuestions = (data) => {
             onClick={() => selectQuizType('Basic Conjugation')}
         >
             Basic Conjugation
+        </button>
+              <button 
+            className={quizType === 'Imperative' ? 'selected-quiz' : ''} 
+            onClick={() => selectQuizType('Imperative')}
+        >
+           Imperative
         </button>
       </div>
 
