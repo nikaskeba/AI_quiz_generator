@@ -84,8 +84,8 @@ const formatQuestions = (data) => {
 
   if (data && data.choices && data.choices[0] && data.choices[0].message) {
     const content = data.choices[0].message.content;
-    
-    const splitIndex = nthIndexOf(content, "1. ", 2);  // Find the index of the second occurrence of "1. "
+    console.log(content);
+ndex = nthIndexOf(content, "1. ", 2);  // Find the index of the second occurrence of "1. "
     if (splitIndex === -1) return;  // Early return if the format is not as expected
     
     const questionsContent = content.substring(0, splitIndex).trim();
@@ -97,6 +97,7 @@ const formatQuestions = (data) => {
     questions.forEach((question, index) => {
   // Split the question around the placeholder
   let parts = question.split(/\((\w+)\)/g);
+console.log(parts);
 
   // If parts length is less than 3, it's not a valid question, so skip
   if (parts.length < 3) return;
