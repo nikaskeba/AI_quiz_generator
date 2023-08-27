@@ -6,7 +6,6 @@ const QuizComponent = () => {
   const [loading, setLoading] = useState(false);
   const [showAnswers, setShowAnswers] = useState(false);  // New state variable
   const [feedback, setFeedback] = useState({}); // New state to store feedback for each question
-const [userAnswers, setUserAnswers] = useState({});
 
 const generateNewQuiz = async () => {
   setLoading(true);
@@ -47,21 +46,19 @@ const checkAnswers = () => {
 
     if (userInput === formattedAnswer) {
       newFeedback[index] = "correct";
+      if (inputElement) {
+        inputElement.style.borderColor = 'green';
+      }
     } else {
       newFeedback[index] = "wrong";
+      if (inputElement) {
+        inputElement.style.borderColor = 'red';
+      }
     }
   });
 
-  setFeedback(newFeedback, () => {
-    Object.keys(newFeedback).forEach(index => {
-      let inputElement = document.getElementById(`input-${index}`);
-      if (inputElement) {
-        inputElement.style.borderColor = newFeedback[index] === 'correct' ? 'green' : 'red';
-      }
-    });
-  });
+  setFeedback(newFeedback);
 };
-
 
 
 const formatQuestions = (data) => {
@@ -78,15 +75,7 @@ const formatQuestions = (data) => {
     const answers = contentAfterSolutions.split('\n');
     
     return questions.map((question, index) => {
-let formattedQuestion = question.replace(/\((\w+)\)/g, 
-    `($1) <input 
-             id="input-${index}" 
-             placeholder="$1" 
-             value=${userAnswers[index] || ''} 
-             onChange={(e) => handleInputChange(e, index)} 
-          />`
-);
-
+      let formattedQuestion = question.replace(/\((\w+)\)/g, `($1) <input id="input-${index}" placeholder="$1" />`);
 
       if (showAnswers && answers[index]) {
         let formattedAnswer = answers[index].replace(/^\d+\.\s*/, '');
