@@ -2,13 +2,16 @@
 const axios = require('axios');
 
 exports.handler = async function(event, context) {
+    const requestBody = JSON.parse(event.body); // Parsing the incoming request body
+
     try {
         const payload = {
             model: "gpt-3.5-turbo-0613",
             messages: [
                 { "role": "system", "content": "You are a Spanish teacher." },
-                { "role": "user", "content": "Generate a Spanish quiz that numerically lists 5 unique Spanish subjunctive phrases. In each sentence, leave the verb without conjugated and display the verb within (). Keep the 5 generated sentences together. WRit ethe word solution and List the 5 conjugated verb solutions in numerical order after the sentences. List only the questions and solutions with no other text."}
-            ],    max_tokens: 300
+                { "role": "user", "content": requestBody.content } // Using the content sent from the React component
+            ],
+            max_tokens: 300
         };
 
         const response = await axios.post('https://api.openai.com/v1/chat/completions', payload, {
@@ -30,4 +33,5 @@ exports.handler = async function(event, context) {
         };
     }
 };
+
 
