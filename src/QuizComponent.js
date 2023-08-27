@@ -81,48 +81,52 @@ const formatQuestions = (data) => {
   let renderedQuestions = [];
 
   if (data && data.choices && data.choices[0] && data.choices[0].message) {
-    const content = data.choices[0].message.content;
+    // Finding the second occurrence of "1."
+    let firstIndex = data.choices[0].message.content.indexOf('1.');
+    let secondIndex = data.choices[0].message.content.indexOf('1.', firstIndex + 1);
     
-    const splitContent = content.split('1. ');
-    if (splitContent.length < 3) return;  // Early return if the format is not as expected
-    
-    const questionsContent = splitContent[1];
-    const answersContent = splitContent[2];
-    
-    const questions = questionsContent.split('\n').slice(0, 5);  // Assuming 5 questions
-    const answers = answersContent.split('\n').slice(0, 5);  // Assuming 5 answers
+    if (secondIndex === -1) {
+      console.error('Unexpected data format');
+      return;
+    }
+
+    const contentBeforeSolutions = data.choices[0].message.content.substring(firstIndex, secondIndex).trim();
+    const questions = contentBeforeSolutions.split('\n');
+
+    const contentAfterSolutions = data.choices[0].message.content.substring(secondIndex);
+    const answers = contentAfterSolutions.split('\n');
 
     questions.forEach((question, index) => {
-  // Split the question around the placeholder
-  let parts = question.split(/\((\w+)\)/g);
+      // Split the question around the placeholder
+      let parts = question.split(/\((\w+)\)/g);
 
-  // If parts length is less than 3, it's not a valid question, so skip
-  if (parts.length < 3) return;
+      // If parts length is less than 3, it's not a valid question, so skip
+      if (parts.length < 3) return;
 
-  let feedbackElement = null;
-  if (feedback[index]) {
-    feedbackElement = <span className={`feedback ${feedback[index]}`}>{feedback[index]}</span>;
-  }
+      let feedbackElement = null;
+      if (feedback[index]) {
+        feedbackElement = <span className={`feedback ${feedback[index]}`}>{feedback[index]}</span>;
+      }
 
-  let answerText = null;
-  if (showAnswers && answers[index]) {
-    let formattedAnswer = answers[index].replace(/^\d+\.\s*/, '');
-    answerText = <span>{formattedAnswer}</span>;
-  }
+      let answerText = null;
+      if (showAnswers && answers[index]) {
+        let formattedAnswer = answers[index].replace(/^\d+\.\s*/, '');
+        answerText = <span>{formattedAnswer}</span>;
+      }
 
-  renderedQuestions.push(
-    <p key={index}>
-      {parts[0]} 
-      <input id={`input-${index}`} placeholder={parts[1]} /> 
-      {parts[2]} {answerText} {feedbackElement}
-    </p>
-  );
-});
-
+      renderedQuestions.push(
+        <p key={index}>
+          {parts[0]} 
+          <input id={`input-${index}`} placeholder={parts[1]} /> 
+          {parts[2]} {answerText} {feedbackElement}
+        </p>
+      );
+    });
   }
 
   return renderedQuestions;
 };
+
 
 
 
