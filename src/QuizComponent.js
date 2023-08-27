@@ -90,5 +90,5 @@ const formatQuestions = (data) => {
     </div>
   );
 };
-
+};
 export default QuizComponent;
