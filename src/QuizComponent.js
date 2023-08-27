@@ -44,45 +44,52 @@ const checkAnswers = () => {
 
     setFeedback(newFeedback);
 };
-  const formatQuestions = (data) => {
-    if (data && data.choices && data.choices[0] && data.choices[0].message) {
-      const fullContent = data.choices[0].message.content;
-      const [questionsPart, answersPart] = fullContent.split('Verb solutions in order of question:');
-      
-      // Extract answers into an array
-const answersArray = answersPart ? answersPart.trim().split('\n').map(answer => answer.split('.')[1].trim()) : [];
+const formatQuestions = (data) => {
+  if (data && data.choices && data.choices[0] && data.choices[0].message) {
+    // Split the content at "Solutions:"
+    const [rawContentBeforeSolutions, rawContentAfterSolutions] = data.choices[0].message.content.split('Solutions:');
 
-      const sentences = questionsPart.split('\n');
+    // Extract questions and remove text before the first "1."
+    const contentBeforeSolutions = rawContentBeforeSolutions.substring(rawContentBeforeSolutions.indexOf('1.'));
+    const questions = contentBeforeSolutions.split('\n');
+
+    // Start answers from the first occurrence of "1."
+    const contentAfterSolutions = rawContentAfterSolutions.substring(rawContentAfterSolutions.indexOf('1.'));
+    const answers = contentAfterSolutions.split('\n');
+    
+    return questions.map((question, index) => {
+      let formattedQuestion = question.replace(/\((\w+)\)/g, `($1) <input id="input-${index}" placeholder="$1" />`);
+
+      if (showAnswers && answers[index]) {
+        let formattedAnswer = answers[index].replace(/^\d+\.\s*/, '');
+        formattedQuestion += `${formattedAnswer}`;
+      }
+
+      // Add feedback after the question if available
+      if (feedback[index]) {
+        formattedQuestion += ` <span class="feedback">${feedback[index]}</span>`;
+      }
+
       return (
-        <>
-          {sentences.map((sentence, index) => {
-            if (index < 5) {
-              const formattedSentence = sentence.replace(/\((\w+)\)/g, '($1) <input placeholder="$1" />');
-              return (
-                <p key={index} dangerouslySetInnerHTML={{ __html: formattedSentence }} />
-              );
-            }
-            return null;
-          })}
-          {showAnswers && (
-            <div>
-              <p>Test: {answersArray.join(', ')}</p>
-            </div>
-          )}
-        </>
+        <p key={index} dangerouslySetInnerHTML={{ __html: formattedQuestion }} />
       );
-    }
-    return null;
-  };
+    });
+};
+
 
   return (
     <div>
       <button onClick={generateNewQuiz}>Generate New Quiz</button>
-      <button onClick={() => setShowAnswers(!showAnswers)}>Show Answers</button>
-      
+            <button onClick={() => setShowAnswers(!showAnswers)}>Show Answers</button> {/* New button */}
+
+            {formatQuestions(quizData)}
+
       {loading && <p>Loading...</p>}
 
-      {formatQuestions(quizData)}
+      {/* Display API Response for Debugging */}
+      {/* quizData && (
+        <pre>{JSON.stringify(quizData, null, 2)}</pre>
+      )*/}
     </div>
   );
 };
