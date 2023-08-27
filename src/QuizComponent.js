@@ -25,9 +25,9 @@ const generateNewQuiz = async () => {
  // Determine the content based on the selected quiz type
     let userContent;
     if (quizType === 'Subjunctive') {
-      userContent = "Generate a Spanish quiz that numerically lists 5 unique Spanish subjunctive sentences. In each sentence, leave the verb without conjugation and display the verb within (). Keep the 5 generated sentences together. Write the word solution and then list the 5 conjugated verb solutions in numerical order after the questions. List only the questions and solutions with no other text.";
+      userContent = "Generate a Spanish quiz that numerically lists 5 unique Spanish subjunctive sentences. In each sentence, leave the verb without conjugation and display the verb within (). Keep the 5 generated sentences together. Write the word solution and then list the 5 conjugated verb solutions, listing only the verb, in numerical order after the questions. List only the questions and solutions with no other text.";
     } else if (quizType === 'Basic Conjugation') {
-      userContent = "Generate a Spanish quiz that numerically lists 5 unique Spanish present tense sentences. In each sentence, leave the verb without conjugation and display the verb within (). Keep the 5 generated sentences together. Write the word solution and then list the 5 conjugated verb solutions with only the conjugated verb and no other text in numerical order after the questions. List only the questions and solutions with no other text.";
+      userContent = "Generate a Spanish quiz that numerically lists 5 unique Spanish present tense sentences. In each sentence, leave the verb without conjugation and display the verb within (). Keep the 5 generated sentences together. Write the word solution and then list the 5 conjugated verbs solution, writing only the conjugated verb and no other text in numerical order after the questions. List only the questions and solutions with no other text.";
     }
 
     try {
