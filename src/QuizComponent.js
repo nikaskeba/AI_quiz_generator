@@ -78,50 +78,50 @@ const answersContent = splitData[1].trim();
 
 
 const formatQuestions = (data) => {
-  let renderedQuestions = [];
+    let renderedQuestions = [];
 
-  if (data && data.choices && data.choices[0] && data.choices[0].message) {
-    const content = data.choices[0].message.content;
-    
- const splitData = content.split(/(.*?)(?=^1\. )/s);
-if (splitData.length < 3) return;
-const questionsContent = splitData[1].trim();
-const answersContent = splitData[2].trim();
+    if (data && data.choices && data.choices[0] && data.choices[0].message) {
+        const content = data.choices[0].message.content;
 
-const questions = questionsContent.split('\n').filter(q => q.trim() !== ""); // Assuming 5 questions
-const answers = answersContent.split('\n').filter(a => a.trim() !== "");  // Assuming 5 answers
+        const splitData = content.split(/(.*?)(?=^1\. )/s);
+        if (splitData.length < 3) return;
+        const questionsContent = splitData[1].trim();
+        const answersContent = splitData[2].trim();
 
-    questions.forEach((question, index) => {
-  // Split the question around the placeholder
-  let parts = question.split(/\((\w+)\)/g);
+        const questions = questionsContent.split('\n').filter(q => q.trim() !== "");
+        const answers = answersContent.split('\n').filter(a => a.trim() !== "");
 
-  // If parts length is less than 3, it's not a valid question, so skip
-  if (parts.length < 3) return;
+        questions.forEach((question, index) => {
+            // Split the question around the placeholder
+            let parts = question.split(/\((\w+)\)/g);
 
-  let feedbackElement = null;
-  if (feedback[index]) {
-    feedbackElement = <span className={`feedback ${feedback[index]}`}>{feedback[index]}</span>;
-  }
+            // If parts length is less than 3, it's not a valid question, so skip
+            if (parts.length < 3) return;
 
-  let answerText = null;
-  if (showAnswers && answers[index]) {
-    let formattedAnswer = answers[index].replace(/^\d+\.\s*/, '');
-    answerText = <span>{formattedAnswer}</span>;
-  }
+            let feedbackElement = null;
+            if (feedback[index]) {
+                feedbackElement = <span className={`feedback ${feedback[index]}`}>{feedback[index]}</span>;
+            }
 
-  renderedQuestions.push(
-    <p key={index}>
-      {parts[0]} 
-      <input id={`input-${index}`} placeholder={parts[1]} /> 
-      {parts[2]} {answerText} {feedbackElement}
-    </p>
-  );
-});
+            let answerText = null;
+            if (showAnswers && answers[index]) {
+                let formattedAnswer = answers[index].replace(/^\d+\.\s*/, '');
+                answerText = <span>{formattedAnswer}</span>;
+            }
 
-  }
+            renderedQuestions.push(
+                <p key={index}>
+                    {parts[0]}
+                    <input id={`input-${index}`} placeholder={parts[1]} />
+                    {parts[2]} {answerText} {feedbackElement}
+                </p>
+            );
+        });
+    }
 
     return renderedQuestions;
 };
+
 
 // Helper function to find the nth occurrence of a substring
 function nthIndexOf(string, substring, n) {
