@@ -53,11 +53,22 @@ const generateNewQuiz = async () => {
 const checkAnswers = () => {
   let newFeedback = {};
 
-  // Split the content at "Solutions:"
-  const solutionContent = quizData.choices[0].message.content.split('Solutions:')[1];
-  // Start from the first occurrence of "1."
-  const answersContent = solutionContent.substring(solutionContent.indexOf('1.'));
-  const answers = answersContent.split('\n');
+  if (!quizData || !quizData.choices || !quizData.choices[0] || !quizData.choices[0].message) {
+    console.error("Invalid quiz data");
+    return;
+  }
+
+  // Split based on the second occurrence of "1."
+  let firstIndex = quizData.choices[0].message.content.indexOf('1.');
+  let secondIndex = quizData.choices[0].message.content.indexOf('1.', firstIndex + 1);
+
+  if (secondIndex === -1) {
+    console.error('Unexpected data format');
+    return;
+  }
+
+  const contentAfterSolutions = quizData.choices[0].message.content.substring(secondIndex);
+  const answers = contentAfterSolutions.split('\n');
 
   answers.forEach((answer, index) => {
     let formattedAnswer = answer.replace(/^\d+\.\s*/, '');
@@ -66,15 +77,14 @@ const checkAnswers = () => {
 
     if (userInput === formattedAnswer) {
       newFeedback[index] = "correct";
-
     } else {
       newFeedback[index] = "wrong";
- 
     }
   });
 
   setFeedback(newFeedback);
 };
+
 
 
 const formatQuestions = (data) => {
