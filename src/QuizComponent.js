@@ -30,7 +30,10 @@ const generateNewQuiz = async () => {
     setLoading(false);
   }
 };
-
+ const handleInputChange = (e, index) => {
+    const updatedAnswers = { ...userAnswers, [index]: e.target.value };
+    setUserAnswers(updatedAnswers);
+  };
 const checkAnswers = () => {
   let newFeedback = {};
 
@@ -87,10 +90,7 @@ let formattedQuestion = question.replace(/\((\w+)\)/g,
              onChange={(e) => handleInputChange(e, index)} 
           />`
 );
-const handleInputChange = (e, index) => {
-  const updatedAnswers = { ...userAnswers, [index]: e.target.value };
-  setUserAnswers(updatedAnswers);
-};
+ 
 
       if (showAnswers && answers[index]) {
         let formattedAnswer = answers[index].replace(/^\d+\.\s*/, '');
