@@ -81,13 +81,18 @@ const formatQuestions = (data) => {
   let renderedQuestions = [];
 
   if (data && data.choices && data.choices[0] && data.choices[0].message) {
-    const [rawContentBeforeSolutions, rawContentAfterSolutions] = data.choices[0].message.content.split('Solutions:');
-    const contentBeforeSolutions = rawContentBeforeSolutions.substring(rawContentBeforeSolutions.indexOf('1.'));
-    const questions = contentBeforeSolutions.split('\n');
-    const contentAfterSolutions = rawContentAfterSolutions.substring(rawContentAfterSolutions.indexOf('1.'));
-    const answers = contentAfterSolutions.split('\n');
+    const content = data.choices[0].message.content;
+    
+    const splitContent = content.split('1. ');
+    if (splitContent.length < 3) return;  // Early return if the format is not as expected
+    
+    const questionsContent = splitContent[1];
+    const answersContent = splitContent[2];
+    
+    const questions = questionsContent.split('\n').slice(0, 5);  // Assuming 5 questions
+    const answers = answersContent.split('\n').slice(0, 5);  // Assuming 5 answers
 
-questions.forEach((question, index) => {
+    questions.forEach((question, index) => {
   // Split the question around the placeholder
   let parts = question.split(/\((\w+)\)/g);
 
