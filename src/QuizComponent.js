@@ -51,68 +51,91 @@ const generateNewQuiz = async () => {
 
 
 const checkAnswers = () => {
-    let newFeedback = {};
+  let newFeedback = {};
 
-    if (!quizData || !quizData.answers) return;
+  const content = quizData.choices[0].message.content;
+  const splitIndex = nthIndexOf(content, "1. ", 2);  // Find the index of the second occurrence of "1. "
+  
+  const answersContent = content.substring(splitIndex).trim();
+  const answers = answersContent.split('\n').filter(a => a.trim() !== "");
 
-    const answers = quizData.answers.map(a => a.replace(/^\d+\.\s*/, '')); // Now using answers directly from quizData
+  answers.forEach((answer, index) => {
+    let formattedAnswer = answer.replace(/^\d+\.\s*/, '');
+    let inputElement = document.getElementById(`input-${index}`);
+    let userInput = inputElement ? inputElement.value : null;
 
-    answers.forEach((answer, index) => {
-        let inputElement = document.getElementById(`input-${index}`);
-        let userInput = inputElement ? inputElement.value : null;
+    if (userInput === formattedAnswer) {
+      newFeedback[index] = "correct";
+    } else {
+      newFeedback[index] = "wrong";
+    }
+  });
 
-        if (userInput === answer) {
-            newFeedback[index] = "correct";
-        } else {
-            newFeedback[index] = "wrong";
-        }
-    });
-
-    setFeedback(newFeedback);
+  setFeedback(newFeedback);
 };
 
 
 
-const formatQuestions = () => {
-    let renderedQuestions = [];
 
-    if (!quizData || !quizData.questions || !quizData.answers) return [];
+const formatQuestions = (data) => {
+  let renderedQuestions = [];
 
-    const questions = quizData.questions;
-    const answers = quizData.answers; // Now using answers directly from quizData
+  if (data && data.choices && data.choices[0] && data.choices[0].message) {
+    const content = data.choices[0].message.content;
+    
+    const splitIndex = nthIndexOf(content, "1. ", 2);  // Find the index of the second occurrence of "1. "
+    if (splitIndex === -1) return;  // Early return if the format is not as expected
+    
+    const questionsContent = content.substring(0, splitIndex).trim();
+    const answersContent = content.substring(splitIndex).trim();
+
+    const questions = questionsContent.split('\n').filter(q => q.trim() !== ""); // Assuming 5 questions
+    const answers = answersContent.split('\n').filter(a => a.trim() !== "");  // Assuming 5 answers
 
     questions.forEach((question, index) => {
-        // Split the question around the placeholder
-        let parts = question.split(/\((\w+)\)/g);
+  // Split the question around the placeholder
+  let parts = question.split(/\((\w+)\)/g);
 
-        // If parts length is less than 3, it's not a valid question, so skip
-        if (parts.length < 3) return;
+  // If parts length is less than 3, it's not a valid question, so skip
+  if (parts.length < 3) return;
 
-        let feedbackElement = null;
-        if (feedback[index]) {
-            feedbackElement = <span className={`feedback ${feedback[index]}`}>{feedback[index]}</span>;
-        }
+  let feedbackElement = null;
+  if (feedback[index]) {
+    feedbackElement = <span className={`feedback ${feedback[index]}`}>{feedback[index]}</span>;
+  }
 
-        let answerText = null;
-        if (showAnswers && answers[index]) {
-            let formattedAnswer = answers[index].replace(/^\d+\.\s*/, '');
-            answerText = <span>{formattedAnswer}</span>;
-        }
+  let answerText = null;
+  if (showAnswers && answers[index]) {
+    let formattedAnswer = answers[index].replace(/^\d+\.\s*/, '');
+    answerText = <span>{formattedAnswer}</span>;
+  }
 
-        renderedQuestions.push(
-            <p key={index}>
-                {parts[0]} 
-                <input id={`input-${index}`} placeholder={parts[1]} /> 
-                {parts[2]} {answerText} {feedbackElement}
-            </p>
-        );
-    });
+  renderedQuestions.push(
+    <p key={index}>
+      {parts[0]} 
+      <input id={`input-${index}`} placeholder={parts[1]} /> 
+      {parts[2]} {answerText} {feedbackElement}
+    </p>
+  );
+});
+
+  }
 
     return renderedQuestions;
 };
 
+// Helper function to find the nth occurrence of a substring
+function nthIndexOf(string, substring, n) {
+  let times = 0;
+  let index = 0;
 
+  while (times < n && index !== -1) {
+    index = string.indexOf(substring, index + 1);
+    times++;
+  }
 
+  return index;
+}
 
 
   const selectQuizType = (type) => {
