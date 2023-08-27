@@ -6,6 +6,7 @@ const QuizComponent = () => {
   const [loading, setLoading] = useState(false);
   const [showAnswers, setShowAnswers] = useState(false);  // New state variable
   const [feedback, setFeedback] = useState({}); // New state to store feedback for each question
+  const [quizType, setQuizType] = useState('Subjunctive'); // New state for quiz type
 
 const generateNewQuiz = async () => {
   setLoading(true);
@@ -21,22 +22,32 @@ const generateNewQuiz = async () => {
     }
   }
 
-  try {
-    const response = await fetch('/.netlify/functions/getQuizQuestions', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
+ // Determine the content based on the selected quiz type
+    let userContent;
+    if (quizType === 'Subjunctive') {
+      userContent = "Generate a Spanish quiz that numerically lists 5 unique Spanish subjunctive phrases. In each sentence, leave the verb without conjugated and display the verb within (). Keep the 5 generated sentences together. Write the word solution and List the 5 conjugated verb solutions in numerical order after the sentences. List only the questions and solutions with no other text.";
+    } else if (quizType === 'Basic Conjugation') {
+      userContent = "Generate a Spanish quiz that numerically lists 5 unique Spanish present tense phrases. In each sentence, leave the verb without conjugated and display the verb within (). Keep the 5 generated sentences together. Write the word solution and List the 5 conjugated verb solutions in numerical order after the sentences. List only the questions and solutions with no other text.";
+    }
 
-    const data = await response.json();
-    setQuizData(data);
-    setLoading(false);
-  } catch (error) {
-    console.error("Error fetching quiz data:", error);
-    setLoading(false);
-  }
-};
+    try {
+      const response = await fetch('/.netlify/functions/getQuizQuestions', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ content: userContent }) // Sending content to the serverless function
+      });
+
+      const data = await response.json();
+      setQuizData(data);
+      setLoading(false);
+    } catch (error) {
+      console.error("Error fetching quiz data:", error);
+      setLoading(false);
+    }
+  };
+
 
 
 const checkAnswers = () => {
@@ -110,16 +121,26 @@ questions.forEach((question, index) => {
 
 
 
+  const selectQuizType = (type) => {
+    setQuizType(type);
+  };
+
   return (
-  <div>
-    <button onClick={generateNewQuiz}>Generate New Quiz</button>
-    <button onClick={checkAnswers}>Check</button>
-    <button onClick={() => setShowAnswers(!showAnswers)}>Show Answers</button>
+    <div>
+      {/* Selector buttons for quiz type */}
+      <div className="quiz-selector">
+        <button onClick={() => selectQuizType('Subjunctive')}>Subjunctive</button>
+        <button onClick={() => selectQuizType('Basic Conjugation')}>Basic Conjugation</button>
+      </div>
 
-    {formatQuestions(quizData)}
+      <button onClick={generateNewQuiz}>Generate New Quiz</button>
+      <button onClick={checkAnswers}>Check</button>
+      <button onClick={() => setShowAnswers(!showAnswers)}>Show Answers</button>
 
-    {loading && <p>Loading...</p>}
-  </div>
+      {formatQuestions(quizData)}
+
+      {loading && <p>Loading...</p>}
+    </div>
   );
 };
 export default QuizComponent;
