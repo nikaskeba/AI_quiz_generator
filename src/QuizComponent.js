@@ -30,10 +30,7 @@ const generateNewQuiz = async () => {
     setLoading(false);
   }
 };
- const handleInputChange = (e, index) => {
-    const updatedAnswers = { ...userAnswers, [index]: e.target.value };
-    setUserAnswers(updatedAnswers);
-  };
+
 const checkAnswers = () => {
   let newFeedback = {};
 
