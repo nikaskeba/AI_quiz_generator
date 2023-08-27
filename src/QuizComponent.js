@@ -74,7 +74,7 @@ const formatQuestions = (data) => {
         <p key={index} dangerouslySetInnerHTML={{ __html: formattedQuestion }} />
       );
     });
-};
+
 
 
 
