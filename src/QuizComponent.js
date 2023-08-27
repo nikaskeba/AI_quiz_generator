@@ -85,7 +85,7 @@ const formatQuestions = (data) => {
   if (data && data.choices && data.choices[0] && data.choices[0].message) {
     const content = data.choices[0].message.content;
     console.log(content);
-ndex = nthIndexOf(content, "1. ", 2);  // Find the index of the second occurrence of "1. "
+index = nthIndexOf(content, "1. ", 2);  // Find the index of the second occurrence of "1. "
     if (splitIndex === -1) return;  // Early return if the format is not as expected
     
     const questionsContent = content.substring(0, splitIndex).trim();
