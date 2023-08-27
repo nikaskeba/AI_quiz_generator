@@ -7,7 +7,7 @@ exports.handler = async function(event, context) {
             model: "gpt-3.5-turbo-0613",
             messages: [
                 { "role": "system", "content": "You are a Spanish teacher." },
-                { "role": "user", "content": "gGenerate a Spanish quiz that numerically lists 5 unique Spanish subjunctive phrases. In each sentence, leave the verb without conjugated and display the verb within (). Keep the 5 generated sentences together. WRit ethe word solution and List the 5 conjugated verb solutions in numerical order after the sentences. List only the questions and solutions with no other text."}
+                { "role": "user", "content": "Generate a Spanish quiz that numerically lists 5 unique Spanish subjunctive phrases. In each sentence, leave the verb without conjugated and display the verb within (). Keep the 5 generated sentences together. WRit ethe word solution and List the 5 conjugated verb solutions in numerical order after the sentences. List only the questions and solutions with no other text."}
             ],    max_tokens: 300
         };
 
@@ -18,9 +18,14 @@ exports.handler = async function(event, context) {
             }
         });
 
+        const responseData = response.data.choices[0].message.content;
+        const indexOfFirst1 = responseData.indexOf("1");
+
+        const cleanedResponse = indexOfFirst1 !== -1 ? responseData.slice(indexOfFirst1) : responseData;
+
         return {
             statusCode: 200,
-            body: JSON.stringify(response.data)
+            body: JSON.stringify({ cleanedResponse })
         };
     } catch (error) {
         console.error("Error making API call:", error);
@@ -30,4 +35,5 @@ exports.handler = async function(event, context) {
         };
     }
 };
+
 
