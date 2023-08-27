@@ -8,48 +8,44 @@ const QuizComponent = () => {
   const [feedback, setFeedback] = useState({}); // New state to store feedback for each question
 
 const generateNewQuiz = async () => {
-    setLoading(true);
-    try {
-      const response = await fetch('/.netlify/functions/getQuizQuestions', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
+  setLoading(true);
 
-      const data = await response.json();
-      setQuizData(data);
-      setLoading(false);
-    } catch (error) {
-      console.error("Error fetching quiz data:", error);
-      setLoading(false);
-    }
+  // Reset the feedback state
+  setFeedback({});
 
+  try {
+    const response = await fetch('/.netlify/functions/getQuizQuestions', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+
+    const data = await response.json();
+    setQuizData(data);
+    setLoading(false);
+  } catch (error) {
+    console.error("Error fetching quiz data:", error);
+    setLoading(false);
+  }
 };
+
 const checkAnswers = () => {
-  let newFeedback = {};
+    quizData.choices[0].message.content.split('Solutions:')[1].split('\n').forEach((answer, index) => {
+      let formattedAnswer = answer.replace(/^\d+\.\s*/, '');
+      let inputElement = document.getElementById(`input-${index}`);
+      let userInput = inputElement ? inputElement.value : null;
 
-  // Split the content at "Solutions:"
-  const solutionContent = quizData.choices[0].message.content.split('Solutions:')[1];
-  // Start from the first occurrence of "1."
-  const answersContent = solutionContent.substring(solutionContent.indexOf('1.'));
-  const answers = answersContent.split('\n');
-
-  answers.forEach((answer, index) => {
-    let formattedAnswer = answer.replace(/^\d+\.\s*/, '');
-    let inputElement = document.getElementById(`input-${index}`);
-    let userInput = inputElement ? inputElement.value : null;
-
-    if (userInput === formattedAnswer) {
-      newFeedback[index] = "correct";
-    } else {
-      // Include the correct answer in the feedback if the user's answer is wrong.
-      newFeedback[index] = `wrong (Correct answer: ${formattedAnswer})`;
-    }
-  });
-
-  setFeedback(newFeedback);
+      if (userInput === formattedAnswer) {
+        // Set border color to green for correct answers
+        inputElement.style.borderColor = "green";
+      } else {
+        // Set border color to red for incorrect answers
+        inputElement.style.borderColor = "red";
+      }
+    });
 };
+
 
 const formatQuestions = (data) => {
   if (data && data.choices && data.choices[0] && data.choices[0].message) {
