@@ -63,7 +63,6 @@ const checkAnswers = () => {
 
 const formatQuestions = (data) => {
   if (data && data.choices && data.choices[0] && data.choices[0].message) {
-    // Split the content at "Solutions:"
     const [rawContentBeforeSolutions, rawContentAfterSolutions] = data.choices[0].message.content.split('Solutions:');
 
     // Extract questions and remove text before the first "1."
@@ -75,25 +74,23 @@ const formatQuestions = (data) => {
     const answers = contentAfterSolutions.split('\n');
     
     return questions.map((question, index) => {
-      let formattedQuestion = question.replace(/\((\w+)\)/g, `($1) <input id="input-${index}" placeholder="$1" />`);
+      let formattedQuestion = question.replace(/\((\w+)\)/g, `($1)`);
+      let inputBox = <input id={`input-${index}`} placeholder="$1" />;
+      let feedbackSpan = feedback[index] ? <span className="feedback">{feedback[index]}</span> : null;
+      let answerContent = showAnswers && answers[index] ? answers[index].replace(/^\d+\.\s*/, '') : null;
 
-      if (showAnswers && answers[index]) {
-        let formattedAnswer = answers[index].replace(/^\d+\.\s*/, '');
-        formattedQuestion += `${formattedAnswer}`;
-      }
-
-      // Add feedback after the question if available
-      if (feedback[index]) {
-        formattedQuestion += ` <span class="feedback">${feedback[index]}</span>`;
-      }
-
-      // Only one return statement here
       return (
-        <p key={index} dangerouslySetInnerHTML={{ __html: formattedQuestion }} />
+        <div key={index}>
+          <span dangerouslySetInnerHTML={{ __html: formattedQuestion }} />
+          {inputBox}
+          {answerContent && <span>{answerContent}</span>}
+          {feedbackSpan}
+        </div>
       );
     });
   }
 };
+
 
 
 
