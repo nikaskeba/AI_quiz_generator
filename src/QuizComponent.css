@@ -12,3 +12,9 @@
 .selected-quiz {
     border-color: green;
 }
+
+button{    margin-right: 10px;
+    margin-bottom: 10px;
+    background-color: white;
+    padding: 5px;
+    border-radius: 5px;}
