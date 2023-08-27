@@ -13,6 +13,14 @@ const generateNewQuiz = async () => {
   // Reset the feedback state
   setFeedback({});
 
+  // Clear input boxes
+  for (let i = 0; i < 5; i++) { // Assuming you know there are always 5 questions; adjust if variable
+    const inputElement = document.getElementById(`input-${i}`);
+    if (inputElement) {
+      inputElement.value = '';
+    }
+  }
+
   try {
     const response = await fetch('/.netlify/functions/getQuizQuestions', {
       method: 'POST',
@@ -29,6 +37,7 @@ const generateNewQuiz = async () => {
     setLoading(false);
   }
 };
+
 
 const checkAnswers = () => {
   let newFeedback = {};
