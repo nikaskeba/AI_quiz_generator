@@ -70,7 +70,10 @@ const formatQuestions = (data) => {
 questions.forEach((question, index) => {
   // Split the question around the placeholder
   let parts = question.split(/\((\w+)\)/g);
-  
+
+  // If parts length is less than 3, it's not a valid question, so skip
+  if (parts.length < 3) return;
+
   let feedbackElement = null;
   if (feedback[index]) {
     feedbackElement = <span className={`feedback ${feedback[index]}`}>{feedback[index]}</span>;
@@ -90,6 +93,7 @@ questions.forEach((question, index) => {
     </p>
   );
 });
+
   }
 
   return renderedQuestions;
