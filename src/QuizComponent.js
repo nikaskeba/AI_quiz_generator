@@ -83,13 +83,13 @@ const formatQuestions = (data) => {
   if (data && data.choices && data.choices[0] && data.choices[0].message) {
     const content = data.choices[0].message.content;
     
-  const splitData = content.split(/(.*?)(?=^1\. )/s);
-if (splitData.length < 2) return;
-const questionsContent = splitData[0].trim();
-const answersContent = splitData[1].trim();
+ const splitData = content.split(/(.*?)(?=^1\. )/s);
+if (splitData.length < 3) return;
+const questionsContent = splitData[1].trim();
+const answersContent = splitData[2].trim();
 
-    const questions = questionsContent.split('\n').filter(q => q.trim() !== ""); // Assuming 5 questions
-    const answers = answersContent.split('\n').filter(a => a.trim() !== "");  // Assuming 5 answers
+const questions = questionsContent.split('\n').filter(q => q.trim() !== ""); // Assuming 5 questions
+const answers = answersContent.split('\n').filter(a => a.trim() !== "");  // Assuming 5 answers
 
     questions.forEach((question, index) => {
   // Split the question around the placeholder
