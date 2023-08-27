@@ -56,16 +56,15 @@ const checkAnswers = () => {
   const content = quizData.choices[0].message.content;
   const splitIndex = nthIndexOf(content, "1. ", 2);  // Find the index of the second occurrence of "1. "
   
-  if (splitIndex === -1) return;  // If the format is not as expected, exit early
-  
-  const answersContent = content.substring(splitIndex);
-  const answers = answersContent.split('\n').filter(a => a.trim() !== "").map(a => a.replace(/^\d+\.\s*/, ''));
+  const answersContent = content.substring(splitIndex).trim();
+  const answers = answersContent.split('\n').filter(a => a.trim() !== "");
 
   answers.forEach((answer, index) => {
+    let formattedAnswer = answer.replace(/^\d+\.\s*/, '');
     let inputElement = document.getElementById(`input-${index}`);
     let userInput = inputElement ? inputElement.value : null;
 
-    if (userInput === answer) {
+    if (userInput === formattedAnswer) {
       newFeedback[index] = "correct";
     } else {
       newFeedback[index] = "wrong";
@@ -78,14 +77,13 @@ const checkAnswers = () => {
 
 
 
-
 const formatQuestions = (data) => {
   let renderedQuestions = [];
 
   if (data && data.choices && data.choices[0] && data.choices[0].message) {
     const content = data.choices[0].message.content;
-    console.log(content);
-index = nthIndexOf(content, "1. ", 2);  // Find the index of the second occurrence of "1. "
+    
+    const splitIndex = nthIndexOf(content, "1. ", 2);  // Find the index of the second occurrence of "1. "
     if (splitIndex === -1) return;  // Early return if the format is not as expected
     
     const questionsContent = content.substring(0, splitIndex).trim();
@@ -97,7 +95,6 @@ index = nthIndexOf(content, "1. ", 2);  // Find the index of the second occurren
     questions.forEach((question, index) => {
   // Split the question around the placeholder
   let parts = question.split(/\((\w+)\)/g);
-console.log(parts);
 
   // If parts length is less than 3, it's not a valid question, so skip
   if (parts.length < 3) return;
