@@ -45,9 +45,7 @@ const checkAnswers = () => {
 
   answers.forEach((answer, index) => {
     let formattedAnswer = answer.replace(/^\d+\.\s*/, '');
-    let inputElement = document.getElementById(`input-${index}`);
     let userInput = userAnswers[index] || null;
-
 
     if (userInput === formattedAnswer) {
       newFeedback[index] = "correct";
@@ -65,6 +63,7 @@ const checkAnswers = () => {
     });
   });
 };
+
 
 
 
