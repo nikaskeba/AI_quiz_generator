@@ -93,15 +93,27 @@ const formatQuestions = (data) => {
   let renderedQuestions = [];
 
   if (data && data.choices && data.choices[0] && data.choices[0].message) {
-    const content = data.choices[0].message.content;
-    const questionAnswerPairs = content.split('\\\\n');
+    // Finding the second occurrence of "1."
+    let firstIndex = data.choices[0].message.content.indexOf('1.');
+    let secondIndex = data.choices[0].message.content.indexOf('1.', firstIndex + 1);
+    
+    if (secondIndex === -1) {
+      console.error('Unexpected data format');
+      return;
+    }
 
-    questionAnswerPairs.forEach((pair, index) => {
-      // Extract the question and answer from the pair using a modified regex pattern
-      let parts = pair.split(/(\\d+\\.)?\\s*([^()]+)\\(([^()]+)\\)\\s*([^()]+)\\s*\\(([^()]+)\\)/);
-      
-      // If parts length is not as expected, it's not a valid pair, so skip
-      if (parts.length < 6) return;
+    const contentBeforeSolutions = data.choices[0].message.content.substring(firstIndex, secondIndex).trim();
+    const questions = contentBeforeSolutions.split('\n');
+
+    const contentAfterSolutions = data.choices[0].message.content.substring(secondIndex);
+    const answers = contentAfterSolutions.split('\n');
+
+    questions.forEach((question, index) => {
+      // Split the question around the placeholder
+      let parts = question.split(/\((\w+)\)/g);
+
+      // If parts length is less than 3, it's not a valid question, so skip
+      if (parts.length < 3) return;
 
       let feedbackElement = null;
       if (feedback[index]) {
@@ -109,31 +121,24 @@ const formatQuestions = (data) => {
       }
 
       let answerText = null;
-      if (showAnswers) {
-        answerText = <span>({parts[5]})</span>;
+      if (showAnswers && answers[index]) {
+                let formattedAnswer = answers[index].match(/\(\w+\)\s*\((\w+)\)/)[1];
+        answerText = <span>{formattedAnswer}</span>;
       }
 
       renderedQuestions.push(
         <p key={index}>
-          {parts[2]} 
-          <input id={`input-${index}`} placeholder={parts[3]} /> 
-          {parts[4]} {answerText} {feedbackElement}
+          {parts[0]} 
+          <input id={`input-${index}`} placeholder={parts[1]} /> 
+          {parts[2]} {answerText} {feedbackElement}
         </p>
       );
     });
   }
 
-  // Return renderedQuestions along with questionAnswerPairs for display
-  return (
-    <div>
-      <div>
-        <strong>Debug Output (Question-Answer Pairs):</strong>
-        <pre>{JSON.stringify(questionAnswerPairs, null, 2)}</pre>
-      </div>
-      {renderedQuestions}
-    </div>
-  );
+  return renderedQuestions;
 };
+
 
 
 
