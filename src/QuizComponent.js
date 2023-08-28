@@ -91,29 +91,33 @@ const checkAnswers = () => {
 
 const formatQuestions = (data) => {
   let renderedQuestions = [];
-  let questionAnswerPairs = [];  // Declare here for wider scope
 
   if (data && data.choices && data.choices[0] && data.choices[0].message) {
     const content = data.choices[0].message.content;
-
-    // Start from the first occurrence of "1."
-    const startIndex = content.indexOf('1.');
-    const adjustedContent = content.substring(startIndex);
-    
-    questionAnswerPairs = adjustedContent.split('\\\\n');
+    const questionAnswerPairs = content.split('\\\\n');
 
     questionAnswerPairs.forEach((pair, index) => {
-      // Extract the question and answer from the pair using the regex pattern
+      // Extract the question and answer from the pair using a modified regex pattern
       let parts = pair.split(/(\\d+\\.)?\\s*([^()]+)\\(([^()]+)\\)\\s*([^()]+)\\s*\\(([^()]+)\\)/);
       
       // If parts length is not as expected, it's not a valid pair, so skip
       if (parts.length < 6) return;
 
+      let feedbackElement = null;
+      if (feedback[index]) {
+        feedbackElement = <span className={`feedback ${feedback[index]}`}>{feedback[index]}</span>;
+      }
+
+      let answerText = null;
+      if (showAnswers) {
+        answerText = <span>({parts[5]})</span>;
+      }
+
       renderedQuestions.push(
         <p key={index}>
-          {parts[1]} {parts[2]} 
+          {parts[2]} 
           <input id={`input-${index}`} placeholder={parts[3]} /> 
-          {parts[4]}
+          {parts[4]} {answerText} {feedbackElement}
         </p>
       );
     });
@@ -130,6 +134,7 @@ const formatQuestions = (data) => {
     </div>
   );
 };
+
 
 
   const selectQuizType = (type) => {
