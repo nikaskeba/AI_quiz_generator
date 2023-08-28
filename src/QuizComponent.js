@@ -33,7 +33,7 @@ const generateNewQuiz = async () => {
 }
 
     try {
-      const response = await fetch('/.netlify/functions/getQuizQuestions', {
+      const response = await fetch('https://app.netlify.com/sites/resonant-pudding-151f19/.netlify/functions/getQuizQuestions', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
