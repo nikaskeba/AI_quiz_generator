@@ -25,11 +25,11 @@ const generateNewQuiz = async () => {
  // Determine the content based on the selected quiz type
     let userContent;
       if (quizType === 'Imperative') {
-    userContent = "generate 20 complete spanish imperative sentences in the format "1. Es probable que Juan (venir) a la fiesta. (venga)" with the verb in the sentence not conjugated and the answer at the end in ()";
+    userContent = "generate 20 complete spanish imperative sentences in the format '1. Es probable que Juan (venir) a la fiesta. (venga)' with the verb in the sentence not conjugated and the answer at the end in ()";
 } else if (quizType === 'Subjunctive') {
-    userContent = "Generate a Spanish quiz that numerically lists 5 unique Spanish subjunctive sentences. In each sentence, leave the verb without conjugation and display the verb within () followed by its solution in the format "1. Ayer, tú (estudiar) para el examen. (estudiaste)". Keep the 5 generated sentences together.  List only the questions with solutions in the mentioned format and no other text.";
+    userContent = "Generate a Spanish quiz that numerically lists 5 unique Spanish subjunctive sentences. In each sentence, leave the verb without conjugation and display the verb within () followed by its solution in the format '1. Ayer, tú (estudiar) para el examen. (estudiaste)'. Keep the 5 generated sentences together.  List only the questions with solutions in the mentioned format and no other text.";
 } else if (quizType === 'Basic Conjugation') {
-    userContent = "Generate a Spanish quiz that numerically lists 5 unique Spanish present tense sentences. In each sentence, leave the verb without conjugation and display the verb within () followed by its solution in the format "1. Ayer, tú (estudiar) para el examen. (estudiaste)". Keep the 5 generated sentences together.  List only the questions with solutions in the mentioned format and no other text.";
+    userContent = "Generate a Spanish quiz that numerically lists 5 unique Spanish present tense sentences. In each sentence, leave the verb without conjugation and display the verb within () followed by its solution in the format '1. Ayer, tú (estudiar) para el examen. (estudiaste)'. Keep the 5 generated sentences together.  List only the questions with solutions in the mentioned format and no other text.";
 }
 
     try {
