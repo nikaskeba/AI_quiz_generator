@@ -25,11 +25,11 @@ const generateNewQuiz = async () => {
  // Determine the content based on the selected quiz type
     let userContent;
       if (quizType === 'Imperative') {
-    userContent = "generate 20 complete spanish imperative sentences in the format '1. Es probable que Juan (venir) a la fiesta. (venga)' with the verb in the sentence not conjugated and the answer at the end in ()";
+    userContent = "generate 20 complete spanish imperative sentences with the sentence verb unconjugated inside a () and the conjugated answer at the end in () for example '1.(venir) a la fiesta. (venga)'  output only sentences 1 to 20";
 } else if (quizType === 'Subjunctive') {
-    userContent = "Generate a Spanish quiz that numerically lists 5 unique Spanish subjunctive sentences. In each sentence, leave the verb without conjugation and display the verb within () followed by its solution in the format '1. Ayer, tú (estudiar) para el examen. (estudiaste)'. Keep the 5 generated sentences together.  List only the questions with solutions in the mentioned format and no other text.";
+    userContent = "generate 20 complete spanish imperative sentences with the sentence verb unconjugated inside a () and the conjugated answer at the end in () for example '1. Es probable que Juan (venir) a la fiesta. (venga)'  output only sentences 1 to 20";
 } else if (quizType === 'Basic Conjugation') {
-    userContent = "Generate a Spanish quiz that numerically lists 5 unique Spanish present tense sentences. In each sentence, leave the verb without conjugation and display the verb within () followed by its solution in the format '1. Ayer, tú (estudiar) para el examen. (estudiaste)'. Keep the 5 generated sentences together.  List only the questions with solutions in the mentioned format and no other text.";
+    userContent = "generate 20 basic spanish present tense sentences with the sentence verb unconjugated inside a () and the conjugated answer at the end in () for example '1. Juan (venir) a la fiesta. (viene)'  output only sentences 1 to 20";
 }
 
     try {
@@ -178,6 +178,10 @@ return (
       {formatQuestions(quizData)}
 
       {loading && <p>Loading...</p>}
+           {/* Display API Response for Debugging */}
+      {quizData && (
+        <pre>{JSON.stringify(quizData, null, 2)}</pre>
+      )}
     </div>
   );
 };
