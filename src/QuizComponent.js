@@ -6,6 +6,7 @@ const QuizComponent = () => {
   const [loading, setLoading] = useState(false);
   const [showAnswers, setShowAnswers] = useState(false);  // New state variable
   const [feedback, setFeedback] = useState({}); // New state to store feedback for each question
+  const [quizType, setQuizType] = useState('Subjunctive'); // New state for quiz type
 
 const generateNewQuiz = async () => {
   setLoading(true);
@@ -21,32 +22,55 @@ const generateNewQuiz = async () => {
     }
   }
 
-  try {
-    const response = await fetch('/.netlify/functions/getQuizQuestions', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
+ // Determine the content based on the selected quiz type
+    let userContent;
+      if (quizType === 'Imperative') {
+    userContent = "generate 20 complete spanish imperative sentences in the format "1. Es probable que Juan (venir) a la fiesta. (venga)" with the verb in the sentence not conjugated and the answer at the end in ()";
+} else if (quizType === 'Subjunctive') {
+    userContent = "Generate a Spanish quiz that numerically lists 5 unique Spanish subjunctive sentences. In each sentence, leave the verb without conjugation and display the verb within () followed by its solution in the format "1. Ayer, tú (estudiar) para el examen. (estudiaste)". Keep the 5 generated sentences together.  List only the questions with solutions in the mentioned format and no other text.";
+} else if (quizType === 'Basic Conjugation') {
+    userContent = "Generate a Spanish quiz that numerically lists 5 unique Spanish present tense sentences. In each sentence, leave the verb without conjugation and display the verb within () followed by its solution in the format "1. Ayer, tú (estudiar) para el examen. (estudiaste)". Keep the 5 generated sentences together.  List only the questions with solutions in the mentioned format and no other text.";
+}
 
-    const data = await response.json();
-    setQuizData(data);
-    setLoading(false);
-  } catch (error) {
-    console.error("Error fetching quiz data:", error);
-    setLoading(false);
-  }
-};
+    try {
+      const response = await fetch('/.netlify/functions/getQuizQuestions', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ content: userContent }) // Sending content to the serverless function
+      });
+
+      const data = await response.json();
+      setQuizData(data);
+      setLoading(false);
+    } catch (error) {
+      console.error("Error fetching quiz data:", error);
+      setLoading(false);
+    }
+  };
+
 
 
 const checkAnswers = () => {
   let newFeedback = {};
 
-  // Split the content at "Solutions:"
-  const solutionContent = quizData.choices[0].message.content.split('Solutions:')[1];
-  // Start from the first occurrence of "1."
-  const answersContent = solutionContent.substring(solutionContent.indexOf('1.'));
-  const answers = answersContent.split('\n');
+  if (!quizData || !quizData.choices || !quizData.choices[0] || !quizData.choices[0].message) {
+    console.error("Invalid quiz data");
+    return;
+  }
+
+  // Split based on the second occurrence of "1."
+  let firstIndex = quizData.choices[0].message.content.indexOf('1.');
+  let secondIndex = quizData.choices[0].message.content.indexOf('1.', firstIndex + 1);
+
+  if (secondIndex === -1) {
+    console.error('Unexpected data format');
+    return;
+  }
+
+  const contentAfterSolutions = quizData.choices[0].message.content.substring(secondIndex);
+  const answers = contentAfterSolutions.split('\n');
 
   answers.forEach((answer, index) => {
     let formattedAnswer = answer.replace(/^\d+\.\s*/, '');
@@ -55,10 +79,8 @@ const checkAnswers = () => {
 
     if (userInput === formattedAnswer) {
       newFeedback[index] = "correct";
-
     } else {
       newFeedback[index] = "wrong";
- 
     }
   });
 
@@ -66,43 +88,52 @@ const checkAnswers = () => {
 };
 
 
+
 const formatQuestions = (data) => {
   let renderedQuestions = [];
 
   if (data && data.choices && data.choices[0] && data.choices[0].message) {
-    const [rawContentBeforeSolutions, rawContentAfterSolutions] = data.choices[0].message.content.split('Solutions:');
-    const contentBeforeSolutions = rawContentBeforeSolutions.substring(rawContentBeforeSolutions.indexOf('1.'));
+    // Finding the second occurrence of "1."
+    let firstIndex = data.choices[0].message.content.indexOf('1.');
+    let secondIndex = data.choices[0].message.content.indexOf('1.', firstIndex + 1);
+    
+    if (secondIndex === -1) {
+      console.error('Unexpected data format');
+      return;
+    }
+
+    const contentBeforeSolutions = data.choices[0].message.content.substring(firstIndex, secondIndex).trim();
     const questions = contentBeforeSolutions.split('\n');
-    const contentAfterSolutions = rawContentAfterSolutions.substring(rawContentAfterSolutions.indexOf('1.'));
+
+    const contentAfterSolutions = data.choices[0].message.content.substring(secondIndex);
     const answers = contentAfterSolutions.split('\n');
 
-questions.forEach((question, index) => {
-  // Split the question around the placeholder
-  let parts = question.split(/\((\w+)\)/g);
+    questions.forEach((question, index) => {
+      // Split the question around the placeholder
+      let parts = question.split(/\((\w+)\)/g);
 
-  // If parts length is less than 3, it's not a valid question, so skip
-  if (parts.length < 3) return;
+      // If parts length is less than 3, it's not a valid question, so skip
+      if (parts.length < 3) return;
 
-  let feedbackElement = null;
-  if (feedback[index]) {
-    feedbackElement = <span className={`feedback ${feedback[index]}`}>{feedback[index]}</span>;
-  }
+      let feedbackElement = null;
+      if (feedback[index]) {
+        feedbackElement = <span className={`feedback ${feedback[index]}`}>{feedback[index]}</span>;
+      }
 
-  let answerText = null;
-  if (showAnswers && answers[index]) {
-    let formattedAnswer = answers[index].replace(/^\d+\.\s*/, '');
-    answerText = <span>{formattedAnswer}</span>;
-  }
+      let answerText = null;
+      if (showAnswers && answers[index]) {
+        let formattedAnswer = answers[index].replace(/^\d+\.\s*/, '');
+        answerText = <span>{formattedAnswer}</span>;
+      }
 
-  renderedQuestions.push(
-    <p key={index}>
-      {parts[0]} 
-      <input id={`input-${index}`} placeholder={parts[1]} /> 
-      {parts[2]} {answerText} {feedbackElement}
-    </p>
-  );
-});
-
+      renderedQuestions.push(
+        <p key={index}>
+          {parts[0]} 
+          <input id={`input-${index}`} placeholder={parts[1]} /> 
+          {parts[2]} {answerText} {feedbackElement}
+        </p>
+      );
+    });
   }
 
   return renderedQuestions;
@@ -110,16 +141,45 @@ questions.forEach((question, index) => {
 
 
 
-  return (
-  <div>
-    <button onClick={generateNewQuiz}>Generate New Quiz</button>
-    <button onClick={checkAnswers}>Check</button>
-    <button onClick={() => setShowAnswers(!showAnswers)}>Show Answers</button>
 
-    {formatQuestions(quizData)}
+  const selectQuizType = (type) => {
+    setQuizType(type);
+  };
 
-    {loading && <p>Loading...</p>}
-  </div>
+return (
+    <div>
+      {/* Selector buttons for quiz type */}
+      <div className="quiz-selector">
+        <button 
+            className={quizType === 'Subjunctive' ? 'selected-quiz' : ''} 
+            onClick={() => selectQuizType('Subjunctive')}
+        >
+            Subjunctive
+        </button>
+        <button 
+            className={quizType === 'Basic Conjugation' ? 'selected-quiz' : ''} 
+            onClick={() => selectQuizType('Basic Conjugation')}
+        >
+            Basic Conjugation
+        </button>
+        {/* New button for Imperative */}
+        <button 
+            className={quizType === 'Imperative' ? 'selected-quiz' : ''} 
+            onClick={() => selectQuizType('Imperative')}
+        >
+            Imperative
+        </button>
+      </div>
+
+      <button onClick={generateNewQuiz}>Generate New Quiz</button>
+      <button onClick={checkAnswers}>Check</button>
+      <button onClick={() => setShowAnswers(!showAnswers)}>Show Answers</button>
+
+      {formatQuestions(quizData)}
+
+      {loading && <p>Loading...</p>}
+    </div>
   );
 };
+
 export default QuizComponent;
