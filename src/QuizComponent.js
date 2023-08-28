@@ -94,38 +94,41 @@ const formatQuestions = (data) => {
 
   if (data && data.choices && data.choices[0] && data.choices[0].message) {
     const content = data.choices[0].message.content;
-    const questionAnswerPairs = content.split('\\\\n');
+
+    // Start from the first occurrence of "1."
+    const startIndex = content.indexOf('1.');
+    const adjustedContent = content.substring(startIndex);
+    
+    const questionAnswerPairs = adjustedContent.split('\\\\n');
 
     questionAnswerPairs.forEach((pair, index) => {
-      // Extract the question and answer from the pair using a modified regex pattern
+      // Extract the question and answer from the pair using the regex pattern
       let parts = pair.split(/(\\d+\\.)?\\s*([^()]+)\\(([^()]+)\\)\\s*([^()]+)\\s*\\(([^()]+)\\)/);
       
       // If parts length is not as expected, it's not a valid pair, so skip
       if (parts.length < 6) return;
 
-      let feedbackElement = null;
-      if (feedback[index]) {
-        feedbackElement = <span className={`feedback ${feedback[index]}`}>{feedback[index]}</span>;
-      }
-
-      let answerText = null;
-      if (showAnswers) {
-        answerText = <span>({parts[5]})</span>;
-      }
-
       renderedQuestions.push(
         <p key={index}>
-          {parts[2]} 
+          {parts[1]} {parts[2]} 
           <input id={`input-${index}`} placeholder={parts[3]} /> 
-          {parts[4]} {answerText} {feedbackElement}
+          {parts[4]}
         </p>
       );
     });
   }
 
-  return renderedQuestions;
+  // Return renderedQuestions along with questionAnswerPairs for display
+  return (
+    <div>
+      <div>
+        <strong>Debug Output (Question-Answer Pairs):</strong>
+        <pre>{JSON.stringify(questionAnswerPairs, null, 2)}</pre>
+      </div>
+      {renderedQuestions}
+    </div>
+  );
 };
-
 
 
   const selectQuizType = (type) => {
