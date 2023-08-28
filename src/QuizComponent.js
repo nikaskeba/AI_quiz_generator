@@ -119,7 +119,7 @@ const formatQuestions = (data) => {
     });
   }
 
-  // Return renderedQuestions along with questionAnswerPairs for display
+
   return (
     <div>
       <div>
