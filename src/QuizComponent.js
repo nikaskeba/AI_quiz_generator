@@ -93,27 +93,15 @@ const formatQuestions = (data) => {
   let renderedQuestions = [];
 
   if (data && data.choices && data.choices[0] && data.choices[0].message) {
-    // Finding the second occurrence of "1."
-    let firstIndex = data.choices[0].message.content.indexOf('1.');
-    let secondIndex = data.choices[0].message.content.indexOf('1.', firstIndex + 1);
-    
-    if (secondIndex === -1) {
-      console.error('Unexpected data format');
-      return;
-    }
+    const content = data.choices[0].message.content;
+    const questionAnswerPairs = content.split('\\n');
 
-    const contentBeforeSolutions = data.choices[0].message.content.substring(firstIndex, secondIndex).trim();
-    const questions = contentBeforeSolutions.split('\n');
-
-    const contentAfterSolutions = data.choices[0].message.content.substring(secondIndex);
-    const answers = contentAfterSolutions.split('\n');
-
-    questions.forEach((question, index) => {
-      // Split the question around the placeholder
-      let parts = question.split(/\((\w+)\)/g);
-
-      // If parts length is less than 3, it's not a valid question, so skip
-      if (parts.length < 3) return;
+    questionAnswerPairs.forEach((pair, index) => {
+      // Extract the question and answer from the pair
+      let parts = pair.split(/\\(\\w+\\)\\s*\\((\\w+)\\)/g);
+      
+      // If parts length is less than 4, it's not a valid pair, so skip
+      if (parts.length < 4) return;
 
       let feedbackElement = null;
       if (feedback[index]) {
@@ -121,16 +109,15 @@ const formatQuestions = (data) => {
       }
 
       let answerText = null;
-      if (showAnswers && answers[index]) {
-                let formattedAnswer = answers[index].match(/\(\w+\)\s*\((\w+)\)/)[1];
-        answerText = <span>{formattedAnswer}</span>;
+      if (showAnswers) {
+        answerText = <span>{parts[2]}</span>;
       }
 
       renderedQuestions.push(
         <p key={index}>
           {parts[0]} 
           <input id={`input-${index}`} placeholder={parts[1]} /> 
-          {parts[2]} {answerText} {feedbackElement}
+          {parts[3]} {answerText} {feedbackElement}
         </p>
       );
     });
@@ -138,7 +125,6 @@ const formatQuestions = (data) => {
 
   return renderedQuestions;
 };
-
 
 
 
