@@ -91,52 +91,44 @@ const checkAnswers = () => {
 
 const formatQuestions = (data) => {
   let renderedQuestions = [];
+  let questionAnswerPairs = [];  // Declare here for wider scope
 
   if (data && data.choices && data.choices[0] && data.choices[0].message) {
-    // Finding the second occurrence of "1."
-    let firstIndex = data.choices[0].message.content.indexOf('1.');
-    let secondIndex = data.choices[0].message.content.indexOf('1.', firstIndex + 1);
+    const content = data.choices[0].message.content;
+
+    // Start from the first occurrence of "1."
+    const startIndex = content.indexOf('1.');
+    const adjustedContent = content.substring(startIndex);
     
-    if (secondIndex === -1) {
-      console.error('Unexpected data format');
-      return;
-    }
+    questionAnswerPairs = adjustedContent.split('\\\\n');
 
-    const contentBeforeSolutions = data.choices[0].message.content.substring(firstIndex, secondIndex).trim();
-    const questions = contentBeforeSolutions.split('\n');
-
-    const contentAfterSolutions = data.choices[0].message.content.substring(secondIndex);
-    const answers = contentAfterSolutions.split('\n');
-
-    questions.forEach((question, index) => {
-      // Split the question around the placeholder
-      let parts = question.split(/\((\w+)\)/g);
-
-      // If parts length is less than 3, it's not a valid question, so skip
-      if (parts.length < 3) return;
-
-      let feedbackElement = null;
-      if (feedback[index]) {
-        feedbackElement = <span className={`feedback ${feedback[index]}`}>{feedback[index]}</span>;
-      }
-
-      let answerText = null;
-      if (showAnswers && answers[index]) {
-                let formattedAnswer = answers[index].match(/\(\w+\)\s*\((\w+)\)/)[1];
-        answerText = <span>{formattedAnswer}</span>;
-      }
+    questionAnswerPairs.forEach((pair, index) => {
+      // Extract the question and answer from the pair using the regex pattern
+      let parts = pair.split(/(\\d+\\.)?\\s*([^()]+)\\(([^()]+)\\)\\s*([^()]+)\\s*\\(([^()]+)\\)/);
+      
+      // If parts length is not as expected, it's not a valid pair, so skip
+      if (parts.length < 6) return;
 
       renderedQuestions.push(
         <p key={index}>
-          {parts[0]} 
-          <input id={`input-${index}`} placeholder={parts[1]} /> 
-          {parts[2]} {answerText} {feedbackElement}
+          {parts[1]} {parts[2]} 
+          <input id={`input-${index}`} placeholder={parts[3]} /> 
+          {parts[4]}
         </p>
       );
     });
   }
 
-  return renderedQuestions;
+  // Return renderedQuestions along with questionAnswerPairs for display
+  return (
+    <div>
+      <div>
+        <strong>Debug Output (Question-Answer Pairs):</strong>
+        <pre>{JSON.stringify(questionAnswerPairs, null, 2)}</pre>
+      </div>
+      {renderedQuestions}
+    </div>
+  );
 };
 
 
