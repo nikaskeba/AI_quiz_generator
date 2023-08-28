@@ -25,11 +25,11 @@ const generateNewQuiz = async () => {
  // Determine the content based on the selected quiz type
     let userContent;
       if (quizType === 'Imperative') {
-    userContent = "generate 20 complete spanish imperative sentences with the sentence verb unconjugated inside a () and the conjugated answer at the end in () for example '1.(venir) a la fiesta. (venga)'  output only sentences 1 to 20";
+    userContent = "generate 5 complete spanish imperative sentences with the sentence verb unconjugated inside a () and the conjugated answer at the end in () for example '1.(venir) a la fiesta. (venga)'  output only sentences 1 to 20";
 } else if (quizType === 'Subjunctive') {
-    userContent = "generate 20 complete spanish imperative sentences with the sentence verb unconjugated inside a () and the conjugated answer at the end in () for example '1. Es probable que Juan (venir) a la fiesta. (venga)'  output only sentences 1 to 20";
+    userContent = "generate 5 complete spanish imperative sentences with the sentence verb unconjugated inside a () and the conjugated answer at the end in () for example '1. Es probable que Juan (venir) a la fiesta. (venga)'  output only sentences 1 to 20";
 } else if (quizType === 'Basic Conjugation') {
-    userContent = "generate 20 basic spanish present tense sentences with the sentence verb unconjugated inside a () and the conjugated answer at the end in () for example '1. Juan (venir) a la fiesta. (viene)'  output only sentences 1 to 20";
+    userContent = "generate 5 basic spanish present tense sentences with the sentence verb unconjugated inside a () and the conjugated answer at the end in () for example '1. Juan (venir) a la fiesta. (viene)'  output only sentences 1 to 20";
 }
 
     try {
