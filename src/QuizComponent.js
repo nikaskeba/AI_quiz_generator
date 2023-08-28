@@ -91,6 +91,7 @@ const checkAnswers = () => {
 
 const formatQuestions = (data) => {
   let renderedQuestions = [];
+  let questionAnswerPairs = [];  // Declare here for wider scope
 
   if (data && data.choices && data.choices[0] && data.choices[0].message) {
     const content = data.choices[0].message.content;
@@ -99,7 +100,7 @@ const formatQuestions = (data) => {
     const startIndex = content.indexOf('1.');
     const adjustedContent = content.substring(startIndex);
     
-    const questionAnswerPairs = adjustedContent.split('\\\\n');
+    questionAnswerPairs = adjustedContent.split('\\\\n');
 
     questionAnswerPairs.forEach((pair, index) => {
       // Extract the question and answer from the pair using the regex pattern
