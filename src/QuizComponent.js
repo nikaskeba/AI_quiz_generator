@@ -104,7 +104,7 @@ const formatQuestions = (data) => {
     const questionAnswerPairs = content.split('\\n');
     
     // Debug: Print questionAnswerPairs
-    console.log("Debug questionAnswerPairs:", questionAnswerPairs);
+   document.getElementById("output").innerText = "Debug questionAnswerPairs: " + JSON.stringify(questionAnswerPairs, null, 2);
 
     questionAnswerPairs.forEach((pair, index) => {
       // Extract the question and answer from the pair using a modified regex pattern
