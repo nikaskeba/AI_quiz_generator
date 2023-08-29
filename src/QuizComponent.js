@@ -36,6 +36,7 @@ const generateNewQuiz = async () => {
     userContent = "generate 5 basic spanish present tense sentences with the sentence verb unconjugated inside a () and the conjugated answer at the end in () for example '1. Juan (venir) a la fiesta. (viene)'  output only sentences 1 to 5";
 }
 
+    try {
 const EXTERNAL_API_ENDPOINT = '/.netlify/functions/getQuizQuestions';
 const payload = {
     userContent: userContent
@@ -46,6 +47,21 @@ const response = await axios.post(EXTERNAL_API_ENDPOINT, payload, {
         'Content-Type': 'application/json'
     }
 });
+
+
+      const data = response.data;
+
+      setQuizData(data);
+      setLoading(false);
+      setShowAnswers(false);
+
+    } catch (error) {
+      console.error("Error fetching quiz data:", error);
+      setLoading(false);
+      setShowAnswers(false);
+
+    }
+  };
 
 
 
