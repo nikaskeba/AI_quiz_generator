@@ -13,7 +13,7 @@ const QuizComponent = () => {
   const [quizType, setQuizType] = useState('Subjunctive'); // New state for quiz type
 
 const [language, setLanguage] = useState('spanish');
-
+const [difficulty, setDifficulty] = useState('beginner');
 const generateNewQuiz = async () => {
   setLoading(true);
 
@@ -31,11 +31,11 @@ const generateNewQuiz = async () => {
  // Determine the content based on the selected quiz type
     let userContent;
 if (quizType === 'Imperative') {
-    userContent = `generate 5 complete ${language} imperative sentences with the sentence verb unconjugated inside a () and the conjugated answer at the end in () for example '1.(venir) a la fiesta. (venga)'  output only sentences 1 to 5`;
+    userContent = `generate 5 complete ${language} ${difficulty} imperative sentences with the sentence verb unconjugated inside a () and the conjugated answer at the end in () for example '1.(venir) a la fiesta. (venga)'  output only sentences 1 to 5`;
 } else if (quizType === 'Subjunctive') {
-    userContent = `generate 5 complete ${language} subjunctive sentences with the sentence verb unconjugated inside a () and the conjugated answer at the end in () for example '1. Es probable que Juan (venir) a la fiesta. (venga)'  output only sentences 1 to 5`;
+    userContent = `generate 5 complete ${language} ${difficulty} subjunctive sentences with the sentence verb unconjugated inside a () and the conjugated answer at the end in () for example '1. Es probable que Juan (venir) a la fiesta. (venga)'  output only sentences 1 to 5`;
 } else if (quizType === 'Basic Conjugation') {
-    userContent = `generate 5 basic ${language} present tense sentences with the sentence verb unconjugated inside a () and the conjugated answer at the end in () for example '1. Juan (venir) a la fiesta. (viene)'  output only sentences 1 to 5`;
+    userContent = `generate 5 basic ${language} ${difficulty} present tense sentences with the sentence verb unconjugated inside a () and the conjugated answer at the end in () for example '1. Juan (venir) a la fiesta. (viene)'  output only sentences 1 to 5`;
 }
 
     try {
@@ -154,14 +154,23 @@ renderedQuestions.push(
 return (
     <div>
       {/* Selector buttons for quiz type */}
+        <div className="difficulty-selector">
+  <button 
+className={quizType === 'beginner' ? 'selected-difficulty' : ''} 
+  onClick={() => setLanguage('beginner')}>Beginner</button>
+  <button className={quizType === 'intermediate' ? 'selected-difficulty' : ''} 
+  onClick={() => setLanguage('intermediate')}>intermediate</button>
+  <button className={quizType === 'advanced' ? 'selected-difficulty' : ''} 
+  onClick={() => setDifficulty('advanced')}>Advanced</button>
+</div>
     <div className="language-selector">
   <button 
 className={quizType === 'spanish' ? 'selected-language' : ''} 
   onClick={() => setLanguage('spanish')}>Spanish</button>
- className={quizType === 'german' ? 'selected-language' : ''} 
+  <button className={quizType === 'german' ? 'selected-language' : ''} 
   onClick={() => setLanguage('german')}>German</button>
- className={quizType === 'french' ? 'selected-language' : ''} 
-  onClick={() => setLanguage('french')}>French/button>
+  <button className={quizType === 'french' ? 'selected-language' : ''} 
+  onClick={() => setLanguage('french')}>French/</button>
 </div>
       <div className="quiz-selector">
         <button 
@@ -188,7 +197,7 @@ className={quizType === 'spanish' ? 'selected-language' : ''}
       <button onClick={generateNewQuiz}>Generate New Quiz</button>
       <button onClick={checkAnswers}>Check</button>
       <button onClick={() => setShowAnswers(!showAnswers)}>Show Answers</button>
-<h1 className="quiz-header">{language.charAt(0).toUpperCase() + language.slice(1)} {quizType} Quiz</h1>
+<h1 className="quiz-header">{difficulty}{language.charAt(0).toUpperCase() + language.slice(1)} {quizType} Quiz</h1>
 
       {formatQuestions(quizData)}
  <div id="output"></div>

@@ -21,6 +21,12 @@
     color: white;
     font-weight: 700;
 }
+.selected-difficulty {
+    border-color: green;
+    background-color: green;
+    color: white;
+    font-weight: 700;
+}
 button{    margin-right: 10px;
     margin-bottom: 10px;
     background-color: white;
