@@ -170,7 +170,7 @@ className={language === 'spanish' ? 'selected-language' : ''}
   <button className={language === 'german' ? 'selected-language' : ''} 
   onClick={() => setLanguage('german')}>German</button>
   <button className={language === 'french' ? 'selected-language' : ''} 
-  onClick={() => setLanguage('french')}>French/</button>
+  onClick={() => setLanguage('french')}>French</button>
 </div>
       <div className="quiz-selector">
         <button 
