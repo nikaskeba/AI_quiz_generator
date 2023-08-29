@@ -8,8 +8,8 @@ exports.handler = async function(event, context) {
         const payload = {
             model: "gpt-3.5-turbo-0613",
             messages: [
-                { "role": "system", "content": "You are a Spanish teacher." },
-                { "role": "user", "content": requestBody.content } // Using the content sent from the React component
+                     { "role": "system", "content": "You are a Spanish teacher." },
+            { "role": "user", "content": userContent }
             ],
             max_tokens: 300
         };
