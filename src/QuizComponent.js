@@ -11,6 +11,7 @@ const QuizComponent = () => {
   const [showAnswers, setShowAnswers] = useState(false);  // New state variable
   const [feedback, setFeedback] = useState({}); // New state to store feedback for each question
   const [quizType, setQuizType] = useState('Subjunctive'); // New state for quiz type
+
 const [language, setLanguage] = useState('spanish');
 
 const generateNewQuiz = async () => {
