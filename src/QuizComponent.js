@@ -156,20 +156,20 @@ return (
       {/* Selector buttons for quiz type */}
         <div className="difficulty-selector">
   <button 
-className={quizType === 'beginner' ? 'selected-difficulty' : ''} 
-  onClick={() => setLanguage('beginner')}>Beginner</button>
-  <button className={quizType === 'intermediate' ? 'selected-difficulty' : ''} 
-  onClick={() => setLanguage('intermediate')}>intermediate</button>
-  <button className={quizType === 'advanced' ? 'selected-difficulty' : ''} 
+className={difficulty === 'beginner' ? 'selected-difficulty' : ''} 
+  onClick={() => setDifficulty('beginner')}>Beginner</button>
+  <button className={difficulty  === 'intermediate' ? 'selected-difficulty' : ''} 
+  onClick={() => setDifficulty('intermediate')}>intermediate</button>
+  <button className={difficulty  === 'advanced' ? 'selected-difficulty' : ''} 
   onClick={() => setDifficulty('advanced')}>Advanced</button>
 </div>
     <div className="language-selector">
   <button 
-className={quizType === 'spanish' ? 'selected-language' : ''} 
+className={language === 'spanish' ? 'selected-language' : ''} 
   onClick={() => setLanguage('spanish')}>Spanish</button>
-  <button className={quizType === 'german' ? 'selected-language' : ''} 
+  <button className={language === 'german' ? 'selected-language' : ''} 
   onClick={() => setLanguage('german')}>German</button>
-  <button className={quizType === 'french' ? 'selected-language' : ''} 
+  <button className={language === 'french' ? 'selected-language' : ''} 
   onClick={() => setLanguage('french')}>French/</button>
 </div>
       <div className="quiz-selector">
