@@ -11,6 +11,7 @@ const QuizComponent = () => {
   const [showAnswers, setShowAnswers] = useState(false);  // New state variable
   const [feedback, setFeedback] = useState({}); // New state to store feedback for each question
   const [quizType, setQuizType] = useState('Subjunctive'); // New state for quiz type
+const [language, setLanguage] = useState('spanish');
 
 const generateNewQuiz = async () => {
   setLoading(true);
@@ -29,11 +30,11 @@ const generateNewQuiz = async () => {
  // Determine the content based on the selected quiz type
     let userContent;
       if (quizType === 'Imperative') {
-    userContent = "generate 5 complete spanish imperative sentences with the sentence verb unconjugated inside a () and the conjugated answer at the end in () for example '1.(venir) a la fiesta. (venga)'  output only sentences 1 to 5";
+    userContent = "generate 5 complete ${language} imperative sentences with the sentence verb unconjugated inside a () and the conjugated answer at the end in () for example '1.(venir) a la fiesta. (venga)'  output only sentences 1 to 5";
 } else if (quizType === 'Subjunctive') {
-    userContent = "generate 5 complete spanish subjunctive sentences with the sentence verb unconjugated inside a () and the conjugated answer at the end in () for example '1. Es probable que Juan (venir) a la fiesta. (venga)'  output only sentences 1 to 5";
+    userContent = "generate 5 complete ${language} subjunctive sentences with the sentence verb unconjugated inside a () and the conjugated answer at the end in () for example '1. Es probable que Juan (venir) a la fiesta. (venga)'  output only sentences 1 to 5";
 } else if (quizType === 'Basic Conjugation') {
-    userContent = "generate 5 basic spanish present tense sentences with the sentence verb unconjugated inside a () and the conjugated answer at the end in () for example '1. Juan (venir) a la fiesta. (viene)'  output only sentences 1 to 5";
+    userContent = "generate 5 basic ${language} present tense sentences with the sentence verb unconjugated inside a () and the conjugated answer at the end in () for example '1. Juan (venir) a la fiesta. (viene)'  output only sentences 1 to 5";
 }
 
     try {
@@ -152,6 +153,10 @@ renderedQuestions.push(
 return (
     <div>
       {/* Selector buttons for quiz type */}
+    <div className="language-selector">
+  <button onClick={() => setLanguage('spanish')}>Spanish</button>
+  <button onClick={() => setLanguage('german')}>German</button>
+</div>
       <div className="quiz-selector">
         <button 
             className={quizType === 'Subjunctive' ? 'selected-quiz' : ''} 
