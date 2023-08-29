@@ -1,5 +1,2 @@
-[functions]
-  directory = "netlify/functions"
-
-[functions.getQuizQuestions]
-  timeout = 26
+[build]
+  publish = "public"
