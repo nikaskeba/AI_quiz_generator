@@ -183,6 +183,7 @@ return (
       <button onClick={generateNewQuiz}>Generate New Quiz</button>
       <button onClick={checkAnswers}>Check</button>
       <button onClick={() => setShowAnswers(!showAnswers)}>Show Answers</button>
+<h1 className="quiz-header">{language.charAt(0).toUpperCase() + language.slice(1)} {quizType} Quiz</h1>
 
       {formatQuestions(quizData)}
  <div id="output"></div>
