@@ -37,20 +37,14 @@ const generateNewQuiz = async () => {
 }
 
     try {
-const OPENAI_API_ENDPOINT = 'https://api.openai.com/v1/chat/completions';
+const EXTERNAL_API_ENDPOINT = '/.netlify/functions/getQuizQuestions';
 const payload = {
-    model: "gpt-3.5-turbo-0613",
-    messages: [
-        { "role": "system", "content": "You are a Spanish teacher." },
-        { "role": "user", "content": userContent }
-    ],
-    max_tokens: 300
+    userContent: userContent
 };
 
-const response = await axios.post(OPENAI_API_ENDPOINT, payload, {
+const response = await axios.post(EXTERNAL_API_ENDPOINT, payload, {
     headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${process.env.OPENAI_API_KEY}`
+        'Content-Type': 'application/json'
     }
 });
 
