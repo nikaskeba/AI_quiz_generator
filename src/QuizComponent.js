@@ -155,8 +155,13 @@ return (
     <div>
       {/* Selector buttons for quiz type */}
     <div className="language-selector">
-  <button onClick={() => setLanguage('spanish')}>Spanish</button>
-  <button onClick={() => setLanguage('german')}>German</button>
+  <button 
+className={quizType === 'spanish' ? 'selected-language' : ''} 
+  onClick={() => setLanguage('spanish')}>Spanish</button>
+ className={quizType === 'german' ? 'selected-language' : ''} 
+  onClick={() => setLanguage('german')}>German</button>
+ className={quizType === 'french' ? 'selected-language' : ''} 
+  onClick={() => setLanguage('french')}>French/button>
 </div>
       <div className="quiz-selector">
         <button 
