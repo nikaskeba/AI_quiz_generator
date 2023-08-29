@@ -197,7 +197,7 @@ className={language === 'spanish' ? 'selected-language' : ''}
       <button onClick={generateNewQuiz}>Generate New Quiz</button>
       <button onClick={checkAnswers}>Check</button>
       <button onClick={() => setShowAnswers(!showAnswers)}>Show Answers</button>
-<h1 className="quiz-header">{difficulty}{language.charAt(0).toUpperCase() + language.slice(1)} {quizType} Quiz</h1>
+<h1 className="quiz-header">{difficulty.charAt(0).toUpperCase() + difficulty.slice(1)} {language.charAt(0).toUpperCase() + language.slice(1)} {quizType} Quiz</h1>
 
       {formatQuestions(quizData)}
  <div id="output"></div>
