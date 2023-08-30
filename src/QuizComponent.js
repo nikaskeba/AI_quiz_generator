@@ -159,7 +159,7 @@ return (
 className={difficulty === 'beginner' ? 'selected-difficulty' : ''} 
   onClick={() => setDifficulty('beginner')}>Beginner</button>
   <button className={difficulty  === 'intermediate' ? 'selected-difficulty' : ''} 
-  onClick={() => setDifficulty('intermediate')}>intermediate</button>
+  onClick={() => setDifficulty('intermediate')}>Intermediate</button>
   <button className={difficulty  === 'advanced' ? 'selected-difficulty' : ''} 
   onClick={() => setDifficulty('advanced')}>Advanced</button>
 </div>
