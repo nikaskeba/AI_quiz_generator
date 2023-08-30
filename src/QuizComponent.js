@@ -31,11 +31,11 @@ const generateNewQuiz = async () => {
  // Determine the content based on the selected quiz type
     let userContent;
 if (quizType === 'Imperative') {
-    userContent = `generate 5 complete ${language} ${difficulty} imperative sentences with the sentence verb unconjugated inside a () and the conjugated answer at the end in () for example '1.(venir) a la fiesta. (venga)'  output only sentences 1 to 5`;
+    userContent = `generate 5 complete ${language} ${difficulty} imperative sentences with the ${language} sentence verb unconjugated inside a () and the conjugated ${language} answer at the end in () for example '1.(venir) a la fiesta. (venga)'  output only sentences 1 to 5`;
 } else if (quizType === 'Subjunctive') {
-    userContent = `generate 5 complete ${language} ${difficulty} subjunctive sentences with the sentence verb unconjugated inside a () and the conjugated answer at the end in () for example '1. Es probable que Juan (venir) a la fiesta. (venga)'  output only sentences 1 to 5`;
+    userContent = `generate 5 complete ${language} ${difficulty} subjunctive sentences with the ${language} sentence verb unconjugated inside a () and the conjugated ${language} answer at the end in () for example '1. Es probable que Juan (venir) a la fiesta. (venga)'  output only sentences 1 to 5`;
 } else if (quizType === 'Basic Conjugation') {
-    userContent = `generate 5 basic ${language} ${difficulty} present tense sentences with the sentence verb unconjugated inside a () and the conjugated answer at the end in () for example '1. Juan (venir) a la fiesta. (viene)'  output only sentences 1 to 5`;
+    userContent = `generate 5 basic ${language} ${difficulty} present tense sentences with the ${language} sentence verb unconjugated inside a () and the conjugated ${language} answer at the end in () for example '1. Juan (venir) a la fiesta. (viene)'  output only sentences 1 to 5`;
 }
 
     try {
