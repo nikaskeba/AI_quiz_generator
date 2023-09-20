@@ -165,11 +165,9 @@ useEffect(() => {
       <div className="App">
       {isLoggedIn ? (
     <Routes>
-      
             <Route path="/profile" element={<ProfilePage profile={profile} defaultSettings={defaultSettings} setDefaultSettings={setDefaultSettings} />} />
    <Route path="/quizzes" element={<QuizComponent difficulty={difficulty} language={language}  />} />
    <Route path="/" element={<LoggedIn profile={profile} defaultSettings={defaultSettings} />} />
-
   </Routes>
     
 
