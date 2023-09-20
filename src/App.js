@@ -36,8 +36,8 @@ function App() {
 
       // Parameters to pass to OAuth 2.0 endpoint.
       var params = {
-        'client_id': REACT_APP_CLIENT_ID,
-        'redirect_uri': REACT_APP_REDIRECT_URI,
+        'client_id': process.env.REACT_APP_CLIENT_ID,
+        'redirect_uri': process.env.REACT_APP_REDIRECT_URI,
         'response_type': 'token id_token',
         'scope': 'https://www.googleapis.com/auth/drive.metadata.readonly profile',
         'include_granted_scopes': 'true',
