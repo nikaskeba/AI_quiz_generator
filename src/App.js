@@ -77,7 +77,7 @@ useEffect(() => {
     savedSettings = JSON.stringify({ language: 'english', difficulty: 'beginner' });
     localStorage.setItem('defaultSettings', savedSettings);
   }
-}, []);
+},  [defaultSettings]);
 
 
 
@@ -138,22 +138,14 @@ useEffect(() => {
   
 
   
-  function handleDifficultyChange(difficulty, name) {
-    setDifficulty(difficulty);
-    setQuizName(name);
-  }
 
-  function handleLanguageChange(language, name) {
-    setLanguage(language);
-    setLanguageName(name);
-  }
  
 
   return (
     <Router>
     <div>
       <nav className="navbar navbar-light bg-light">
-        <a className="navbar-brand" href="#">Quiz App</a>
+        <a className="navbar-brand" >Quiz App</a>
         {isLoggedIn && (
         <>
         

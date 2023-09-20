@@ -3,8 +3,8 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 function LoggedIn({ profile, defaultSettings }) {
-    const [language, setLanguage] = useState(defaultSettings.language);
-    const [difficulty, setDifficulty] = useState(defaultSettings.difficulty);
+    const [language] = useState(defaultSettings.language);
+    const [difficulty] = useState(defaultSettings.difficulty);
   return (
     <div>
       <h1>Welcome {profile.name}</h1>
