@@ -100,15 +100,15 @@ const response = await axios.post(EXTERNAL_API_ENDPOINT, payload, {
 
 
 
-const formatQuestions = (data) => {
-  let renderedQuestions = [];
-
-  if (data && data.choices && data.choices[0] && data.choices[0].message) {
-    let content = data.choices[0].message.content;
-
-    const questionAnswerPairs = content.split('\n');
-    
-    questionAnswerPairs.forEach((pair, index) => {
+  const formatQuestions = (data) => {
+    let renderedQuestions = [];
+  
+    if (data && data.choices && data.choices[0] && data.choices[0].message) {
+      let content = data.choices[0].message.content;
+  
+      const questionAnswerPairs = content.split('\n');
+      
+      questionAnswerPairs.forEach((pair, index) => {
       // Extract the prefix, question, and answer from the pair using the updated regex pattern
       let match = pattern_with_prefix.exec(pair);
       if (!match) return;
@@ -129,20 +129,18 @@ if (showAnswers) {
 }
 
 renderedQuestions.push(
-    <p key={index}>
-        {prefix} 
-        <input id={`input-${index}`} placeholder={verb} /> 
-        {questionContent} {answerText} {feedbackElement}
-    </p>
+  <p key={index}>
+    {prefix} 
+    <input id={`input-${index}`} placeholder={verb} /> 
+    {questionContent} {answerText} {feedbackElement}
+  </p>
 );
-
 });
 } else {
-  console.error('Data structure is not as expected:', data);
-  return renderedQuestions; // Return empty array if data structure is not as expected
+console.error('Data structure is not as expected:', data);
 }
-
-}
+return renderedQuestions;
+};
 
 function handleQuizTypeChange(type) {
   setQuizType(type);
@@ -171,9 +169,15 @@ return (
 <button onClick={generateNewQuiz}>Generate New Quiz</button>
       <button onClick={checkAnswers}>Check</button>
       <button onClick={() => setShowAnswers(!showAnswers)}>Show Answers</button>
-      {formatQuestions(quizData)}
- <div id="output"></div>
+   
+
       {loading && <p>Loading...</p>}
+      {quizData && formatQuestions(quizData).map((question, index) => (
+      <React.Fragment key={index}>
+        {question}
+      </React.Fragment>
+    ))}
+     <div id="output"></div>
            {/* Display API Response for Debugging */}
 
     </div>

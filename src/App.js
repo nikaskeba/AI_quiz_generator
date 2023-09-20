@@ -6,11 +6,12 @@ import ProfilePage from './ProfilePage'; // Import the ProfilePage component
 import LoggedIn from './LoggedIn'; // Import the LoggedIn component
 
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [difficulty, setDifficulty] = useState('beginner');
-  const [language, setLanguage] = useState('english');
-
   const [defaultSettings, setDefaultSettings] = useState({ language: 'english', difficulty: 'beginner' });
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [difficulty, setDifficulty] = useState(defaultSettings.difficulty);
+  const [language, setLanguage] = useState(defaultSettings.language);
+
+
 
   const [profile, setProfile] = useState(null);
   function generateRandomString() {
@@ -35,8 +36,8 @@ function App() {
 
       // Parameters to pass to OAuth 2.0 endpoint.
       var params = {
-        'client_id': process.env.REACT_APP_CLIENT_ID,
-        'redirect_uri': process.env.REACT_APP_REDIRECT_URI,
+        'client_id': REACT_APP_CLIENT_ID,
+        'redirect_uri': REACT_APP_REDIRECT_URI,
         'response_type': 'token id_token',
         'scope': 'https://www.googleapis.com/auth/drive.metadata.readonly profile',
         'include_granted_scopes': 'true',
@@ -62,25 +63,11 @@ function App() {
   
 // Only one useEffect to get defaultSettings from local storage and set it once when the component mounts
 useEffect(() => {
-  let savedSettings = localStorage.getItem('defaultSettings');
+  const savedSettings = JSON.parse(localStorage.getItem('defaultSettings'));
   if (savedSettings) {
-    try {
-      const parsedSettings = JSON.parse(savedSettings);
-      if (JSON.stringify(parsedSettings) !== JSON.stringify(defaultSettings)) {
-        setDefaultSettings(parsedSettings);
-      }
-    } catch (error) {
-      console.error('Failed to parse savedSettings from localStorage', error);
-    }
-  } else {
-    savedSettings = JSON.stringify({ language: 'english', difficulty: 'beginner' });
-    localStorage.setItem('defaultSettings', savedSettings);
+    setDefaultSettings(savedSettings);
   }
-},  [defaultSettings]);
-
-
-
-
+}, []);
 
 useEffect(() => {
   localStorage.setItem('defaultSettings', JSON.stringify(defaultSettings));
@@ -92,6 +79,7 @@ useEffect(() => {
     setDifficulty(defaultSettings.difficulty);
   }
 }, [isLoggedIn, defaultSettings]);
+
   
 
   
