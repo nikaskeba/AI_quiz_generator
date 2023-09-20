@@ -5,15 +5,13 @@ import axios from 'axios';
 const pattern_with_prefix = /(.*?)\(([^()]+)\)([^()]+)\(([^()]+)\)/;
 
 
-const QuizComponent = () => {
+const QuizComponent = ({ difficulty, language}) => {
   const [quizData, setQuizData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [showAnswers, setShowAnswers] = useState(false);  // New state variable
   const [feedback, setFeedback] = useState({}); // New state to store feedback for each question
-  const [quizType, setQuizType] = useState('Subjunctive'); // New state for quiz type
+  const [quizType, setQuizType] = useState('Subjunctive')
 
-const [language, setLanguage] = useState('spanish');
-const [difficulty, setDifficulty] = useState('beginner');
 const generateNewQuiz = async () => {
   setLoading(true);
 
@@ -57,47 +55,51 @@ const response = await axios.post(EXTERNAL_API_ENDPOINT, payload, {
       setLoading(false);
       setShowAnswers(false);
 
-    } catch (error) {
-      console.error("Error fetching quiz data:", error);
-      setLoading(false);
-      setShowAnswers(false);
-
+    } 
+      catch (error) {
+        console.error("Error fetching quiz data:", error);
+        console.error("Error response:", error.response);
+        setLoading(false);
+        setShowAnswers(false);
     }
+    
   };
 
 
 
-const checkAnswers = () => {
-  let newFeedback = {};
-
-  if (!quizData || !quizData.choices || !quizData.choices[0] || !quizData.choices[0].message) {
-    console.error("Invalid quiz data");
-    return;
-  }
-
-  const lines = quizData.choices[0].message.content.split('\n');
-
-  lines.forEach((line, index) => {
-    let match = pattern_with_prefix.exec(line);
-    if (!match) return;
-
-    let answer = match[4];  // Extracting the answer from the matched groups
-
-    let inputElement = document.getElementById(`input-${index}`);
-    let userInput = inputElement ? inputElement.value : null;
-
-    if (userInput.toLowerCase() === answer.toLowerCase()) {
-
-      newFeedback[index] = "correct";
+  const checkAnswers = () => {
+    let newFeedback = {};
+  
+    if (quizData && quizData.choices && quizData.choices[0] && quizData.choices[0].message && quizData.choices[0].message.content) {
+      let lines = quizData.choices[0].message.content.split('\n');
+  
+      lines.forEach((line, index) => {
+        let match = pattern_with_prefix.exec(line);
+        if (!match) return;
+  
+        let answer = match[4];  // Extracting the answer from the matched groups
+  
+        let inputElement = document.getElementById(`input-${index}`);
+        let userInput = inputElement ? inputElement.value : null;
+  
+        if (userInput.toLowerCase() === answer.toLowerCase()) {
+          newFeedback[index] = "correct";
+        } else {
+          newFeedback[index] = "wrong";
+        }
+      });
+  
     } else {
-      newFeedback[index] = "wrong";
+      console.error('quizData structure is not as expected:', quizData);
+      return;
     }
-  });
-
-  setFeedback(newFeedback);
-};
-
-
+  
+    setFeedback(newFeedback);
+  };
+  
+  function handleQuizTypeChange(type) {
+    setQuizType(type);
+  }
 
 
 const formatQuestions = (data) => {
@@ -136,69 +138,39 @@ renderedQuestions.push(
     </p>
 );
 
-    });
-  }
+});
+} else {
+  console.error('Data structure is not as expected:', data);
+  return renderedQuestions; // Return empty array if data structure is not as expected
+}
 
-  return renderedQuestions;
-};
-
-
-
-
+}
 
 
-  const selectQuizType = (type) => {
-    setQuizType(type);
-  };
+
+
+
 
 return (
     <div>
-      {/* Selector buttons for quiz type */}
-        <div className="difficulty-selector">
-  <button 
-className={difficulty === 'beginner' ? 'selected-difficulty' : ''} 
-  onClick={() => setDifficulty('beginner')}>Beginner</button>
-  <button className={difficulty  === 'intermediate' ? 'selected-difficulty' : ''} 
-  onClick={() => setDifficulty('intermediate')}>Intermediate</button>
-  <button className={difficulty  === 'advanced' ? 'selected-difficulty' : ''} 
-  onClick={() => setDifficulty('advanced')}>Advanced</button>
-</div>
-    <div className="language-selector">
-  <button 
-className={language === 'spanish' ? 'selected-language' : ''} 
-  onClick={() => setLanguage('spanish')}>Spanish</button>
-  <button className={language === 'german' ? 'selected-language' : ''} 
-  onClick={() => setLanguage('german')}>German</button>
-  <button className={language === 'french' ? 'selected-language' : ''} 
-  onClick={() => setLanguage('french')}>French</button>
-</div>
-      <div className="quiz-selector">
-        <button 
-            className={quizType === 'Subjunctive' ? 'selected-quiz' : ''} 
-            onClick={() => selectQuizType('Subjunctive')}
-        >
-            Subjunctive
-        </button>
-        <button 
-            className={quizType === 'Basic Conjugation' ? 'selected-quiz' : ''} 
-            onClick={() => selectQuizType('Basic Conjugation')}
-        >
-            Basic Conjugation
-        </button>
-        {/* New button for Imperative */}
-        <button 
-            className={quizType === 'Imperative' ? 'selected-quiz' : ''} 
-            onClick={() => selectQuizType('Imperative')}
-        >
-            Imperative
-        </button>
-      </div>
+     
+     
+      <div className="dropdown">
+              <button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                {quizType}
+              </button>
+              <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <button className="dropdown-item" onClick={() => handleQuizTypeChange('Subjunctive')}>Subjunctive</button>
+                <button className="dropdown-item" onClick={() => handleQuizTypeChange('Conjugation')}>Conjugation</button>
+                <button className="dropdown-item" onClick={() => handleQuizTypeChange('Imperative')}>Imperative</button>
+              </div>
+            </div>
 
-      <button onClick={generateNewQuiz}>Generate New Quiz</button>
+   
+<h1 className="quiz-header">{difficulty.charAt(0).toUpperCase() + difficulty.slice(1)} {language.charAt(0).toUpperCase() + language.slice(1)} {quizType} Quiz</h1>
+<button onClick={generateNewQuiz}>Generate New Quiz</button>
       <button onClick={checkAnswers}>Check</button>
       <button onClick={() => setShowAnswers(!showAnswers)}>Show Answers</button>
-<h1 className="quiz-header">{difficulty.charAt(0).toUpperCase() + difficulty.slice(1)} {language.charAt(0).toUpperCase() + language.slice(1)} {quizType} Quiz</h1>
-
       {formatQuestions(quizData)}
  <div id="output"></div>
       {loading && <p>Loading...</p>}
