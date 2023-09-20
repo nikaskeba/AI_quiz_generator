@@ -9,8 +9,7 @@ function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [difficulty, setDifficulty] = useState('beginner');
   const [language, setLanguage] = useState('english');
-  const [quizName, setQuizName] = useState('Beginner');
-  const [languageName, setLanguageName] = useState('Spanish');
+
   const [defaultSettings, setDefaultSettings] = useState({ language: 'english', difficulty: 'beginner' });
 
   const [profile, setProfile] = useState(null);
@@ -145,7 +144,8 @@ useEffect(() => {
     <Router>
     <div>
       <nav className="navbar navbar-light bg-light">
-        <a className="navbar-brand" >Quiz App</a>
+      <a className="navbar-brand" href="#someSectionID">Quiz App</a>
+
         {isLoggedIn && (
         <>
         
