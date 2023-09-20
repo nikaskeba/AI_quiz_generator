@@ -36,8 +36,8 @@ function App() {
 
       // Parameters to pass to OAuth 2.0 endpoint.
       var params = {
-        'client_id': '818715484116-lk0u6hiqoi4s4rgt559pq7i3v7p06eep.apps.googleusercontent.com',
-        'redirect_uri': 'http://localhost:3000/',
+        'client_id': process.env.REACT_APP_CLIENT_ID,
+        'redirect_uri': process.env.REACT_APP_REDIRECT_URI,
         'response_type': 'token id_token',
         'scope': 'https://www.googleapis.com/auth/drive.metadata.readonly profile',
         'include_granted_scopes': 'true',
@@ -63,11 +63,25 @@ function App() {
   
 // Only one useEffect to get defaultSettings from local storage and set it once when the component mounts
 useEffect(() => {
-  const savedSettings = JSON.parse(localStorage.getItem('defaultSettings'));
-  if (savedSettings && JSON.stringify(savedSettings) !== JSON.stringify(defaultSettings)) {
-    setDefaultSettings(savedSettings);
+  let savedSettings = localStorage.getItem('defaultSettings');
+  if (savedSettings) {
+    try {
+      const parsedSettings = JSON.parse(savedSettings);
+      if (JSON.stringify(parsedSettings) !== JSON.stringify(defaultSettings)) {
+        setDefaultSettings(parsedSettings);
+      }
+    } catch (error) {
+      console.error('Failed to parse savedSettings from localStorage', error);
+    }
+  } else {
+    savedSettings = JSON.stringify({ language: 'english', difficulty: 'beginner' });
+    localStorage.setItem('defaultSettings', savedSettings);
   }
 }, []);
+
+
+
+
 
 useEffect(() => {
   localStorage.setItem('defaultSettings', JSON.stringify(defaultSettings));
@@ -92,23 +106,35 @@ useEffect(() => {
           .split('&')
           .reduce((init, item) => {
             let parts = item.split('=');
-            init[parts[0]] = decodeURIComponent(parts[1]);
+            if (parts[1]) {
+              init[parts[0]] = decodeURIComponent(parts[1]);
+            }
             return init;
           }, {});
     
-        if (hash.id_token) {
-          const idToken = JSON.parse(atob(hash.id_token.split('.')[1]));
-          setProfile({
-            name: idToken.name,
-            email: idToken.email,
-            // ... other profile fields
-          });
+        if (hash && hash.id_token) {
+          const idTokenPayload = hash.id_token.split('.')[1];
+          if (idTokenPayload) {
+            try {
+              const idToken = JSON.parse(atob(idTokenPayload));
+              setProfile({
+                name: idToken.name,
+                email: idToken.email,
+                // ... other profile fields
+              });
+            } catch (e) {
+              console.error('Failed to parse ID token payload', e);
+            }
+          } else {
+            console.error('id_token payload is not present in the hash');
+          }
         } else {
           console.error('id_token is not present in the hash');
         }
       }
     }, []);
     
+
   
 
   
@@ -147,6 +173,7 @@ useEffect(() => {
       <div className="App">
       {isLoggedIn ? (
     <Routes>
+      
             <Route path="/profile" element={<ProfilePage profile={profile} defaultSettings={defaultSettings} setDefaultSettings={setDefaultSettings} />} />
    <Route path="/quizzes" element={<QuizComponent difficulty={difficulty} language={language} quizName={quizName} languageName={languageName}  />} />
    <Route path="/" element={<LoggedIn profile={profile} defaultSettings={defaultSettings} />} />

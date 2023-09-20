@@ -5,7 +5,7 @@ import axios from 'axios';
 const pattern_with_prefix = /(.*?)\(([^()]+)\)([^()]+)\(([^()]+)\)/;
 
 
-const QuizComponent = ({ difficulty, language}) => {
+const QuizComponent = ({ difficulty, language }) => {
   const [quizData, setQuizData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [showAnswers, setShowAnswers] = useState(false);  // New state variable
@@ -97,9 +97,7 @@ const response = await axios.post(EXTERNAL_API_ENDPOINT, payload, {
     setFeedback(newFeedback);
   };
   
-  function handleQuizTypeChange(type) {
-    setQuizType(type);
-  }
+
 
 
 const formatQuestions = (data) => {
@@ -146,7 +144,9 @@ renderedQuestions.push(
 
 }
 
-
+function handleQuizTypeChange(type) {
+  setQuizType(type);
+}
 
 
 
