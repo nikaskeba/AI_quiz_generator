@@ -1,1 +1,5 @@
 .env
+node_modules/.cache/default-development/0.pack
+node_modules/.cache/default-development/16.pack
+node_modules/.cache/default-development/18.pack
+node_modules/.cache/default-development/20.pack
