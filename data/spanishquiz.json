@@ -1,0 +1,465 @@
+{
+  "beginner": {
+    "Imperative": [{
+        "sentence": "(Venir) aquí!",
+        "answer": "ven"
+      },
+      {
+        "sentence": "(Hablar) más despacio.",
+        "answer": "habla"
+      },
+      {
+        "sentence": "(Escuchar) la música.",
+        "answer": "escucha"
+      },
+      {
+        "sentence": "(Comer) la sopa.",
+        "answer": "come"
+      },
+      {
+        "sentence": "(Beber) agua.",
+        "answer": "bebe"
+      },
+      {
+        "sentence": "(Ir) a la tienda.",
+        "answer": "ve"
+      },
+      {
+        "sentence": "(Estudiar) para el examen.",
+        "answer": "estudia"
+      },
+      {
+        "sentence": "(Escribir) una carta.",
+        "answer": "escribe"
+      },
+      {
+        "sentence": "(Abrir) la ventana.",
+        "answer": "abre"
+      },
+      {
+        "sentence": "(Cerrar) la puerta.",
+        "answer": "cierra"
+      },
+      {
+        "sentence": "(Pasar) la sal.",
+        "answer": "pasa"
+      },
+      {
+        "sentence": "(Trabajar) duro.",
+        "answer": "trabaja"
+      },
+      {
+        "sentence": "(Llamar) a Juan.",
+        "answer": "llama"
+      },
+      {
+        "sentence": "(Mirar) la televisión.",
+        "answer": "mira"
+      },
+      {
+        "sentence": "(Leer) el libro.",
+        "answer": "lee"
+      }, {
+        "sentence": "(Decir) la verdad.",
+        "answer": "di"
+      },
+      {
+        "sentence": "(Vivir) la vida.",
+        "answer": "vive"
+      },
+      {
+        "sentence": "(Correr) rápido.",
+        "answer": "corre"
+      },
+      {
+        "sentence": "(Jugar) al fútbol.",
+        "answer": "juega"
+      },
+      {
+        "sentence": "(Bailar) conmigo.",
+        "answer": "baila"
+      },
+      {
+        "sentence": "(Cantar) la canción.",
+        "answer": "canta"
+      },
+      {
+        "sentence": "(Esperar) un momento.",
+        "answer": "espera"
+      },
+      {
+        "sentence": "(Pensar) antes de actuar.",
+        "answer": "piensa"
+      },
+      {
+        "sentence": "(Volver) temprano.",
+        "answer": "vuelve"
+      },
+      {
+        "sentence": "(Sentarse) aquí.",
+        "answer": "siéntate"
+      },
+      {
+        "sentence": "(Tomar) un café.",
+        "answer": "toma"
+      },
+      {
+        "sentence": "(Pagar) la cuenta.",
+        "answer": "paga"
+      },
+      {
+        "sentence": "(Dormir) bien.",
+        "answer": "duerme"
+      },
+      {
+        "sentence": "(Comprar) el pan.",
+        "answer": "compra"
+      },
+      {
+        "sentence": "(Ayudar) a María.",
+        "answer": "ayuda"
+      },
+      {
+        "sentence": "(Viajar) por el mundo.",
+        "answer": "viaja"
+      },
+      {
+        "sentence": "(Recordar) la cita.",
+        "answer": "recuerda"
+      },
+      {
+        "sentence": "(Cocinar) la cena.",
+        "answer": "cocina"
+      },
+      {
+        "sentence": "(Vender) el coche.",
+        "answer": "vende"
+      },
+      {
+        "sentence": "(Aprender) español.",
+        "answer": "aprende"
+      }
+    ],
+    "Subjunctive": [{
+        "sentence": "Espero que tú (aprender) español.",
+        "answer": "aprendas"
+      },
+      {
+        "sentence": "Quiero que él (ser) feliz.",
+        "answer": "sea"
+      },
+      {
+        "sentence": "Dudo que ellos (venir) mañana.",
+        "answer": "vengan"
+      },
+      {
+        "sentence": "Es importante que tú (hacer) la tarea.",
+        "answer": "hagas"
+      },
+      {
+        "sentence": "Ojalá que (llover) mañana.",
+        "answer": "llueva"
+      },
+      {
+        "sentence": "No creo que ella (saber) la respuesta.",
+        "answer": "sepa"
+      },
+      {
+        "sentence": "Es posible que nosotros (ir) al cine.",
+        "answer": "vayamos"
+      },
+      {
+        "sentence": "Prefiero que tú no (decir) nada.",
+        "answer": "digas"
+      },
+      {
+        "sentence": "Necesito que tú (escribir) la carta.",
+        "answer": "escribas"
+      },
+      {
+        "sentence": "Temo que él no (poder) venir.",
+        "answer": "pueda"
+      },
+      {
+        "sentence": "Es bueno que ustedes (estudiar) mucho.",
+        "answer": "estudien"
+      },
+      {
+        "sentence": "Deseo que ella (tener) éxito.",
+        "answer": "tenga"
+      },
+      {
+        "sentence": "Es probable que él (correr) en la maratón.",
+        "answer": "corra"
+      },
+      {
+        "sentence": "Espero que tú (comer) bien.",
+        "answer": "comas"
+      },
+      {
+        "sentence": "Quiero que ellos (estar) aquí.",
+        "answer": "estén"
+      },
+      {
+        "sentence": "No es cierto que él (haber) terminado.",
+        "answer": "haya"
+      },
+      {
+        "sentence": "Dudo que nosotros (pensar) lo mismo.",
+        "answer": "pensemos"
+      },
+      {
+        "sentence": "Es necesario que tú (hacer) ejercicio.",
+        "answer": "hagas"
+      },
+      {
+        "sentence": "Recomiendo que ella (leer) ese libro.",
+        "answer": "lea"
+      },
+      {
+        "sentence": "Espero que tú (vivir) una vida plena.",
+        "answer": "vivas"
+      }
+    ],
+    "Conjugation": [
+   {"sentence": "Yo (hablar) español.", "answer": "hablo"},
+      {"sentence": "Tú (comer) una manzana.", "answer": "comes"},
+      {"sentence": "Él (vivir) en Madrid.", "answer": "vive"},
+      {"sentence": "Nosotros (ser) estudiantes.", "answer": "somos"},
+      {"sentence": "Vosotros (tener) un coche.", "answer": "tenéis"},
+      {"sentence": "Ellos (hacer) la tarea.", "answer": "hacen"},
+      {"sentence": "Ella (escribir) una carta.", "answer": "escribe"},
+      {"sentence": "Yo (poder) resolverlo.", "answer": "puedo"},
+      {"sentence": "Tú (decir) la verdad.", "answer": "dices"},
+      {"sentence": "Nosotros (ir) al cine.", "answer": "vamos"},
+      {"sentence": "Vosotros (jugar) al fútbol.", "answer": "jugáis"},
+      {"sentence": "Él (querer) un helado.", "answer": "quiere"},
+      {"sentence": "Ella (poner) la mesa.", "answer": "pone"},
+      {"sentence": "Yo (saber) la respuesta.", "answer": "sé"},
+      {"sentence": "Tú (venir) a la fiesta.", "answer": "vienes"},
+      {"sentence": "Nosotros (dormir) ocho horas.", "answer": "dormimos"},
+      {"sentence": "Ellos (leer) el periódico.", "answer": "leen"},
+      {"sentence": "Vosotros (correr) en el parque.", "answer": "corréis"},
+      {"sentence": "Ella (abrir) la ventana.", "answer": "abre"},
+      {"sentence": "Yo (conducir) el coche.", "answer": "conduzco"}
+    ]
+  },
+  "intermediate": {
+    "Imperative": [
+    {"sentence": "(Decírselo) a Juan.", "answer": "díselo"},
+      {"sentence": "No (preocuparse) por pequeñeces.", "answer": "preocúpate"},
+      {"sentence": "(Vestirse) rápidamente.", "answer": "vístete"},
+      {"sentence": "(Traer) los documentos contigo.", "answer": "trae"},
+      {"sentence": "No (olvidarse) de la cita.", "answer": "olvídate"},
+      {"sentence": "(Irse) de aquí.", "answer": "vete"},
+      {"sentence": "(Ponerlo) en la mesa.", "answer": "ponlo"},
+      {"sentence": "(Hacer) lo necesario.", "answer": "haz"},
+      {"sentence": "No (ser) grosero.", "answer": "sé"},
+      {"sentence": "(Dármelo) ahora.", "answer": "dámelo"},
+      {"sentence": "(Venirse) con nosotros.", "answer": "véngete"},
+      {"sentence": "(Salir) sin hacer ruido.", "answer": "sal"},
+      {"sentence": "(Tener) cuidado con ese perro.", "answer": "ten"},
+      {"sentence": "No (decirme) mentiras.", "answer": "dime"},
+      {"sentence": "(Escribirme) una carta.", "answer": "escríbeme"},
+      {"sentence": "No (mirar) atrás.", "answer": "mira"},
+      {"sentence": "(Ducharse) antes de dormir.", "answer": "ducha"},
+      {"sentence": "(Sentarse) en ese lugar.", "answer": "siéntate"},
+      {"sentence": "(Volver) antes de las 10.", "answer": "vuelve"},
+      {"sentence": "(Entregarlo) mañana.", "answer": "entrégalo"}
+
+    ],
+    "Subjunctive": [
+      {"sentence": "No creo que Juan (saber) la verdad.", "answer": "sepa"},
+      {"sentence": "Me alegra que tú (venir) a la fiesta.", "answer": "vengas"},
+      {"sentence": "Es posible que nosotros (terminar) el proyecto mañana.", "answer": "terminemos"},
+      {"sentence": "Dudo que él (poder) ayudarnos.", "answer": "pueda"},
+      {"sentence": "Es importante que usted (informar) al director.", "answer": "informe"},
+      {"sentence": "Ojalá que ellos (tener) tiempo libre.", "answer": "tengan"},
+      {"sentence": "Quisiera que tú (estar) aquí conmigo.", "answer": "estuvieras"},
+      {"sentence": "Aunque él no (querer), debemos continuar.", "answer": "quiera"},
+      {"sentence": "Es probable que Marta (decidir) irse.", "answer": "decida"},
+      {"sentence": "Es necesario que nosotros (hacer) una reserva.", "answer": "hagamos"},
+      {"sentence": "Te pido que no (hablar) de eso.", "answer": "hables"},
+      {"sentence": "Espero que tú (conocer) a mi amigo pronto.", "answer": "conozcas"},
+      {"sentence": "No estoy seguro de que ellos (entender) la situación.", "answer": "entiendan"},
+      {"sentence": "Temo que Raúl no (llegar) a tiempo.", "answer": "llegue"},
+      {"sentence": "Deseo que tú (ser) feliz.", "answer": "seas"},
+      {"sentence": "A menos que él (trabajar) más, no lo logrará.", "answer": "trabaje"},
+      {"sentence": "Aunque tú no lo (creer), es la verdad.", "answer": "creas"},
+      {"sentence": "Me sorprende que María (saber) eso.", "answer": "sepa"},
+      {"sentence": "Necesito que tú (hacer) el favor.", "answer": "hagas"},
+      {"sentence": "Es raro que él (actuar) así.", "answer": "actúe"}
+    ],
+
+    "Conjugation": [
+      {"sentence": "Cuando era niño, yo siempre (jugar) en el parque.", "answer": "jugaba"},
+      {"sentence": "Me dijo que él (venir) mañana.", "answer": "vendría"},
+      {"sentence": "Si tuviera dinero, yo (comprar) un coche nuevo.", "answer": "compraría"},
+      {"sentence": "Es posible que Juan (hacer) la tarea mañana.", "answer": "haga"},
+      {"sentence": "Ojalá que ellos (estar) aquí.", "answer": "estén"},
+      {"sentence": "Cuando llegué, él ya (salir).", "answer": "había salido"},
+      {"sentence": "Si (tener) tiempo, lo haría.", "answer": "tuviera"},
+      {"sentence": "Antes de mudarme aquí, nunca (probar) la paella.", "answer": "había probado"},
+      {"sentence": "Es probable que nosotros (ir) a la playa este fin de semana.", "answer": "vayamos"},
+      {"sentence": "Mi madre quería que yo (ser) médico.", "answer": "fuera"},
+      {"sentence": "Siempre (dudar) de sus palabras.", "answer": "dudaba"},
+      {"sentence": "Si supieras la verdad, (cambiar) de opinión.", "answer": "cambiarías"},
+      {"sentence": "Necesito un libro que (explicar) la gramática avanzada.", "answer": "explique"},
+      {"sentence": "Cuando era joven, (pensar) en ser astronauta.", "answer": "pensaba"},
+      {"sentence": "El profesor espera que tú (estudiar) para el examen.", "answer": "estudies"},
+      {"sentence": "Si (saber) la respuesta, te la diría.", "answer": "supiera"},
+      {"sentence": "Aunque (tener) miedo, decidió enfrentarlo.", "answer": "tenía"},
+      {"sentence": "Me sorprendió que él no (conocer) a María.", "answer": "conociera"},
+      {"sentence": "Antes de que llegaras, yo ya (comer).", "answer": "había comido"},
+      {"sentence": "No creo que él (poder) resolver el problema tan rápidamente.", "answer": "pueda"}
+
+    ]
+  },
+ "advanced": {
+"Imperative": [{"sentence": "(Escribir) a mí.", "answer": "Escribe"},
+      {"sentence": "(Hacer) los deberes ahora mismo.", "answer": "Haz"},
+      {"sentence": "(Decir) la verdad, por favor.", "answer": "Di"},
+      {"sentence": "(Venir) con nosotros esta noche.", "answer": "Ven"},
+      {"sentence": "No (hablar) tan alto.", "answer": "hables"},
+      {"sentence": "(Dar) el libro a Juan.", "answer": "Da"},
+      {"sentence": "(Ir) directo a casa.", "answer": "Ve"},
+      {"sentence": "(Saber) comportarse.", "answer": "Sabe"},
+      {"sentence": "No (estar) triste.", "answer": "estés"},
+      {"sentence": "(Poner) más esfuerzo en tu trabajo.", "answer": "Pon"},
+       {"sentence": "(Resolver) el problema.", "answer": "Resuelve"},
+    {"sentence": "(Decidir) ahora mismo.", "answer": "Decide"},
+    {"sentence": "(Intervenir) en la discusión.", "answer": "Interviene"},
+    {"sentence": "(Transmitir) el mensaje.", "answer": "Transmite"},
+    {"sentence": "(Distinguir) entre lo bueno y lo malo.", "answer": "Distingue"},
+    {"sentence": "(Contribuir) con la causa.", "answer": "Contribuye"},
+    {"sentence": "(Describir) la situación.", "answer": "Describe"},
+    {"sentence": "(Producir) más unidades.", "answer": "Produce"},
+    {"sentence": "(Reducir) los costos.", "answer": "Reduce"},
+    {"sentence": "(Traducir) el documento.", "answer": "Traduce"},
+    {"sentence": "(Adquirir) más habilidades.", "answer": "Adquiere"},
+    {"sentence": "(Distribuir) los recursos.", "answer": "Distribuye"},
+    {"sentence": "(Incluir) todos los detalles.", "answer": "Incluye"},
+    {"sentence": "(Construir) una base sólida.", "answer": "Construye"},
+    {"sentence": "(Proteger) tus derechos.", "answer": "Protege"},
+    {"sentence": "(Dirigir) la reunión.", "answer": "Dirige"},
+    {"sentence": "(Expandir) tus horizontes.", "answer": "Expande"},
+    {"sentence": "(Sustituir) el producto defectuoso.", "answer": "Sustituye"},
+    {"sentence": "(Corregir) los errores.", "answer": "Corrige"},
+    {"sentence": "(Instruir) al nuevo empleado.", "answer": "Instruye"},
+    {"sentence": "(Convertir) tus sueños en realidad.", "answer": "Convierte"},
+    {"sentence": "(Persistir) en tus esfuerzos.", "answer": "Persiste"},
+    {"sentence": "(Invertir) en educación.", "answer": "Invierte"},
+    {"sentence": "(Perseguir) tus pasiones.", "answer": "Persigue"},
+    {"sentence": "(Asumir) la responsabilidad.", "answer": "Asume"},
+    {"sentence": "(Obtener) mejores resultados.", "answer": "Obtén"},
+    {"sentence": "(Insistir) en la calidad.", "answer": "Insiste"},
+    {"sentence": "(Poseer) una actitud positiva.", "answer": "Posee"},
+    {"sentence": "(Concebir) un nuevo proyecto.", "answer": "Concibe"},
+    {"sentence": "(Percibir) los cambios.", "answer": "Percibe"}
+
+    ],
+    "Subjunctive": [  {"sentence": "Si él (estar) aquí, sería genial.", "answer": "estuviera"},
+      {"sentence": "Es posible que nosotros (hacer) un viaje el próximo año.", "answer": "hagamos"},
+      {"sentence": "Dudo que ella (saber) la verdad.", "answer": "sepa"},
+      {"sentence": "Quisiera que tú (venir) a la fiesta.", "answer": "vinieras"},
+      {"sentence": "Ojalá que (llover) mañana.", "answer": "llueva"},
+      {"sentence": "Aunque él (tener) razón, no lo admitiré.", "answer": "tenga"},
+      {"sentence": "Es probable que ellos no (entender) el problema.", "answer": "entiendan"},
+      {"sentence": "Espero que tú (ser) feliz.", "answer": "seas"},
+      {"sentence": "Necesito alguien que (hablar) francés.", "answer": "hable"},
+      {"sentence": "Recomiendo que ella (leer) ese libro.", "answer": "lea"},
+        {"sentence": "Si él (estar) aquí, sería genial.", "answer": "estuviera"},
+    {"sentence": "Es posible que nosotros (hacer) un viaje el próximo año.", "answer": "hagamos"},
+    {"sentence": "Dudo que ella (saber) la solución.", "answer": "sepa"},
+    {"sentence": "Es probable que Juan (venir) mañana.", "answer": "venga"},
+    {"sentence": "Me alegraría si tú (poder) asistir a la fiesta.", "answer": "pudieras"},
+    {"sentence": "Es necesario que ustedes (ser) puntuales.", "answer": "sean"},
+    {"sentence": "Espero que tú (tener) éxito en tu proyecto.", "answer": "tengas"},
+    {"sentence": "Ojalá que ellos (decidir) pronto.", "answer": "decidan"},
+    {"sentence": "Dudo que el proyecto (prosperar) sin financiamiento.", "answer": "prospere"},
+    {"sentence": "Es poco probable que él (entender) la situación.", "answer": "entienda"},
+    {"sentence": "Me sorprendería si él no (saber) nada.", "answer": "supiera"},
+    {"sentence": "Quisiera que tú (ir) conmigo al cine.", "answer": "fueras"},
+    {"sentence": "No creo que ella (querer) acompañarnos.", "answer": "quiera"},
+    {"sentence": "Es fundamental que el equipo (trabajar) unido.", "answer": "trabaje"},
+    {"sentence": "Es una lástima que tú no (poder) quedarte más tiempo.", "answer": "puedas"},
+    {"sentence": "Temo que él (olvidar) nuestro acuerdo.", "answer": "olvide"},
+    {"sentence": "Si ellos (saber) la verdad, reaccionarían diferente.", "answer": "supieran"},
+    {"sentence": "No pienso que él (resolver) el problema tan rápidamente.", "answer": "resuelva"},
+    {"sentence": "Es crucial que nosotros (tomar) una decisión ahora.", "answer": "tomemos"},
+    {"sentence": "Ojalá que la situación (mejorar) pronto.", "answer": "mejore"},
+      {"sentence": "Si tú (tener) más tiempo, podríamos hacerlo.", "answer": "tuvieras"},
+    {"sentence": "Es importante que tú (estudiar) para el examen.", "answer": "estudies"},
+    {"sentence": "No estoy seguro de que él (conocer) la respuesta.", "answer": "conozca"},
+    {"sentence": "Ojalá que ellos (llegar) a tiempo.", "answer": "lleguen"},
+    {"sentence": "Es probable que nosotros (salir) temprano mañana.", "answer": "salgamos"},
+    {"sentence": "Dudo que Juan (poder) completar el proyecto.", "answer": "pueda"},
+    {"sentence": "Es esencial que tú (practicar) cada día.", "answer": "practiques"},
+    {"sentence": "No creo que ellos (entender) el problema.", "answer": "entiendan"},
+    {"sentence": "Espero que ella (traer) el documento.", "answer": "traiga"},
+    {"sentence": "Si tú (ser) más amable, te ayudaría.", "answer": "fueras"},
+    {"sentence": "Ojalá que el clima (ser) bueno mañana.", "answer": "sea"},
+    {"sentence": "No estoy seguro de que tú (querer) ir.", "answer": "quieras"},
+    {"sentence": "Es necesario que él (hacer) su tarea.", "answer": "haga"},
+    {"sentence": "Dudo que nosotros (ir) a la fiesta.", "answer": "vayamos"},
+    {"sentence": "Espero que tú (decidir) pronto.", "answer": "decidas"},
+    {"sentence": "Si ellos (tener) dinero, lo comprarían.", "answer": "tuvieran"},
+    {"sentence": "No es cierto que ella (saber) todo.", "answer": "sepa"},
+    {"sentence": "Es posible que yo (venir) la próxima semana.", "answer": "venga"},
+    {"sentence": "Espero que él (resolver) el problema.", "answer": "resuelva"},
+    {"sentence": "Ojalá que tú (poder) ayudarme.", "answer": "puedas"}
+
+    ],
+    "Conjugation": [ {"sentence": "Ellos (ser) felices.", "answer": "son"},
+      {"sentence": "Yo (tener) una idea.", "answer": "tengo"},
+      {"sentence": "Nosotros (ir) al cine ayer.", "answer": "fuimos"},
+      {"sentence": "Vosotros (hablar) con el profesor.", "answer": "habláis"},
+      {"sentence": "Tú (vivir) en España.", "answer": "vives"},
+      {"sentence": "Ella (hacer) su tarea todos los días.", "answer": "hace"},
+      {"sentence": "Ustedes (comer) en ese restaurante.", "answer": "comen"},
+      {"sentence": "Yo (saber) la respuesta.", "answer": "sé"},
+      {"sentence": "Ellos (estar) en la playa la semana pasada.", "answer": "estuvieron"},
+      {"sentence": "Nosotros (poder) resolver el problema.", "answer": "podemos"},
+          {"sentence": "Aquel día, nosotros (ir) al cine.", "answer": "fuimos"},
+    {"sentence": "El año pasado, tú (tener) un coche rojo.", "answer": "tuviste"},
+    {"sentence": "Ellos (decidir) mudarse a Madrid.", "answer": "decidieron"},
+    {"sentence": "A veces yo (pensar) en ti.", "answer": "pienso"},
+    {"sentence": "Aquel verano, nosotros (hacer) un viaje a Europa.", "answer": "hicimos"},
+    {"sentence": "¿Tú (saber) la respuesta?", "answer": "sabes"},
+    {"sentence": "Antes de ayer, ella (venir) a mi casa.", "answer": "vino"},
+    {"sentence": "Yo no (poder) hacerlo sin tu ayuda.", "answer": "pude"},
+    {"sentence": "Cada mañana, ellos (leer) el periódico.", "answer": "leen"},
+    {"sentence": "La última vez, nosotros (ver) una película de terror.", "answer": "vimos"},
+    {"sentence": "Cuando era joven, yo (ser) muy activo.", "answer": "era"},
+    {"sentence": "¿Tú (querer) un poco de agua?", "answer": "quieres"},
+    {"sentence": "El mes pasado, ellos (comer) en ese restaurante.", "answer": "comieron"},
+    {"sentence": "Habitualmente, yo (escribir) en mi diario.", "answer": "escribo"},
+    {"sentence": "El otro día, tú (hablar) con el director.", "answer": "hablaste"},
+    {"sentence": "A veces ellos (dormir) en el sofá.", "answer": "duermen"},
+    {"sentence": "Durante la infancia, yo (jugar) al fútbol.", "answer": "jugaba"},
+    {"sentence": "La semana pasada, nosotros (vivir) una experiencia increíble.", "answer": "vivimos"},
+    {"sentence": "Ellos siempre (decir) la verdad.", "answer": "dicen"},
+    {"sentence": "Yo (sentir) mucho lo que ocurrió.", "answer": "siento"},
+  {"sentence": "Si hubiera sabido, yo (actuar) de forma diferente.", "answer": "habría actuado"},
+    {"sentence": "Ellos (resolver) el problema si tuvieran los recursos.", "answer": "resolverían"},
+    {"sentence": "Aunque tú no lo (creer), es la verdad.", "answer": "creas"},
+    {"sentence": "Tal vez él (llegar) mañana.", "answer": "llegue"},
+    {"sentence": "Yo (preferir) no comentar al respecto.", "answer": "prefiero"},
+    {"sentence": "Aunque ellos (intentar), no lograron terminar a tiempo.", "answer": "intentaron"},
+    {"sentence": "Si tú me lo (pedir), te lo daría.", "answer": "pidieras"},
+    {"sentence": "Ella (volver) a casa tan pronto como pueda.", "answer": "volverá"},
+    {"sentence": "Nosotros (producir) más si tuviéramos más trabajadores.", "answer": "produciríamos"},
+    {"sentence": "Aunque tú (estar) cansado, deberías continuar.", "answer": "estés"},
+    {"sentence": "Si ellos lo (saber), nos habrían informado.", "answer": "supieran"},
+    {"sentence": "Aunque lo (hacer) rápidamente, asegúrate de que esté bien hecho.", "answer": "hagas"},
+    {"sentence": "Si yo (tener) el dinero, habría comprado esa casa.", "answer": "tuviera"},
+    {"sentence": "Es probable que nosotros (partir) antes del amanecer.", "answer": "partamos"},
+    {"sentence": "Aunque tú no (querer) aceptarlo, es la realidad.", "answer": "quieras"},
+    {"sentence": "Ellos (estar) en el concierto si consiguen las entradas.", "answer": "estarán"},
+    {"sentence": "Yo (leer) el libro si tuviera más tiempo.", "answer": "leería"},
+    {"sentence": "Si tú (ser) más cuidadoso, esto no habría pasado.", "answer": "fueras"},
+    {"sentence": "Aunque él (trabajar) duro, no logra sus objetivos.", "answer": "trabaje"},
+    {"sentence": "Es probable que tú (recibir) una respuesta mañana.", "answer": "recibas"}
+    ]
+  }
+}
