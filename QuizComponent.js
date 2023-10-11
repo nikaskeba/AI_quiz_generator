@@ -29,6 +29,9 @@ const [answerCorrectness, setAnswerCorrectness] = useState([]);
 const inputRefs = useRef([]);
 const [answersChecked, setAnswersChecked] = useState(false);
 const [userAnswers, setUserAnswers] = useState([]);
+useEffect(() => {
+    setUserAnswers(formattedQuestions.map(() => ""));
+}, [formattedQuestions]);
 const [showQuiz, setShowQuiz] = useState(false);
 const [hasSelected, setHasSelected] = useState(false);
 const [quizQuestion, setQuizQuestion] = useState("");
@@ -247,43 +250,44 @@ const isIncorrect = (option) => hasSelected && option === selectedAnswer && opti
          
 
 
-{formattedQuestions.map((question, index) => {
-    const [start, middle, end] = question.sentence.split(/[\(\)]/);
-    return (
-        <View key={index} style={{ flexDirection: 'column', alignItems: 'flex-start', marginVertical: 5 }}>
-            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                <Text>{start}</Text>
- <TextInput
-    ref={el => inputRefs.current[index] = el}
-    value={userAnswers[index]}
-    onChangeText={(text) => {
-        const updatedAnswers = [...userAnswers];
-        updatedAnswers[index] = text;
-        setUserAnswers(updatedAnswers);
-    }}
-    style={{ 
-        borderWidth: 1, 
-        borderColor: 'gray', 
-        paddingHorizontal: 5, 
-        marginHorizontal: 5,
-        backgroundColor: answerCorrectness[index] === true ? 'green' : (answerCorrectness[index] === false ? 'red' : 'white')
-    }}
-     placeholder={middle}
-/>
+   {formattedQuestions.map((question, index) => {
+                const [start, middle, end] = question.sentence.split(/[\(\)]/);
+                return (
+                    <View key={index} style={{ flexDirection: 'column', alignItems: 'flex-start', marginVertical: 5 }}>
+                        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                            <Text>{start}</Text>
+                            <TextInput
+                                ref={el => inputRefs.current[index] = el}
+                                value={userAnswers[index] || ""} // Ensure value is never undefined or null
+                                onChangeText={(text) => {
+                                    const updatedAnswers = [...userAnswers];
+                                    updatedAnswers[index] = text;
+                                    setUserAnswers(updatedAnswers);
+                                }}
+                                style={{ 
+                                    borderWidth: 1, 
+                                    borderColor: 'gray', 
+                                    paddingHorizontal: 5, 
+                                    marginHorizontal: 5,
+                                    backgroundColor: answerCorrectness[index] === true ? 'green' : (answerCorrectness[index] === false ? 'red' : 'white')
+                                }}
+                                placeholder={middle}
+                            />
+                            <Text>{end}</Text>
+                        </View>
+                        {showAnswersVisibility && <Text style={{ marginTop: 5 }}>Answer: {question.answer.charAt(0).toUpperCase() + question.answer.slice(1)}</Text>}
+                    </View>
+                );
+            })}
 
-                <Text>{end}</Text>
-            </View>
-{showAnswersVisibility && <Text style={{ marginTop: 5 }}>Answer: {question.answer.charAt(0).toUpperCase() + question.answer.slice(1)}</Text>}
-        </View>
-    );
-})}
-
-{formattedQuestions.length > 0 && (
-<View style={{flexDirection: 'row', justifyContent: 'space-between', marginTop: 10 }}> <View style={{ marginRight: 5, }}>
-    <Button title={answersChecked ? "Reset Answers" : "Check Answers"} onPress={handleCheckAnswers} /></View>
-    <Button title={showAnswersVisibility ? "Hide Answers" : "Show Answers"} onPress={() => setShowAnswersVisibility(prevState => !prevState)} />
-</View>
-)}
+            {formattedQuestions.length > 0 && (
+                <View style={{flexDirection: 'row', justifyContent: 'space-between', marginTop: 10 }}>
+                    <View style={{ marginRight: 5, }}>
+                        <Button title={answersChecked ? "Reset Answers" : "Check Answers"} onPress={handleCheckAnswers} />
+                    </View>
+                    <Button title={showAnswersVisibility ? "Hide Answers" : "Show Answers"} onPress={() => setShowAnswersVisibility(prevState => !prevState)} />
+                </View>
+            )}
         </View>
     );
 };

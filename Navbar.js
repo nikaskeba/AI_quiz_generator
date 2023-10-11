@@ -3,8 +3,10 @@ import { View, Text, StyleSheet, Platform, TouchableOpacity } from 'react-native
 
 const Navbar = ({ isUserLoggedIn, setActivePage, activePage }) => {
     return (  
-        <View style={styles.navbar}>
-            {isUserLoggedIn && (
+   
+  <View style={styles.navbar}>
+  
+         
                 <View style={styles.links}>
                     {['home', 'dictionary', 'saved', 'quiz'].map((page) => (
                         <TouchableOpacity 
@@ -21,7 +23,7 @@ const Navbar = ({ isUserLoggedIn, setActivePage, activePage }) => {
                         </TouchableOpacity>
                     ))}
                 </View>
-            )}
+      
         </View>
     );
 };
@@ -58,6 +60,7 @@ const styles = StyleSheet.create({
     },
     navbar: {
         height: 60,
+             width: '100%',
         alignItems: 'center',
         justifyContent: 'center',
         backgroundColor: '#333',
