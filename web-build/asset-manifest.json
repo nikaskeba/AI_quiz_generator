@@ -1,0 +1,19 @@
+{
+  "files": {
+    "main.js": "/static/js/main.8c1fd85d.js",
+    "static/js/984.cb34a3c7.js": "/static/js/984.cb34a3c7.js",
+    "static/media/spanishquiz.png": "/static/media/spanishquiz.85b1e26378e2b6bb5658.png",
+    "favicon.ico": "/favicon.ico",
+    "index.html": "/index.html",
+    "favicon-32.png": "/favicon-32.png",
+    "favicon-16.png": "/favicon-16.png",
+    "manifest.json": "/manifest.json",
+    "serve.json": "/serve.json",
+    "main.8c1fd85d.js.map": "/static/js/main.8c1fd85d.js.map",
+    "984.cb34a3c7.js.map": "/static/js/984.cb34a3c7.js.map"
+  },
+  "entrypoints": [
+    "static/js/984.cb34a3c7.js",
+    "static/js/main.8c1fd85d.js"
+  ]
+}

@@ -11,9 +11,7 @@
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.cantrollmyrs.spanishquiz"
@@ -25,9 +23,22 @@
       },
       "package": "com.cantrollmyrs.spanishquiz"
     },
-    "web": {
-      "favicon": "./assets/favicon.png"
-    },
+   "web": {
+  "favicon": "./assets/favicon.png",
+  "build": {
+    "babel": {
+      "include": ["@babel/plugin-proposal-optional-chaining"]
+    }
+  },
+  "serve": {
+    "dev": true
+  },
+  "config": {
+    "barTintColor": "#ffffff",
+    "barStyle": "default",
+    "name": "Your App Name for Web"
+  }
+},
     "scheme": "myauthapp",
     "extra": {
       "eas": {
